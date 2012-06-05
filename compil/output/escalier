@@ -1,0 +1,5 @@
+#ContrainteOrtho
+grammaire escalier;
+
+escalier->sequence(marche,{adj($0.top,$1.front) ^ @ContrainteOrtho}) {}
+marche->polygone, polygone {$0.horizontal=true ^ $1.vertical = true} {top = $0.primitive;front = $1.primitive;}
