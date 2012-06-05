@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<title>Grammaires:  Fichier source de grammaire/Parser.h</title>
+
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+
+</head>
+<body>
+<div id="top"><!-- do not remove this div! -->
+
+
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  
+  
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Grammaires
+   
+   </div>
+   
+  </td>
+  
+  
+  
+ </tr>
+ </tbody>
+</table>
+</div>
+
+<!-- Généré par Doxygen 1.8.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+</div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">grammaire/Parser.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef PARSER_H</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define PARSER_H</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span><span class="preprocessor">#include &lt;Vector&gt;</span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;Set&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;Map&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;../geometrie/Polygone.h&quot;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &quot;parsing/Noeud.h&quot;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;regles/Regle.h&quot;</span>
+<a name="l00009"></a>00009 <span class="keyword">using namespace </span>std;
+<a name="l00010"></a><a class="code" href="class_parser.html">00010</a> <span class="keyword">class </span><a class="code" href="class_parser.html">Parser</a>
+<a name="l00011"></a>00011 {
+<a name="l00012"></a>00012         <span class="keyword">public</span> :
+<a name="l00013"></a>00013                 <a class="code" href="class_parser.html">Parser</a>(vector&lt;Polygone*&gt; terminaux);
+<a name="l00014"></a>00014                 <span class="keywordtype">void</span> parse();
+<a name="l00015"></a>00015                 <span class="keywordtype">void</span> ajouterNoeud(<a class="code" href="class_noeud.html">Noeud</a>* n);
+<a name="l00016"></a>00016                 vector&lt;Polygone*&gt; terminaux;
+<a name="l00017"></a>00017                 <span class="keywordtype">void</span> computeAdjacencies();
+<a name="l00018"></a>00018                 <span class="keywordtype">void</span> ajouterRegle(<a class="code" href="class_regle.html">Regle</a>* r);
+<a name="l00019"></a>00019                 <span class="comment">//void ajouterRegle(RegleSequence* r);</span>
+<a name="l00020"></a>00020                 map&lt;Polygone*, set&lt;Polygone*&gt; &gt; adj;
+<a name="l00021"></a><a class="code" href="class_parser.html#ab12284f865e62e28eb976f9052974493">00021</a>                 vector&lt;Regle*&gt; <a class="code" href="class_parser.html#ab12284f865e62e28eb976f9052974493" title="La matrice d&#39;adjacence entre polygones.">regles</a>; 
+<a name="l00022"></a><a class="code" href="class_parser.html#a7fe194d2dd89651fedc7c45efefd6b63">00022</a>                 vector&lt;Noeud*&gt; <a class="code" href="class_parser.html#a7fe194d2dd89651fedc7c45efefd6b63" title="Les règles de la grammaire.">foret</a>; 
+<a name="l00023"></a><a class="code" href="class_parser.html#a3d972c8e07b4cc7d827ddc67b9c2a265">00023</a>                 map&lt;string,vector&lt;Noeud*&gt; &gt; <a class="code" href="class_parser.html#a3d972c8e07b4cc7d827ddc67b9c2a265" title="La forêt des non-terminaux reconnus.">noeudsParType</a>; 
+<a name="l00024"></a>00024                 <span class="keywordtype">void</span> generateDot(<span class="keywordtype">string</span> filename);
+<a name="l00025"></a>00025                 <span class="comment">//map&lt;Regle*,set&lt;Noeud*&gt; &gt; seqDejaTraitees; /** Pour chaque règle de séquence, listes à 1 élément déjà construites */</span>
+<a name="l00026"></a>00026                 map&lt;Noeud*,set&lt;Noeud*&gt; &gt; exclusivite ; 
+<a name="l00027"></a>00027                 <span class="comment">//map&lt;string,set&lt;RegleSequence*&gt; &gt;  reglesSequence; /** Associe à chaque non-terminal les règles séquence dans lesquelles il apparait. */ </span>
+<a name="l00028"></a>00028                 };
+<a name="l00029"></a>00029 <span class="preprocessor">#endif</span>
+</pre></div></div><!-- contents -->
+
+
+<hr class="footer"/><address class="footer"><small>
+Généré le Jeudi Mai 10 2012 14:12:48 pour Grammaires par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.0
+</small></address>
+
+</body>
+</html>

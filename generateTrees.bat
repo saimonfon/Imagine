@@ -1,0 +1,1 @@
+for /f %%a IN ('dir /b *.dot') do dot -Tpng %%a > %%~na.png

@@ -1,0 +1,6 @@
+grammaire maison
+maison->murs,toit{} {}
+toit->sequence(polygone,{adj($0 .primitive,$1 .primitive)}) {primitive = $0 .primitive;}
+murs->cycle(mur,{adj($0 .primitive,$1 .primitive)}) {primitive = $0 .primitive;}
+
+mur->polygone {$0 .vertical==true} {primitive = $0 .primitive;}

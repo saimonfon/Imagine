@@ -1,0 +1,108 @@
+\documentclass{book}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{makeidx}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage[table]{xcolor}
+\usepackage{textcomp}
+\usepackage{alltt}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage[pdftex,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\else
+\usepackage[ps2pdf,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\usepackage{pspicture}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{sectsty}
+\usepackage[titles]{tocloft}
+\usepackage{doxygen}
+\lstset{language=C++,inputencoding=utf8,basicstyle=\footnotesize,breaklines=true,breakatwhitespace=true,tabsize=8,numbers=left }
+\makeindex
+\setcounter{tocdepth}{3}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\familydefault}{\sfdefault}
+\hfuzz=15pt
+\setlength{\emergencystretch}{15pt}
+\hbadness=750
+\tolerance=750
+\begin{document}
+\hypersetup{pageanchor=false,citecolor=blue}
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}
+{\Large Grammaires }\\
+\vspace*{1cm}
+{\large Généré par Doxygen 1.8.0}\\
+\vspace*{0.5cm}
+{\small Jeudi Mai 10 2012 14:12:52}\\
+\end{center}
+\end{titlepage}
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true,citecolor=blue}
+\chapter{Index des classes}
+\input{hierarchy}
+\chapter{Index des classes}
+\input{annotated}
+\chapter{Documentation des classes}
+\input{class_condition}
+\input{class_condition_adj}
+\input{class_condition_egal}
+\input{class_condition_unique}
+\input{class_convex_hull}
+\input{class_convex_hull_e_p_s_writer}
+\input{class_element}
+\input{class_graham_scan_convex_hull}
+\input{structgs__point2d}
+\input{class_g_s_point2_d_compare}
+\input{structlist}
+\input{class_matrice2}
+\input{class_noeud}
+\input{class_non_terminal}
+\input{structobj__camera}
+\input{structobj__face}
+\input{structobj__growable__scene__data}
+\input{structobj__light__disc}
+\input{structobj__light__point}
+\input{structobj__light__quad}
+\input{structobj__material}
+\input{structobj__plane}
+\input{structobj__scene__data}
+\input{structobj__sphere}
+\input{structobj__vector}
+\input{classobj_loader}
+\input{class_parser}
+\input{structpoint2d}
+\input{class_polygone}
+\input{class_polygone___detector}
+\input{class_regle}
+\input{class_regle_sequence}
+\input{class_regle_standard}
+\input{class_terminal}
+\input{class_vec3}
+\printindex
+\end{document}

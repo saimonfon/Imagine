@@ -1,0 +1,19 @@
+#ContrainteMurFenetre
+#ContrainteFenetreComplete
+#ContrainteAdjacenceExacte
+#ContrainteMaison
+grammaire maison
+maison->murs,toit,sol{@ContrainteMaison} {}
+toit->sequence(toit_possible,{adj($0 .primitive,$1 .primitive)}) {primitive = $0 .primitive;}
+toit_possible->polygone {$0 .vertical==false} {primitive = $0 .primitive;}
+murs->cycle(mur,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte}) {primitive = $0 .primitive;}
+
+sol->polygone {$0 .horizontal==true} {primitive = $0 .primitive;}
+
+mur->polygone {$0 .vertical==true} {primitive = $0 .primitive;}
+mur->mur,fenetre_complete{adj($0 .primitive,$1 .primitive) ^ @ContrainteMurFenetre} {primitive = $0 .primitive;}
+
+fenetre->polygone {$0 .vertical==true} {primitive = $0 .primitive;}
+rebord->cycle(rebord_possible,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte}) {primitive = $0 .primitive;}
+rebord_possible-> polygone{$0 .vert_or_hor == true} {primitive = $0 .primitive;}
+fenetre_complete->fenetre, rebord {adj($0 .primitive,$1 .primitive) ^ @ContrainteFenetreComplete} {primitive = $0 .primitive;}

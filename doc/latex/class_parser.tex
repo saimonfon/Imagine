@@ -1,0 +1,94 @@
+\hypertarget{class_parser}{\section{Référence de la classe Parser}
+\label{class_parser}\index{Parser@{Parser}}
+}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_parser_a6f6138bd72ec4a3aa7d76641e122c537}{Parser} (vector$<$ \hyperlink{class_polygone}{Polygone} $\ast$ $>$ terminaux)
+\begin{DoxyCompactList}\small\item\em Initialise le parser. \end{DoxyCompactList}\item 
+\hypertarget{class_parser_ad941a297e9f6abb39271090806a6be33}{void {\bfseries parse} ()}\label{class_parser_ad941a297e9f6abb39271090806a6be33}
+
+\item 
+\hypertarget{class_parser_a7fa7066e4e04f27ae3880fdf645fb693}{void {\bfseries ajouter\-Noeud} (\hyperlink{class_noeud}{Noeud} $\ast$n)}\label{class_parser_a7fa7066e4e04f27ae3880fdf645fb693}
+
+\item 
+void \hyperlink{class_parser_ac5704426c8d048ef82b0e7f960529959}{compute\-Adjacencies} ()
+\begin{DoxyCompactList}\small\item\em Calcule la matrice d'adjacences. \end{DoxyCompactList}\item 
+\hypertarget{class_parser_a87ca20ebcc9c7faa50c74a5958ae68bd}{void {\bfseries ajouter\-Regle} (\hyperlink{class_regle}{Regle} $\ast$r)}\label{class_parser_a87ca20ebcc9c7faa50c74a5958ae68bd}
+
+\item 
+void \hyperlink{class_parser_a46eb959ad3811dce52332f74b739206c}{generate\-Dot} (string filename)
+\begin{DoxyCompactList}\small\item\em A chaque type, l'ensemble des noeuds correspondants. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_parser_aa821df7860d07a050e8938a8e65eaa56}{vector$<$ \hyperlink{class_polygone}{Polygone} $\ast$ $>$ {\bfseries terminaux}}\label{class_parser_aa821df7860d07a050e8938a8e65eaa56}
+
+\item 
+\hypertarget{class_parser_af1fb4443a36f62abdbd865ee3e45b5dd}{map$<$ \hyperlink{class_polygone}{Polygone} $\ast$, set$<$ \hyperlink{class_polygone}{Polygone} $\ast$ $>$ $>$ {\bfseries adj}}\label{class_parser_af1fb4443a36f62abdbd865ee3e45b5dd}
+
+\item 
+\hypertarget{class_parser_ab12284f865e62e28eb976f9052974493}{vector$<$ \hyperlink{class_regle}{Regle} $\ast$ $>$ \hyperlink{class_parser_ab12284f865e62e28eb976f9052974493}{regles}}\label{class_parser_ab12284f865e62e28eb976f9052974493}
+
+\begin{DoxyCompactList}\small\item\em La matrice d'adjacence entre polygones. \end{DoxyCompactList}\item 
+\hypertarget{class_parser_a7fe194d2dd89651fedc7c45efefd6b63}{vector$<$ \hyperlink{class_noeud}{Noeud} $\ast$ $>$ \hyperlink{class_parser_a7fe194d2dd89651fedc7c45efefd6b63}{foret}}\label{class_parser_a7fe194d2dd89651fedc7c45efefd6b63}
+
+\begin{DoxyCompactList}\small\item\em Les règles de la grammaire. \end{DoxyCompactList}\item 
+\hypertarget{class_parser_a3d972c8e07b4cc7d827ddc67b9c2a265}{map$<$ string, vector$<$ \hyperlink{class_noeud}{Noeud} $\ast$ $>$ $>$ \hyperlink{class_parser_a3d972c8e07b4cc7d827ddc67b9c2a265}{noeuds\-Par\-Type}}\label{class_parser_a3d972c8e07b4cc7d827ddc67b9c2a265}
+
+\begin{DoxyCompactList}\small\item\em La forêt des non-\/terminaux reconnus. \end{DoxyCompactList}\item 
+\hypertarget{class_parser_ac51ef6ccbb6e71f39b763a3ae47dc718}{map$<$ \hyperlink{class_noeud}{Noeud} $\ast$, set$<$ \hyperlink{class_noeud}{Noeud} $\ast$ $>$ $>$ {\bfseries exclusivite}}\label{class_parser_ac51ef6ccbb6e71f39b763a3ae47dc718}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_parser_a6f6138bd72ec4a3aa7d76641e122c537}{\index{Parser@{Parser}!Parser@{Parser}}
+\index{Parser@{Parser}!Parser@{Parser}}
+\subsubsection[{Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parser\-::\-Parser} (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf Polygone} $\ast$ $>$}]{terminaux}
+\end{DoxyParamCaption}
+)}}\label{class_parser_a6f6138bd72ec4a3aa7d76641e122c537}
+
+
+Initialise le parser. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em terminaux} & Les terminaux initiaux, i.\-e. les polygones détectés. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_parser_ac5704426c8d048ef82b0e7f960529959}{\index{Parser@{Parser}!compute\-Adjacencies@{compute\-Adjacencies}}
+\index{compute\-Adjacencies@{compute\-Adjacencies}!Parser@{Parser}}
+\subsubsection[{compute\-Adjacencies}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf Parser\-::compute\-Adjacencies} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_parser_ac5704426c8d048ef82b0e7f960529959}
+
+
+Calcule la matrice d'adjacences. 
+
+Pour le moment, deux polygones sont adjacents s'ils partagent un côté. \hypertarget{class_parser_a46eb959ad3811dce52332f74b739206c}{\index{Parser@{Parser}!generate\-Dot@{generate\-Dot}}
+\index{generate\-Dot@{generate\-Dot}!Parser@{Parser}}
+\subsubsection[{generate\-Dot}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf Parser\-::generate\-Dot} (
+\begin{DoxyParamCaption}
+\item[{string}]{filename}
+\end{DoxyParamCaption}
+)}}\label{class_parser_a46eb959ad3811dce52332f74b739206c}
+
+
+A chaque type, l'ensemble des noeuds correspondants. 
+
+Premier parcours pour donner des noms
+
+Second parcours pour écrire le dot 
+
+La documentation de cette classe a été générée à partir des fichiers suivants \-:\begin{DoxyCompactItemize}
+\item 
+grammaire/Parser.\-h\item 
+grammaire/Parser.\-cpp\end{DoxyCompactItemize}

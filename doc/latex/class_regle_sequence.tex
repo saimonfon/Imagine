@@ -1,0 +1,147 @@
+\hypertarget{class_regle_sequence}{\section{Référence de la classe Regle\-Sequence}
+\label{class_regle_sequence}\index{Regle\-Sequence@{Regle\-Sequence}}
+}
+Graphe d'héritage de Regle\-Sequence\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_regle_sequence}
+\end{center}
+\end{figure}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_regle_sequence_a7cba8d2491d2f5c1854f6d9e40db018d}{Regle\-Sequence} (string nom, string type)
+\begin{DoxyCompactList}\small\item\em Crée une règle de type séquence. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{class_noeud}{Noeud} $\ast$ $>$ \hyperlink{class_regle_sequence_a523224e9cbace57e6a96a957b8fb04c4}{appliquer} (\hyperlink{class_parser}{Parser} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Renvoie les noeuds résultants de l'application de la règle à l'état courant du parser. \end{DoxyCompactList}\item 
+void \hyperlink{class_regle_sequence_af30c68a9b9a2358e248d5f4edc4a4074}{init} ()
+\begin{DoxyCompactList}\small\item\em Initialise la règle pour le parsing (doit être appelé avant chaque nouveau parsing). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ \hyperlink{class_condition_unique}{Condition\-Unique} $\ast$ $>$ \hyperlink{class_regle_sequence_a7e254237c15832f3b5e79fef57fdac54}{conditions}
+\begin{DoxyCompactList}\small\item\em Les conditions portant sur le membre droit (par exemple, chaque marche doit mesurer plus de 30 cm). \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{class_condition_adj}{Condition\-Adj} $\ast$ $>$ \hyperlink{class_regle_sequence_a0b99e9875a308dac54e99358d5d2a712}{cond\-Succ\-Adj}
+\begin{DoxyCompactList}\small\item\em Les conditions d'adjacence entre attributs de deux éléments consécutifs. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{class_condition_egal}{Condition\-Egal} $\ast$ $>$ \hyperlink{class_regle_sequence_aeb7ff397207904508a29b2f15c6841f1}{cond\-Succ\-Egal}
+\begin{DoxyCompactList}\small\item\em Les conditions d'égalité entre attributs de deux éléments consécutifs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs privés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_regle_sequence_aefc0acf54c76f95a15080df4996ce296}{string {\bfseries type}}\label{class_regle_sequence_aefc0acf54c76f95a15080df4996ce296}
+
+\item 
+\hypertarget{class_regle_sequence_ab57ac6215025b673691010b0a2a57b87}{string {\bfseries nom}}\label{class_regle_sequence_ab57ac6215025b673691010b0a2a57b87}
+
+\item 
+\hypertarget{class_regle_sequence_af43a1ef4bd41eba1ad989831df6831cf}{set$<$ \hyperlink{class_element}{Element} $\ast$ $>$ {\bfseries elements}}\label{class_regle_sequence_af43a1ef4bd41eba1ad989831df6831cf}
+
+\item 
+\hypertarget{class_regle_sequence_aa3dbd3a9d1d025918a4cd38e4ae2505c}{set$<$ \hyperlink{class_noeud}{Noeud} $\ast$ $>$ {\bfseries deja\-Traites}}\label{class_regle_sequence_aa3dbd3a9d1d025918a4cd38e4ae2505c}
+
+\item 
+\hypertarget{class_regle_sequence_ac76b51a73c43c3122b43f0782e3d3355}{map$<$ \hyperlink{class_condition_adj}{Condition\-Adj} $\ast$, map\\*
+$<$ \hyperlink{class_polygone}{Polygone} $\ast$, set$<$ \hyperlink{class_element}{Element} $\ast$ $>$ $>$ $>$ {\bfseries table\-\_\-debuts}}\label{class_regle_sequence_ac76b51a73c43c3122b43f0782e3d3355}
+
+\item 
+\hypertarget{class_regle_sequence_a57b2f9884234276fa004d006a60b7653}{map$<$ \hyperlink{class_condition_adj}{Condition\-Adj} $\ast$, map\\*
+$<$ \hyperlink{class_polygone}{Polygone} $\ast$, set$<$ \hyperlink{class_element}{Element} $\ast$ $>$ $>$ $>$ {\bfseries table\-\_\-fins}}\label{class_regle_sequence_a57b2f9884234276fa004d006a60b7653}
+
+\item 
+\hypertarget{class_regle_sequence_a6fc2e70a5a7715ebd8058f77f9f52eb8}{map$<$ \hyperlink{class_condition_egal}{Condition\-Egal} $\ast$, map\\*
+$<$ void $\ast$, set$<$ \hyperlink{class_element}{Element} $\ast$ $>$ $>$ $>$ {\bfseries table\-\_\-eg\-\_\-debuts}}\label{class_regle_sequence_a6fc2e70a5a7715ebd8058f77f9f52eb8}
+
+\item 
+\hypertarget{class_regle_sequence_ae4af3c30ff37df35b459ce338c7293c9}{map$<$ \hyperlink{class_condition_egal}{Condition\-Egal} $\ast$, map\\*
+$<$ void $\ast$, set$<$ \hyperlink{class_element}{Element} $\ast$ $>$ $>$ $>$ {\bfseries table\-\_\-eg\-\_\-fins}}\label{class_regle_sequence_ae4af3c30ff37df35b459ce338c7293c9}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_regle_sequence_a7cba8d2491d2f5c1854f6d9e40db018d}{\index{Regle\-Sequence@{Regle\-Sequence}!Regle\-Sequence@{Regle\-Sequence}}
+\index{Regle\-Sequence@{Regle\-Sequence}!RegleSequence@{Regle\-Sequence}}
+\subsubsection[{Regle\-Sequence}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Regle\-Sequence\-::\-Regle\-Sequence} (
+\begin{DoxyParamCaption}
+\item[{string}]{nom, }
+\item[{string}]{type}
+\end{DoxyParamCaption}
+)}}\label{class_regle_sequence_a7cba8d2491d2f5c1854f6d9e40db018d}
+
+
+Crée une règle de type séquence. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nom} & Le nom du non-\/terminal. \\
+\hline
+{\em type} & Le type répété (i.\-e. apparaissant en partie droite de la règle). \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_regle_sequence_a523224e9cbace57e6a96a957b8fb04c4}{\index{Regle\-Sequence@{Regle\-Sequence}!appliquer@{appliquer}}
+\index{appliquer@{appliquer}!RegleSequence@{Regle\-Sequence}}
+\subsubsection[{appliquer}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ {\bf Noeud} $\ast$ $>$ {\bf Regle\-Sequence\-::appliquer} (
+\begin{DoxyParamCaption}
+\item[{{\bf Parser} $\ast$}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{class_regle_sequence_a523224e9cbace57e6a96a957b8fb04c4}
+
+
+Renvoie les noeuds résultants de l'application de la règle à l'état courant du parser. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em parser} & Le parser de la grammaire en cours d'exécutino \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Les noeuds créés. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_regle}{Regle}.
+
+\hypertarget{class_regle_sequence_af30c68a9b9a2358e248d5f4edc4a4074}{\index{Regle\-Sequence@{Regle\-Sequence}!init@{init}}
+\index{init@{init}!RegleSequence@{Regle\-Sequence}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf Regle\-Sequence\-::init} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_regle_sequence_af30c68a9b9a2358e248d5f4edc4a4074}
+
+
+Initialise la règle pour le parsing (doit être appelé avant chaque nouveau parsing). 
+
+Réinitialise les structures utilisées lors du parsing. 
+
+\subsection{Documentation des données membres}
+\hypertarget{class_regle_sequence_a7e254237c15832f3b5e79fef57fdac54}{\index{Regle\-Sequence@{Regle\-Sequence}!conditions@{conditions}}
+\index{conditions@{conditions}!RegleSequence@{Regle\-Sequence}}
+\subsubsection[{conditions}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Condition\-Unique}$\ast$$>$ {\bf Regle\-Sequence\-::conditions}}}\label{class_regle_sequence_a7e254237c15832f3b5e79fef57fdac54}
+
+
+Les conditions portant sur le membre droit (par exemple, chaque marche doit mesurer plus de 30 cm). 
+
+\hypertarget{class_regle_sequence_a0b99e9875a308dac54e99358d5d2a712}{\index{Regle\-Sequence@{Regle\-Sequence}!cond\-Succ\-Adj@{cond\-Succ\-Adj}}
+\index{cond\-Succ\-Adj@{cond\-Succ\-Adj}!RegleSequence@{Regle\-Sequence}}
+\subsubsection[{cond\-Succ\-Adj}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Condition\-Adj}$\ast$$>$ {\bf Regle\-Sequence\-::cond\-Succ\-Adj}}}\label{class_regle_sequence_a0b99e9875a308dac54e99358d5d2a712}
+
+
+Les conditions d'adjacence entre attributs de deux éléments consécutifs. 
+
+\hypertarget{class_regle_sequence_aeb7ff397207904508a29b2f15c6841f1}{\index{Regle\-Sequence@{Regle\-Sequence}!cond\-Succ\-Egal@{cond\-Succ\-Egal}}
+\index{cond\-Succ\-Egal@{cond\-Succ\-Egal}!RegleSequence@{Regle\-Sequence}}
+\subsubsection[{cond\-Succ\-Egal}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Condition\-Egal}$\ast$$>$ {\bf Regle\-Sequence\-::cond\-Succ\-Egal}}}\label{class_regle_sequence_aeb7ff397207904508a29b2f15c6841f1}
+
+
+Les conditions d'égalité entre attributs de deux éléments consécutifs. 
+
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \-:\begin{DoxyCompactItemize}
+\item 
+grammaire/regles/Regle\-Sequence.\-h\item 
+grammaire/regles/Regle\-Sequence.\-cpp\end{DoxyCompactItemize}
