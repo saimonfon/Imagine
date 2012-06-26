@@ -1,49 +1,0 @@
-This is makeindex, version 2.14 [02-Oct-2002] (kpathsea + Thai support).
-Scanning input file refman.idx...
-!! Input index error (file = refman.idx, line = 1):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 2):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 3):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 4):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 5):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 6):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 7):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 8):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 9):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 10):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 11):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 12):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 13):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 14):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 15):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 16):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 17):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 18):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 19):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 20):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 21):
-   -- No closing delimiter for second argument (illegal character `').
-!! Input index error (file = refman.idx, line = 22):
-   -- No closing delimiter for second argument (illegal character `').
-done (0 entries accepted, 22 rejected).
-Nothing written in refman.ind.
-Transcript written in refman.ilg.
