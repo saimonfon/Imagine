@@ -5,7 +5,7 @@
 #include <Map>
 #include "../geometrie/Polygone.h"
 #include "parsing/Noeud.h"
-#include "regles/Regle.h"
+#include "Regle.h"
 #include<unordered_set>
 using namespace std;
 
