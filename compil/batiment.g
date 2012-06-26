@@ -4,7 +4,8 @@ import java.util.LinkedList;
 }
 
 @members{
-int n=0;}
+int n=0;
+int n2=0;}
 /* Règles du parser*/
 //class batimentParser extends Parser;
 
@@ -14,6 +15,7 @@ System.out.println("#include <vector>");
 System.out.println("#include <string>");
 System.out.println("#include \"regles/RegleStandard.h\"");
 System.out.println("#include \"regles/RegleSequence.h\"");
+System.out.println("#include \"regles/RegleCluster.h\"");
 System.out.println("#include \"regles/RegleCycle.h\"");
 System.out.println("#include \"condition/ConditionAdj.h\"");
 System.out.println("#include \"condition/ConditionEgal.h\"");
@@ -31,7 +33,7 @@ dinclude
 
 def_nom	returns [String nom]:	'grammaire' id=ID {nom= $id.text;};//id.getText();};
 def_regles 
-	:	(regle_stand|regle_seq|regle_cycle)*;
+	:	(regle_stand|regle_seq|regle_cycle|regle_cluster)*;
 	
 	regle_stand : i1=ID '->' 
 	{
@@ -39,22 +41,27 @@ def_regles
 	i2=ID {System.out.println("v"+n+".push_back(\""+$i2.text+"\");");}
 	(',' i3=ID  {System.out.println("v"+n+".push_back(\""+$i3.text+"\");");})* 
 	{System.out.println("RegleStandard* r"+n+" = new RegleStandard(\""+$i1.text+"\",v"+n+");");System.out.println("ajouterRegle(r"+n+");");}
-	 '{' liste_contraintes?'}'  '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");})? '}' {n++;} ;
+	 '{' liste_contraintes?'}'  '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");}
+	 |'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");})? '}'  {n++;n2=0;};
 	
 	regle_seq : i1=ID '->' 'sequence(' i2=ID {System.out.println("RegleSequence* r"+n+" = new RegleSequence(\""+$i1.text+"\",\""+$i2.text+"\");");System.out.println("ajouterRegle(r"+n+");");}
-	',' '{' liste_contraintes?'}' ')' '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");})? '}'  {n++;};
+	',' '{' liste_contraintes?'}' ')' '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");}
+	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");})? '}'  {n++;n2=0;};
 	
 	regle_cycle : i1=ID '->' 'cycle(' i2=ID {System.out.println("RegleCycle* r"+n+" = new RegleCycle(\""+$i1.text+"\",\""+$i2.text+"\");");System.out.println("ajouterRegle(r"+n+");");}
-	',' '{' liste_contraintes?'}' ')' '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");})? '}' {n++;} ;
+	',' '{' liste_contraintes?'}' ')' '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");}
+	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");})? '}'  {n++;n2=0;};
+	
+	regle_cluster :i1=ID '->' 'cluster(' i2=ID {System.out.println("RegleCluster* r"+n+" = new RegleCluster(\""+$i1.text+"\",\""+$i2.text+"\");");System.out.println("ajouterRegle(r"+n+");");}
+	',' '{' liste_contraintes?'}' ')' '{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");}
+	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");})? '}'  {n++;n2=0;};
 
 liste_contraintes/* returns [List<Contrainte> c]*/:
 	contrainte ('^' contrainte)*;
 
 liste_calcul 
 	:
-	{ System.out.
-	
-	println("class Calcul"+n+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");}
+	{ System.out.println("class Calcul"+n+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");}
 	(expr_calcul ';')+ {System.out.println("}};");};
 	
 	contrainte/* returns [Contrainte c]*/:
@@ -67,13 +74,13 @@ liste_calcul
 	contrainte_egal : '$' i=INT '.' att_i=ID '=' '$' j=INT '.' att_j=ID {System.out.println("r"+n+"->condEgal.push_back(new ConditionEgal("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));");};
 	contrainte_adj : ADJ '(' '$' i=INT '.' att_i=ID ',' '$' j=INT '.' att_j=ID ')' {System.out.println("r"+n+"->condAdj.push_back(new ConditionAdj("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));");};
 	
-	condition_unique : {System.out.println("class ConditionUnique"+n+" : public ConditionUnique{");
+	condition_unique : {System.out.println("class ConditionUnique"+n+"_"+(++n2)+" : public ConditionUnique{");
 	System.out.println("bool estVerifiee(Noeud* n){return (bool)(");}
 	'$' i=INT '.' att_i=ID '==' val=CONST
 		{System.out.print("n->getAttribut(\""+$att_i.text+"\"))=="+$val.text);
 		System.out.println(";}};");
-		System.out.println("ConditionUnique"+n+"* c"+n+" = new ConditionUnique"+n+"(); c"+n+"->indice = "+$i.text+";");
-	System.out.println("r"+n+"->condUnique.push_back(c"+n+");");};
+		System.out.println("ConditionUnique"+n+"_"+n2+"* c"+n+"_"+n2+" = new ConditionUnique"+n+"_"+n2+"(); c"+n+"_"+n2+"->indice = "+$i.text+";");
+	System.out.println("r"+n+"->condUnique.push_back(c"+n+"_"+n2+");");};
 	
 	contrainte_generale:'@' i=ID{System.out.println("r"+n+"->condGen.push_back(new "+$i.text+"());");};
 	

@@ -1,5 +1,5 @@
 CC=g++-4
-CFLAGS= 
+CFLAGS= -std=c++0x -fpermissive
 INCLUDE = -Iirrlicht-1.7.1/include
 LDFLAGS= -lIrrlicht -Lirrlicht-1.7.1/lib/Win32-gcc/
 EXEC=main

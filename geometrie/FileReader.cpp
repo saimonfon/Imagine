@@ -22,14 +22,16 @@ while(getline(infile,line))
 	vector<Vec3> v;
 	std::istringstream iss(line);
 	float x,y,z;
-	cout<<"POLYGONE"<<endl;
+	//cout<<"POLYGONE"<<endl;
 	while(iss>>x>>y>>z)
 	{
 		v.push_back(Vec3(x,y,z));
-		cout<<x<<" "<<y<<" "<<z<<endl;
+		//cout<<x<<" "<<y<<" "<<z<<endl;
 	}
 	//Calcul de l'équation du plan à partir des 3 premiers points
 	Vec3 normale = (v[1]-v[0])^(v[2]-v[0]);
+	if(normale.y<0)
+		normale = Vec3(0,0,0)-normale;
 	normale.normalize();
 	float d = - (normale*v[0]);
 	Matrice2 rot = rotationPlan(normale,d);
@@ -39,9 +41,9 @@ while(getline(infile,line))
 	{
 		//Vec3 new_point = rotationPoint(rot,projectionSurPlan(*it,normale,d));
 		Vec3 new_point = rotationPoint(rot,*it);
-		cout<<"Rotated : "<<new_point.x<<" "<<new_point.y<<" "<<new_point.z<<endl;
+		//cout<<"Rotated : "<<new_point.x<<" "<<new_point.y<<" "<<new_point.z<<endl;
 		x = new_point.x;
-		cout<<new_point.x<<" "<<new_point.y<<" "<<new_point.z<<endl;
+		//cout<<new_point.x<<" "<<new_point.y<<" "<<new_point.z<<endl;
 		contour.push_back(point2d(new_point.y,new_point.z));
 	}
 	Polygone* p = new Polygone();
@@ -55,7 +57,15 @@ while(getline(infile,line))
 	equation[2]  = normale.z;
 	equation[3]  = d;
 	p->equation = equation;
-	res.push_back(p);
+	bool pasDedans = true;
+	for(int i=0;i<res.size();i++)
+	if(res[i]->egal(p))
+	{
+		pasDedans=false;
+		break;
+	}
+	if(pasDedans)
+		res.push_back(p);
 }
 
 
@@ -65,7 +75,7 @@ while(getline(infile,line))
 //cf http://stackoverflow.com/questions/6195413/intersection-between-3d-flat-polygons
 adj.clear();
 for(int i=0;i<res.size();i++)
-	for(int j=0;j<i;j++)
+	for(int j=0;j<res.size();j++)
 	{
 		bool adjacent=false;
 		//S'ils ont un sommet commun, c'est réglé
@@ -105,13 +115,13 @@ for(int i=0;i<res.size();i++)
 		{
 			adj[res[i]].insert(res[j]);
 			adj[res[j]].insert(res[i]);
-			cout<<"ADJACENTS "<<i<<" "<<j<<endl;
+			//cout<<"ADJACENTS "<<i<<" "<<j<<endl;
 		}
 	}
 	
 
 //Affichage des coordonnées 3D pour verif
-for(int i=0;i<res.size();i++)
+/*for(int i=0;i<res.size();i++)
 {
 for(int k=0;k<res[i]->points3D.size();k++)
 {
@@ -119,7 +129,7 @@ for(int k=0;k<res[i]->points3D.size();k++)
 			cout<<"("<<p1.x<<","<<p1.y<<","<<p1.z<<") ";
 			}
 			cout<<endl;
-			}
+			}*/
 
 			//Ecriture dans un fichier texte de l'adjacence pour affichage Matlab
 ofstream adjfile;

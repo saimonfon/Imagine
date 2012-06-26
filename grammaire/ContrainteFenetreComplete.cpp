@@ -1,4 +1,7 @@
+#ifndef CONTRAINTE_FENETRE_COMPLETE_H
+#define CONTRAINTE_FENETRE_COMPLETE_H
 #include "condition/ConditionGenerale.h"
+#include "ContrainteAdjacenceExacte.cpp"
 #include "parsing/Noeud.h"
 #include <vector>
 #include <iostream>
@@ -8,20 +11,23 @@ class ContrainteFenetreComplete : public ConditionGenerale
 public: 
 bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 {
-	//cout<<"Vérfiication de la contriante rebordvrerve fenetre"<<p<<endl;
-	//cout<<"Taille des enfants "<<enfants.size()<<endl;
+	ContrainteAdjacenceExacte* ce = new ContrainteAdjacenceExacte(); //DEGUEULASSE
+	//cout<<"Verifs condition fenetre complete"<<endl;
 	Noeud* fenetre = enfants[0];
 	Noeud* rebord = enfants[1];
-	//cout<<"Ok ciic"<<endl;
 	vector<Noeud*> rebords = rebord->getEnfants();
-	//cout<<rebords.size()<<endl;
 	for(vector<Noeud*>::iterator it = rebords.begin();it!=rebords.end();it++)
 	{
-		//cout<<"Ok au début de l'itération"<<endl;
-		if(p->adj[(Polygone*) (fenetre->getAttribut("primitive"))].count((Polygone*) ((*it)->getAttribut("primitive")))==0) //si un des rebords n'est pas adjacent à la fenetre
+		if(p->adj[(Polygone*) (*fenetre)["primitive"]].count((Polygone*) ((*(*it))["primitive"]))==0) //si un des rebords n'est pas adjacent à la fenetre
+			return false;
+		vector<Noeud*> v;
+		v.push_back(rebord);
+		v.push_back(fenetre);
+		if(!ce->estVerifiee(v,p))
 			return false;
 	}
-	//cout<<"FIN Vérfiication de la contriante rebord fenetre"<<endl;
+	//cout<<"OK condition fenetre complete"<<endl;
 	return true;
 }
 };
+#endif

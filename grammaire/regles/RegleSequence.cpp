@@ -15,6 +15,7 @@ vector<Noeud*> res;
 	/*Parcours en profondeur du graphe pour trouver tous les chemins */
 	/*Tri topologique*/
 	int N = dejaTraites.size();
+	cout<<"Taille du graphe "<<N<<endl;
 	Noeud** triTopo = new Noeud*[N];
 	set<Noeud*> marque;
 	int cur_i=0;
@@ -50,20 +51,20 @@ vector<Noeud*> res;
 				{
 					if(marque.count(*it)>0)
 						continue;
-					//bool exclu = false;
-					/*for( vector<Noeud*>::iterator it2 = cur.second.begin();it2!=cur.second.end();it2++)
+					bool exclu = false;
+					for( vector<Noeud*>::iterator it2 = cur.second.begin();it2!=cur.second.end();it2++)
 						if(parser->exclusivite[*it2].count(*it)>0)
 						{
 							exclu = true;
 							break;
-						}*/
-					//if(!exclu)
-					//{
+						}
+					if(!exclu)
+					{
 					nb_children++;
 					vector<Noeud*> new_set = cur.second;
 					new_set.push_back(*it);
 					p.push(pair<Noeud*, vector<Noeud*> >(*it,new_set)); 
-					//}
+					}
 				}
 			if(nb_children==0)
 			{

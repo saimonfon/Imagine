@@ -14,3 +14,14 @@ void* Noeud::getAttribut(string nom)
 	{
 		attributs[nom] = val;
 	}
+	
+	
+	Noeud*& Noeud::operator[](int i)
+	{
+		return getEnfants()[i];
+	}
+	
+	void* Noeud::operator[](string s)
+	{
+		return attributs[s];
+	}

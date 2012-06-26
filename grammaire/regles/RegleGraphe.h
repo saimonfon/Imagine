@@ -5,6 +5,8 @@
 #include "../condition/ConditionAdj.h"
 #include "../condition/ConditionEgal.h"
 #include "../condition/ConditionGenerale.h"
+/** Classe abstraite décrivant une règle (cycle, séquence, ensemble) d'éléments du même type répétés dont le calcul passe par la construction du graphe
+dont les noeuds sont les noeuds de la forêt du type répété et une arête relie deux noeuds si une certaine relation est vérifiée par ceux-ci.*/
 class RegleGraphe : public Regle
 {
 public :
@@ -24,6 +26,7 @@ public :
 protected :
 	string type;
 	string nom;
+	Parser* parser;
 	set<Noeud*> dejaTraites;
 	map<Noeud*,set<Noeud*> > succ;
 	map<ConditionAdj*,map<Polygone*,set<Noeud*> > > table_adj_i;

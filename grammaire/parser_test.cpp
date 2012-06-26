@@ -37,7 +37,7 @@ class ConditionUnique2 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return (bool)(
 n->getAttribut("vertical"))==false;}};
 ConditionUnique2* c2 = new ConditionUnique2(); c2->indice = 0;
-r2->condUnique.push_back(c2);
+r2->condUnique.push_back((ConditionUnique*)c2);
 class Calcul2 : public CalculAttributs {
 void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
@@ -60,7 +60,7 @@ class ConditionUnique4 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return (bool)(
 n->getAttribut("horizontal"))==true;}};
 ConditionUnique4* c4 = new ConditionUnique4(); c4->indice = 0;
-r4->condUnique.push_back(c4);
+r4->condUnique.push_back((ConditionUnique*)c4);
 class Calcul4 : public CalculAttributs {
 void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));

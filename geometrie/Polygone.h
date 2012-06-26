@@ -19,7 +19,9 @@ class Polygone
 	unsigned short* belongingFaces;
 	int nb_faces;
 	//Rajouter les trous
-	
+	bool egal(const Polygone* p) const;
+	Vec3& operator[](int i);
+	int size();
 	private:
 	float area;
 	void computeArea();

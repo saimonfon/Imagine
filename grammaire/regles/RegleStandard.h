@@ -8,9 +8,13 @@
 #include "../../geometrie/Polygone.h"
 #include<set>
 class Parser;
+/** Règle "classique" dont le nombre d'éléments dans le membre droit est constant.*/
 class RegleStandard : public Regle
 {
 	public : 
+	/** Constructeur
+	@param nom Le nom du non-terminal résultant de l'application de la règle.
+	@param membresDroits La liste des types des membres droits (l'ordre n'a pas d'importance, puisque l'algorithme de résolution choisit heuristiquement l'ordre d'affectation des variables).*/
 	RegleStandard(string nom, vector<string> membresDroits);
 	vector<Noeud*> appliquer(Parser* p);
 	void init();

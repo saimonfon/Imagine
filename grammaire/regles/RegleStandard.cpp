@@ -26,7 +26,10 @@ vector<Noeud*> RegleStandard::appliquer(Parser* p)
 	/*Création des domaines de chaque variable*/
 	domaines = new set<Noeud*>[N];
 	for(int i=0;i<N;i++)
-	domaines[i] = p->noeudsParType[membresDroits[i]];
+	{
+	set_noeud s = p->noeudsParType[membresDroits[i]];
+	domaines[i] = set<Noeud*>(s.begin(),s.end());
+	}
 	cout<<"Ok là"<<endl;
 	/* Utilisation des conditions unitaires pour réduire les domaines */
 	for(vector<ConditionUnique*>::iterator it_cond = condUnique.begin();it_cond!=condUnique.end();it_cond++)
@@ -122,9 +125,12 @@ void RegleStandard::solveCSP(Noeud** affectPart, int curInd, vector<set<Noeud*> 
 	}
 	int var = order[curInd];
 	//cout<<"On choisit la variable "<<var<<", taille du domaine "<<domaines[var].size()<<endl;
+	//cout<<"TAILLE DU DOMAINE"<<domaines[var].size()<<endl;
+	int w=0;
 	for(set<Noeud*>::iterator ite = domaines[var].begin();ite!=domaines[var].end();ite++)
 	{
-		//cout<<"Valeur "<<(*ite)<<"pour la variable "<<var<<endl;
+		//cout<<(w++)<<endl;
+		//cout<<"Valeur "<<(*ite)->nom_parser<<"pour la variable "<<var<<endl;
 		//Affecter à la variable var la valeur it
 		affectPart[var] = *ite;
 		//Modifier les domaines des autres variables en conséquence

@@ -37,3 +37,18 @@ void Polygone::computePoints3D()
 		points3D.push_back(Vec3(m[0][0]*this->x + m[0][1]*p.y,p.x,m[1][0]*this->x + m[1][1]*p.y));
 	}
 }
+
+bool Polygone::egal(const Polygone* p) const
+{
+	return this->points3D == p->points3D;
+}
+
+Vec3& Polygone::operator[](int i)
+{
+	return points3D[i];
+}
+
+int Polygone::size()
+{
+	return points3D.size();
+}

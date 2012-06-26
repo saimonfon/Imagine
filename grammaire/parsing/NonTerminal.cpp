@@ -1,11 +1,11 @@
 #include "NonTerminal.h"
 #include <string>
 
-vector<Noeud*> NonTerminal::getEnfants()
+vector<Noeud*> NonTerminal::getEnfants() const
 {
 	return enfants;
 }
-string NonTerminal::getType()
+string NonTerminal::getType() const
 {
 	return type;
 }
@@ -16,10 +16,11 @@ NonTerminal::NonTerminal(string type, vector<Noeud*> enfants)
 	attributs["type"]= new string(type);
 	this->type = type;
 	this->enfants = enfants;
+	attributs["size"] = enfants.size();
 	score=1;
 	}
 	
-bool NonTerminal::equals(Noeud* n)
+bool NonTerminal::equals(const Noeud* n) const
 {
 	if(type.compare(n->getType())!=0)
 		return false;

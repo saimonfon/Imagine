@@ -21,10 +21,14 @@ void RegleGraphe::init()
 	*@return Les noeuds créés. */
 vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 {
+	this->parser=parser;
+	cout<<"Ok ici"<<endl;
 	/* Ajouter les listes à un élément non encore construites */
-	set<Noeud*> candidats = parser->noeudsParType[this->type];
-	for(set<Noeud*>::iterator ite = candidats.begin();ite!=candidats.end();ite++)
+	set_noeud candidats = parser->noeudsParType[this->type];
+	int itt =0;
+	for(set_noeud::iterator ite = candidats.begin();ite!=candidats.end();ite++)
 	{
+		cout<<"traitement noeud "<<(++itt)<<endl;
 		if(dejaTraites.count(*ite)>0)
 		continue;
 		bool okCondition = true;
@@ -37,7 +41,7 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 		if(!okCondition)
 		continue;
 		dejaTraites.insert(*ite);
-		
+		//cout<<"Ok là"<<endl;
 		//Ajout à la table de hachage
 		for(vector<ConditionAdj*>::iterator it = condAdj.begin();it!=condAdj.end();it++)
 		{
@@ -51,7 +55,7 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 			table_eg_i[ceg][(*ite)->getAttribut(ceg->att_i)].insert(*ite);
 			table_eg_j[ceg][(*ite)->getAttribut(ceg->att_j)].insert(*ite);
 		}
-		
+		//cout<<"Ok ajout table de hachage"<<endl;
 		/*Ajouter les arêtes qui partent du nouveau noeud*/
 		set<Noeud*> possible;// = dejaTraites;
 		bool full = true;
@@ -78,6 +82,7 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 				possible = new_set;
 				}
 		}
+		//cout<<"Ok traiteemnt condition d'ajdvne"<<endl;
 		for(vector<ConditionEgal*>::iterator it = condEgal.begin();it!=condEgal.end();it++)
 		{
 				ConditionEgal* ceg = *it;
@@ -104,6 +109,8 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 				possible.erase(*it_exclu);
 				//cout<<"On supprime "<<(*it_exclu)->nom_parser<<" des succ de "<<(*ite)->nom_parser<<endl;
 		}
+		cout<<"Taille de possible"<<possible.size()<<endl;
+		//cout<<"Ok avant vérif conditions générales"<<endl;
 		/*Conditions générales entre deux éléments successifs*/
 		for(set<Noeud*>::iterator it=possible.begin();it!=possible.end();it++)
 		{
@@ -111,6 +118,7 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 		vector<Noeud*> v;
 		v.push_back(*ite);
 		v.push_back(*it);
+		//cout<<(*ite)->nom_parser<<"<->"<<(*it)->nom_parser<<endl;
 		for(vector<ConditionGenerale*>::iterator it_cond = condGen.begin();it_cond!=condGen.end();it_cond++)
 			if(!(*it_cond)->estVerifiee(v,parser))
 			{
@@ -120,8 +128,10 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 			if(ok)
 			succ[*ite].insert(*it);
 		}
+		//cout<<"ok thereee"<<endl;
 		/*Ajouter les arêtes qui arrivent au nouveau noeud*/
-		possible = dejaTraites;
+		possible = set<Noeud*>();
+		full = true;
 		for(vector<ConditionAdj*>::iterator it = condAdj.begin();it!=condAdj.end();it++)
 		{
 				ConditionAdj* cadj = *it;
@@ -133,18 +143,36 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 				//cout<<"Nombre de sous listes adjacentes "<<adj_elem.size()<<endl;
 				//cout<<"Taille de la table de hachage "<<table_adj_i[cadj].size()<<endl;
 				//sort(adj_elem.begin(),adj_elem.end());
+				if(full) //l'ensemble contient tous les éléments possibles, on doit le construire explicitement
+				{
+					possible = adj_elem;
+					full=false;
+				}
+				else
+				{
 				set<Noeud*> new_set;
 				set_intersection(possible.begin(),possible.end(),adj_elem.begin(),adj_elem.end(),std::inserter(new_set, new_set.begin()));
 				possible = new_set;
+				}
 		}
 		for(vector<ConditionEgal*>::iterator it = condEgal.begin();it!=condEgal.end();it++)
 		{
 				ConditionEgal* ceg = *it;
 				set<Noeud*> eg_elem=table_eg_i[ceg][(*ite)->getAttribut(ceg->att_j)];
+				if(full) //l'ensemble contient tous les éléments possibles, on doit le construire explicitement
+				{
+					possible = eg_elem;
+					full=false;
+				}
+				else
+				{
 				set<Noeud*> new_set;
 				set_intersection(possible.begin(),possible.end(),eg_elem.begin(),eg_elem.end(),std::inserter(new_set, new_set.begin()));
 				possible = new_set;
+				}
 		}
+		//Si le set est toujours plein, tant pis, on le construit explicitement
+		if(full) possible = dejaTraites;
 		//Exclusivite
 		for(set<Noeud*>::iterator it_exclu = exclu.begin();it_exclu!=exclu.end();it_exclu++)
 		{
@@ -152,6 +180,7 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 				
 				//cout<<"On supprime "<<(*it_exclu)->nom_parser<<" des succ de "<<(*ite)->nom_parser<<endl;
 		}
+		cout<<"Taille de possible"<<possible.size()<<endl;
 		/* Ajout des noeuds et vérif des contraintes générales*/
 		for(set<Noeud*>::iterator it=possible.begin();it!=possible.end();it++)
 		{
@@ -168,16 +197,16 @@ vector<Noeud*> RegleGraphe::appliquer(Parser* parser)
 			if(ok)
 			succ[*it].insert(*ite);
 		}
-		
+		//cout<<"Ok élément traité"<<endl;
 	}
-	
-	/*for(map<Noeud*,set<Noeud*> >::iterator it = succ.begin();it!=succ.end();it++)
+	cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
+	for(map<Noeud*,set<Noeud*> >::iterator it = succ.begin();it!=succ.end();it++)
 	{
 		cout<<it->first->nom_parser<<"->";
 		for(set<Noeud*>::iterator it2 = it->second.begin();it2!=it->second.end();it2++)
 			cout<<(*it2)->nom_parser<<", ";
 		cout<<endl;
-	}*/
+	}
 	
 	return noeudsFromGraphe();
 }

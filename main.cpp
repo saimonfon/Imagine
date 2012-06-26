@@ -12,8 +12,11 @@
 #include "grammaire/regles/CalculAttributs.h"
 #include "grammaire/parsing/Noeud.h"
 #include "grammaire/parser_test.cpp"
+#include "grammaire/parserescalier.cpp"
+#include "grammaire/parserHLM.cpp"
 #include <irrlicht.h>
 #include <time.h>
+#include <fstream>
 using namespace std;
 using namespace irr;
 
@@ -27,8 +30,8 @@ void testEscalier();
 void testAuto()
 {
 	FileReader f;
-	vector<Polygone*> maison = f.readFile("maison.txt");
-	Parsermaison* parser = new Parsermaison();
+	vector<Polygone*> maison = f.readFile("hlm.txt");
+	ParserHLM* parser = new ParserHLM();
 	parser->adj = f.adj;
 	parser->parse(maison);
 	//irrlichtShowPolygons(maison);
@@ -40,15 +43,15 @@ int main()
 			test(i);
         return 0; */
 		//test3();
-		//testAuto();
-		testEscalier();
+		testAuto();
+		//testEscalier();
 }
 
 void testEscalier()
 {
 	FileReader f;
-	vector<Polygone*> maison = f.readFile("maison3.txt");
-	Parsermaison* parser = new Parsermaison();
+	vector<Polygone*> maison = f.readFile("christian01.txt");
+	Parserescalier* parser = new Parserescalier();
 	parser->adj = f.adj;
 	parser->parse(maison);
 }
@@ -154,7 +157,10 @@ p->ajouterRegle(rs);
 p->ajouterRegle(r2); 
 clock_t start = clock();
 p->parse(escalier);
-cout<<(2*n)<<"|"<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
+ofstream f;
+	f.open("temps",ios_base::app);
+f<<(2*n)<<"|"<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
+f.close();
 //irrlichtShowPolygons(escalier);
 }
 
