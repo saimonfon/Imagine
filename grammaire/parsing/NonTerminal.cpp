@@ -1,6 +1,5 @@
 #include "NonTerminal.h"
 #include <string>
-
 vector<Noeud*> NonTerminal::getEnfants() const
 {
 	return enfants;
@@ -16,7 +15,7 @@ NonTerminal::NonTerminal(string type, vector<Noeud*> enfants)
 	attributs["type"]= new string(type);
 	this->type = type;
 	this->enfants = enfants;
-	attributs["size"] = enfants.size();
+	attributs["size"] = (void*) enfants.size();
 	score=1;
 	}
 	

@@ -1,8 +1,8 @@
 #ifndef CONDITION_GENERALE_H
 #define CONDITION_GENERALE_H
 #include "../parsing/Noeud.h"
-#include "../Parser.h"
 #include "Condition.h"
+class Parser;
 /** Classe abstraite décrivant une condition générale.*/
 class ConditionGenerale : public Condition
 {

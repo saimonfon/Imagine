@@ -2,6 +2,7 @@
 #define CONTRAINTE_ADJACENCE_EXACTE
 #include "condition/ConditionGenerale.h"
 #include "parsing/Noeud.h"
+#include "Parser.h"
 #include <vector>
 #include <iostream>
 //La contrainte pour une fenetre adjacence exacte (égalité des sommets)

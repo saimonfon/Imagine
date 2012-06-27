@@ -1,5 +1,6 @@
 #include "condition/ConditionGenerale.h"
 #include "parsing/Noeud.h"
+#include "Parser.h"
 #include <vector>
 #include <map>
 #include <iostream>
