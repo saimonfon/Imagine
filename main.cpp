@@ -5,15 +5,13 @@
 #include "geometrie/Polygone_Detector.h"
 #include "geometrie/FileReader.h"
 #include "grammaire/Parser.h"
-#include "grammaire/regles/RegleSequence.h"
-#include "grammaire/regles/RegleCycle.h"
-#include "grammaire/regles/RegleStandard.h"
 #include "grammaire/condition/ConditionAdj.h"
 #include "grammaire/regles/CalculAttributs.h"
+#include "grammaire/Regle.h"
+#include "grammaire/MembreDroit.h"
+#include "grammaire/MembreStandard.h"
+#include "grammaire/OperateurSequence.h"
 #include "grammaire/parsing/Noeud.h"
-#include "grammaire/parser_test.cpp"
-#include "grammaire/parserescalier.cpp"
-#include "grammaire/parserHLM.cpp"
 #include <irrlicht.h>
 #include <time.h>
 #include <fstream>
@@ -22,12 +20,12 @@ using namespace irr;
 
 void irrlichtShowPolygons (vector<Polygone*> v);
 void test(int n);
-void test2();
+/*void test2();
 void test3();
 void testAuto();
-void testEscalier();
+void testEscalier();*/
 
-void testAuto()
+/*void testAuto()
 {
 	FileReader f;
 	vector<Polygone*> maison = f.readFile("hlm.txt");
@@ -35,28 +33,29 @@ void testAuto()
 	parser->adj = f.adj;
 	parser->parse(maison);
 	//irrlichtShowPolygons(maison);
-}
+}*/
 int main()
 {
 		//test2();
 		/*for(int i=10;i<=1500;i*=2)
-			test(i);
-        return 0; */
+			test(i);*/
+		test(20);
+        return 0; 
 		//test3();
-		testAuto();
+		//testAuto();
 		//testEscalier();
 }
 
-void testEscalier()
+/*void testEscalier()
 {
 	FileReader f;
 	vector<Polygone*> maison = f.readFile("christian01.txt");
 	Parserescalier* parser = new Parserescalier();
 	parser->adj = f.adj;
 	parser->parse(maison);
-}
+}*/
 
-void test3()
+/*void test3()
 {
 std::vector<Polygone*> plusieurs_cycles;
 map<Polygone*, set<Polygone*> > adj;
@@ -83,7 +82,7 @@ p->ajouterRegle(r2);
 clock_t start = clock();
 p->parse(plusieurs_cycles);
 cout<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
-}
+}*/
 
 void test(int n)
 {
@@ -141,19 +140,18 @@ for(int i=0;i<n;i++)
 }
 Parser* p = new Parser();
 p->adj=adj;
-/*RegleSequence* rs = new RegleSequence("escalier","polygone");
-rs->condSuccAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
-p->ajouterRegle(rs);
-p->parse(escalier);*/
-vector<string> membresDroits;
-membresDroits.push_back("polygone");
-membresDroits.push_back("polygone");
-RegleStandard* rs = new RegleStandard("marche",membresDroits);
-rs->condAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
-rs->calculAtt = new SyntheseRegle1();
-RegleSequence* r2 = new RegleSequence("escalier","marche");
-r2->condAdj.push_back(new ConditionAdj(0,"primitive2",1,"primitive1"));
-p->ajouterRegle(rs);
+vector<MembreDroit*> membresDroits;
+membresDroits.push_back(new MembreStandard("polygone"));
+membresDroits.push_back(new MembreStandard("polygone"));
+Regle* r = new Regle("marche",membresDroits);
+r->condAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
+r->calculAtt = new SyntheseRegle1();
+membresDroits.clear();
+OperateurSequence* op = new OperateurSequence("marche");
+op->condAdj.push_back(new ConditionAdj(0,"primitive2",1,"primitive1"));
+membresDroits.push_back(op);
+Regle* r2 = new Regle("escalier",membresDroits);
+p->ajouterRegle(r);
 p->ajouterRegle(r2); 
 clock_t start = clock();
 p->parse(escalier);
