@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g 2012-06-14 14:09:07
+// $ANTLR 3.4 C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g 2012-06-28 11:50:44
 
 import java.util.LinkedList;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class batimentParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ADJ", "CONST", "EXPONENT", "FLOAT", "ID", "INT", "WS", "'#'", "'$'", "'('", "')'", "','", "'->'", "'.'", "';'", "'='", "'=='", "'@'", "'^'", "'cluster('", "'cycle('", "'grammaire'", "'sequence('", "'{'", "'}'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ADJ", "EXPONENT", "FLOAT", "ID", "INT", "OP_COMP", "WS", "'#'", "'$'", "'('", "')'", "','", "'->'", "'.'", "';'", "'='", "'@'", "'^'", "'cluster'", "'cycle'", "'false'", "'grammaire'", "'sequence'", "'true'", "'{'", "'}'"
     };
 
     public static final int EOF=-1;
@@ -33,12 +33,13 @@ public class batimentParser extends Parser {
     public static final int T__26=26;
     public static final int T__27=27;
     public static final int T__28=28;
+    public static final int T__29=29;
     public static final int ADJ=4;
-    public static final int CONST=5;
-    public static final int EXPONENT=6;
-    public static final int FLOAT=7;
-    public static final int ID=8;
-    public static final int INT=9;
+    public static final int EXPONENT=5;
+    public static final int FLOAT=6;
+    public static final int ID=7;
+    public static final int INT=8;
+    public static final int OP_COMP=9;
     public static final int WS=10;
 
     // delegates
@@ -74,16 +75,17 @@ public class batimentParser extends Parser {
             // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:13:2: ( dinclude dnom= def_nom def_regles )
             // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:13:4: dinclude dnom= def_nom def_regles
             {
-            System.out.println("#include \"Parser.h\"");
+            System.out.println("#include \"../grammaire/Parser.h\"");
             System.out.println("#include <vector>");
             System.out.println("#include <string>");
-            System.out.println("#include \"regles/RegleStandard.h\"");
-            System.out.println("#include \"regles/RegleSequence.h\"");
-            System.out.println("#include \"regles/RegleCluster.h\"");
-            System.out.println("#include \"regles/RegleCycle.h\"");
-            System.out.println("#include \"condition/ConditionAdj.h\"");
-            System.out.println("#include \"condition/ConditionEgal.h\"");
-            System.out.println("#include \"regles/CalculAttributs.h\"");
+            System.out.println("#include \"../grammaire/Regle.h\"");
+            System.out.println("#include \"../grammaire/OperateurCycle.h\"");
+            System.out.println("#include \"../grammaire/MembreStandard.h\"");
+            System.out.println("#include \"../grammaire/OperateurSequence.h\"");
+            System.out.println("#include \"../grammaire/OperateurCluster.h\"");
+            System.out.println("#include \"../grammaire/condition/ConditionAdj.h\"");
+            System.out.println("#include \"../grammaire/condition/ConditionEgal.h\"");
+            System.out.println("#include \"../grammaire/regles/CalculAttributs.h\"");
 
             pushFollow(FOLLOW_dinclude_in_grammaire27);
             dinclude();
@@ -129,15 +131,15 @@ public class batimentParser extends Parser {
 
 
     // $ANTLR start "dinclude"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:31:1: dinclude : ( '#' i= ID )* ;
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:32:1: dinclude : ( '#' i= ID )* ;
     public final void dinclude() throws RecognitionException {
         Token i=null;
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:32:2: ( ( '#' i= ID )* )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:32:4: ( '#' i= ID )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:33:2: ( ( '#' i= ID )* )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:33:4: ( '#' i= ID )*
             {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:32:4: ( '#' i= ID )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:33:4: ( '#' i= ID )*
             loop1:
             do {
                 int alt1=2;
@@ -150,7 +152,7 @@ public class batimentParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:32:5: '#' i= ID
+            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:33:5: '#' i= ID
             	    {
             	    match(input,11,FOLLOW_11_in_dinclude48); 
 
@@ -185,7 +187,7 @@ public class batimentParser extends Parser {
 
 
     // $ANTLR start "def_nom"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:34:1: def_nom returns [String nom] : 'grammaire' id= ID ;
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:35:1: def_nom returns [String nom] : 'grammaire' id= ID ;
     public final String def_nom() throws RecognitionException {
         String nom = null;
 
@@ -193,8 +195,8 @@ public class batimentParser extends Parser {
         Token id=null;
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:34:29: ( 'grammaire' id= ID )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:34:31: 'grammaire' id= ID
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:35:29: ( 'grammaire' id= ID )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:35:31: 'grammaire' id= ID
             {
             match(input,25,FOLLOW_25_in_def_nom68); 
 
@@ -220,91 +222,29 @@ public class batimentParser extends Parser {
 
 
     // $ANTLR start "def_regles"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:35:1: def_regles : ( regle_stand | regle_seq | regle_cycle | regle_cluster )* ;
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:1: def_regles : ( regle )* ;
     public final void def_regles() throws RecognitionException {
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:2: ( ( regle_stand | regle_seq | regle_cycle | regle_cluster )* )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:4: ( regle_stand | regle_seq | regle_cycle | regle_cluster )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:37:2: ( ( regle )* )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:37:4: ( regle )*
             {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:4: ( regle_stand | regle_seq | regle_cycle | regle_cluster )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:37:4: ( regle )*
             loop2:
             do {
-                int alt2=5;
+                int alt2=2;
                 int LA2_0 = input.LA(1);
 
                 if ( (LA2_0==ID) ) {
-                    int LA2_2 = input.LA(2);
-
-                    if ( (LA2_2==16) ) {
-                        switch ( input.LA(3) ) {
-                        case 26:
-                            {
-                            alt2=2;
-                            }
-                            break;
-                        case 24:
-                            {
-                            alt2=3;
-                            }
-                            break;
-                        case 23:
-                            {
-                            alt2=4;
-                            }
-                            break;
-                        case ID:
-                            {
-                            alt2=1;
-                            }
-                            break;
-
-                        }
-
-                    }
-
-
+                    alt2=1;
                 }
 
 
                 switch (alt2) {
             	case 1 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:5: regle_stand
+            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:37:4: regle
             	    {
-            	    pushFollow(FOLLOW_regle_stand_in_def_regles84);
-            	    regle_stand();
-
-            	    state._fsp--;
-
-
-            	    }
-            	    break;
-            	case 2 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:17: regle_seq
-            	    {
-            	    pushFollow(FOLLOW_regle_seq_in_def_regles86);
-            	    regle_seq();
-
-            	    state._fsp--;
-
-
-            	    }
-            	    break;
-            	case 3 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:27: regle_cycle
-            	    {
-            	    pushFollow(FOLLOW_regle_cycle_in_def_regles88);
-            	    regle_cycle();
-
-            	    state._fsp--;
-
-
-            	    }
-            	    break;
-            	case 4 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:36:39: regle_cluster
-            	    {
-            	    pushFollow(FOLLOW_regle_cluster_in_def_regles90);
-            	    regle_cluster();
+            	    pushFollow(FOLLOW_regle_in_def_regles83);
+            	    regle();
 
             	    state._fsp--;
 
@@ -335,30 +275,31 @@ public class batimentParser extends Parser {
 
 
 
-    // $ANTLR start "regle_stand"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:38:2: regle_stand : i1= ID '->' i2= ID ( ',' i3= ID )* '{' ( liste_contraintes )? '}' '{' ( liste_calcul | '@' c= ID )? '}' ;
-    public final void regle_stand() throws RecognitionException {
+    // $ANTLR start "regle"
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:39:1: regle : i1= ID '->' membre_droit ( ',' membre_droit )* '{' (lc= liste_contraintes )? '}' ( '{' ( liste_calcul | '@' c= ID ) '}' )? ;
+    public final void regle() throws RecognitionException {
         Token i1=null;
-        Token i2=null;
-        Token i3=null;
         Token c=null;
+        List<String> lc =null;
+
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:38:14: (i1= ID '->' i2= ID ( ',' i3= ID )* '{' ( liste_contraintes )? '}' '{' ( liste_calcul | '@' c= ID )? '}' )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:38:16: i1= ID '->' i2= ID ( ',' i3= ID )* '{' ( liste_contraintes )? '}' '{' ( liste_calcul | '@' c= ID )? '}'
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:39:7: (i1= ID '->' membre_droit ( ',' membre_droit )* '{' (lc= liste_contraintes )? '}' ( '{' ( liste_calcul | '@' c= ID ) '}' )? )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:39:9: i1= ID '->' membre_droit ( ',' membre_droit )* '{' (lc= liste_contraintes )? '}' ( '{' ( liste_calcul | '@' c= ID ) '}' )?
             {
-            i1=(Token)match(input,ID,FOLLOW_ID_in_regle_stand104); 
+            i1=(Token)match(input,ID,FOLLOW_ID_in_regle95); 
 
-            match(input,16,FOLLOW_16_in_regle_stand106); 
+            match(input,16,FOLLOW_16_in_regle97); 
+
+            System.out.println("vector<MembreDroit*> v"+n+";");
+
+            pushFollow(FOLLOW_membre_droit_in_regle106);
+            membre_droit();
+
+            state._fsp--;
 
 
-            	System.out.println("vector<string> v"+n+";");
-
-            i2=(Token)match(input,ID,FOLLOW_ID_in_regle_stand115); 
-
-            System.out.println("v"+n+".push_back(\""+(i2!=null?i2.getText():null)+"\");");
-
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:42:2: ( ',' i3= ID )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:41:16: ( ',' membre_droit )*
             loop3:
             do {
                 int alt3=2;
@@ -371,13 +312,15 @@ public class batimentParser extends Parser {
 
                 switch (alt3) {
             	case 1 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:42:3: ',' i3= ID
+            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:41:17: ',' membre_droit
             	    {
-            	    match(input,15,FOLLOW_15_in_regle_stand121); 
+            	    match(input,15,FOLLOW_15_in_regle109); 
 
-            	    i3=(Token)match(input,ID,FOLLOW_ID_in_regle_stand125); 
+            	    pushFollow(FOLLOW_membre_droit_in_regle111);
+            	    membre_droit();
 
-            	    System.out.println("v"+n+".push_back(\""+(i3!=null?i3.getText():null)+"\");");
+            	    state._fsp--;
+
 
             	    }
             	    break;
@@ -388,26 +331,28 @@ public class batimentParser extends Parser {
             } while (true);
 
 
-            System.out.println("RegleStandard* r"+n+" = new RegleStandard(\""+(i1!=null?i1.getText():null)+"\",v"+n+");");System.out.println("ajouterRegle(r"+n+");");
+            System.out.println("Regle* r"+n+" = new Regle(\""+(i1!=null?i1.getText():null)+"\",v"+n+");");System.out.println("ajouterRegle(r"+n+");");
 
-            match(input,27,FOLLOW_27_in_regle_stand138); 
+            match(input,28,FOLLOW_28_in_regle121); 
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:7: ( liste_contraintes )?
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:43:7: (lc= liste_contraintes )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
-            if ( (LA4_0==ADJ||(LA4_0 >= 12 && LA4_0 <= 13)||LA4_0==21) ) {
+            if ( (LA4_0==ADJ||(LA4_0 >= 12 && LA4_0 <= 13)||LA4_0==20) ) {
                 alt4=1;
             }
             switch (alt4) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:7: liste_contraintes
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:43:8: lc= liste_contraintes
                     {
-                    pushFollow(FOLLOW_liste_contraintes_in_regle_stand140);
-                    liste_contraintes();
+                    pushFollow(FOLLOW_liste_contraintes_in_regle128);
+                    lc=liste_contraintes();
 
                     state._fsp--;
 
+
+                    for(String s:lc) System.out.println("r"+n+"->"+s);
 
                     }
                     break;
@@ -415,42 +360,68 @@ public class batimentParser extends Parser {
             }
 
 
-            match(input,28,FOLLOW_28_in_regle_stand142); 
+            match(input,29,FOLLOW_29_in_regle133); 
 
-            match(input,27,FOLLOW_27_in_regle_stand145); 
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:3: ( '{' ( liste_calcul | '@' c= ID ) '}' )?
+            int alt6=2;
+            int LA6_0 = input.LA(1);
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:34: ( liste_calcul | '@' c= ID )?
-            int alt5=3;
-            int LA5_0 = input.LA(1);
-
-            if ( (LA5_0==ID) ) {
-                alt5=1;
+            if ( (LA6_0==28) ) {
+                alt6=1;
             }
-            else if ( (LA5_0==21) ) {
-                alt5=2;
-            }
-            switch (alt5) {
+            switch (alt6) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:35: liste_calcul
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:4: '{' ( liste_calcul | '@' c= ID ) '}'
                     {
-                    pushFollow(FOLLOW_liste_calcul_in_regle_stand148);
-                    liste_calcul();
+                    match(input,28,FOLLOW_28_in_regle138); 
 
-                    state._fsp--;
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:8: ( liste_calcul | '@' c= ID )
+                    int alt5=2;
+                    int LA5_0 = input.LA(1);
 
+                    if ( (LA5_0==ID) ) {
+                        alt5=1;
+                    }
+                    else if ( (LA5_0==20) ) {
+                        alt5=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 5, 0, input);
 
-                    System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");
+                        throw nvae;
 
                     }
-                    break;
-                case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:45:4: '@' c= ID
-                    {
-                    match(input,21,FOLLOW_21_in_regle_stand155); 
+                    switch (alt5) {
+                        case 1 :
+                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:44:9: liste_calcul
+                            {
+                            pushFollow(FOLLOW_liste_calcul_in_regle141);
+                            liste_calcul();
 
-                    c=(Token)match(input,ID,FOLLOW_ID_in_regle_stand159); 
+                            state._fsp--;
 
-                    System.out.println("r"+n+"->calculAtt = new "+(c!=null?c.getText():null)+"();");
+
+                            System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");
+
+                            }
+                            break;
+                        case 2 :
+                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:45:5: '@' c= ID
+                            {
+                            match(input,20,FOLLOW_20_in_regle149); 
+
+                            c=(Token)match(input,ID,FOLLOW_ID_in_regle153); 
+
+                            System.out.println("r"+n+"->calculAtt = new "+(c!=null?c.getText():null)+"();");
+
+                            }
+                            break;
+
+                    }
+
+
+                    match(input,29,FOLLOW_29_in_regle158); 
 
                     }
                     break;
@@ -458,9 +429,7 @@ public class batimentParser extends Parser {
             }
 
 
-            match(input,28,FOLLOW_28_in_regle_stand165); 
-
-            n++;n2=0;
+            n++;
 
             }
 
@@ -475,106 +444,83 @@ public class batimentParser extends Parser {
         }
         return ;
     }
-    // $ANTLR end "regle_stand"
+    // $ANTLR end "regle"
 
 
 
-    // $ANTLR start "regle_seq"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:47:2: regle_seq : i1= ID '->' 'sequence(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}' ;
-    public final void regle_seq() throws RecognitionException {
-        Token i1=null;
-        Token i2=null;
-        Token c=null;
-
+    // $ANTLR start "membre_droit"
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:47:1: membre_droit : ( membreStandard | operateur );
+    public final void membre_droit() throws RecognitionException {
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:47:12: (i1= ID '->' 'sequence(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}' )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:47:14: i1= ID '->' 'sequence(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}'
-            {
-            i1=(Token)match(input,ID,FOLLOW_ID_in_regle_seq180); 
-
-            match(input,16,FOLLOW_16_in_regle_seq182); 
-
-            match(input,26,FOLLOW_26_in_regle_seq184); 
-
-            i2=(Token)match(input,ID,FOLLOW_ID_in_regle_seq188); 
-
-            System.out.println("RegleSequence* r"+n+" = new RegleSequence(\""+(i1!=null?i1.getText():null)+"\",\""+(i2!=null?i2.getText():null)+"\");");System.out.println("ajouterRegle(r"+n+");");
-
-            match(input,15,FOLLOW_15_in_regle_seq193); 
-
-            match(input,27,FOLLOW_27_in_regle_seq195); 
-
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:10: ( liste_contraintes )?
-            int alt6=2;
-            int LA6_0 = input.LA(1);
-
-            if ( (LA6_0==ADJ||(LA6_0 >= 12 && LA6_0 <= 13)||LA6_0==21) ) {
-                alt6=1;
-            }
-            switch (alt6) {
-                case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:10: liste_contraintes
-                    {
-                    pushFollow(FOLLOW_liste_contraintes_in_regle_seq197);
-                    liste_contraintes();
-
-                    state._fsp--;
-
-
-                    }
-                    break;
-
-            }
-
-
-            match(input,28,FOLLOW_28_in_regle_seq199); 
-
-            match(input,14,FOLLOW_14_in_regle_seq201); 
-
-            match(input,27,FOLLOW_27_in_regle_seq203); 
-
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:40: ( liste_calcul | '@' c= ID )?
-            int alt7=3;
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:2: ( membreStandard | operateur )
+            int alt7=2;
             int LA7_0 = input.LA(1);
 
             if ( (LA7_0==ID) ) {
                 alt7=1;
             }
-            else if ( (LA7_0==21) ) {
+            else if ( ((LA7_0 >= 22 && LA7_0 <= 23)||LA7_0==26) ) {
                 alt7=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 7, 0, input);
+
+                throw nvae;
+
             }
             switch (alt7) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:41: liste_calcul
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:5: membreStandard
                     {
-                    pushFollow(FOLLOW_liste_calcul_in_regle_seq206);
-                    liste_calcul();
+                    pushFollow(FOLLOW_membreStandard_in_membre_droit177);
+                    membreStandard();
 
                     state._fsp--;
 
 
-                    System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");
-
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:49:3: '@' c= ID
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:48:22: operateur
                     {
-                    match(input,21,FOLLOW_21_in_regle_seq212); 
+                    pushFollow(FOLLOW_operateur_in_membre_droit181);
+                    operateur();
 
-                    c=(Token)match(input,ID,FOLLOW_ID_in_regle_seq216); 
+                    state._fsp--;
 
-                    System.out.println("r"+n+"->calculAtt = new "+(c!=null?c.getText():null)+"();");
 
                     }
                     break;
 
             }
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+        return ;
+    }
+    // $ANTLR end "membre_droit"
 
 
-            match(input,28,FOLLOW_28_in_regle_seq222); 
 
-            n++;n2=0;
+    // $ANTLR start "membreStandard"
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:51:1: membreStandard : i2= ID ;
+    public final void membreStandard() throws RecognitionException {
+        Token i2=null;
+
+        try {
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:52:2: (i2= ID )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:52:5: i2= ID
+            {
+            i2=(Token)match(input,ID,FOLLOW_ID_in_membreStandard197); 
+
+            System.out.println("v"+n+".push_back(new MembreStandard(\""+(i2!=null?i2.getText():null)+"\"));");
 
             }
 
@@ -589,51 +535,75 @@ public class batimentParser extends Parser {
         }
         return ;
     }
-    // $ANTLR end "regle_seq"
+    // $ANTLR end "membreStandard"
 
 
 
-    // $ANTLR start "regle_cycle"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:51:2: regle_cycle : i1= ID '->' 'cycle(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}' ;
-    public final void regle_cycle() throws RecognitionException {
-        Token i1=null;
+    // $ANTLR start "operateur"
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:54:1: operateur : ( 'sequence' | 'cycle' | 'cluster' ) '(' i2= ID ',' '{' (lc= liste_contraintes )? '}' ( ',' ( '{' liste_calcul | '@' c= ID ) '}' )? ')' ;
+    public final void operateur() throws RecognitionException {
         Token i2=null;
         Token c=null;
+        List<String> lc =null;
+
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:51:14: (i1= ID '->' 'cycle(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}' )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:51:16: i1= ID '->' 'cycle(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}'
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:2: ( ( 'sequence' | 'cycle' | 'cluster' ) '(' i2= ID ',' '{' (lc= liste_contraintes )? '}' ( ',' ( '{' liste_calcul | '@' c= ID ) '}' )? ')' )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:4: ( 'sequence' | 'cycle' | 'cluster' ) '(' i2= ID ',' '{' (lc= liste_contraintes )? '}' ( ',' ( '{' liste_calcul | '@' c= ID ) '}' )? ')'
             {
-            i1=(Token)match(input,ID,FOLLOW_ID_in_regle_cycle237); 
+            String opType="";
 
-            match(input,16,FOLLOW_16_in_regle_cycle239); 
-
-            match(input,24,FOLLOW_24_in_regle_cycle241); 
-
-            i2=(Token)match(input,ID,FOLLOW_ID_in_regle_cycle245); 
-
-            System.out.println("RegleCycle* r"+n+" = new RegleCycle(\""+(i1!=null?i1.getText():null)+"\",\""+(i2!=null?i2.getText():null)+"\");");System.out.println("ajouterRegle(r"+n+");");
-
-            match(input,15,FOLLOW_15_in_regle_cycle250); 
-
-            match(input,27,FOLLOW_27_in_regle_cycle252); 
-
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:52:10: ( liste_contraintes )?
-            int alt8=2;
-            int LA8_0 = input.LA(1);
-
-            if ( (LA8_0==ADJ||(LA8_0 >= 12 && LA8_0 <= 13)||LA8_0==21) ) {
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:23: ( 'sequence' | 'cycle' | 'cluster' )
+            int alt8=3;
+            switch ( input.LA(1) ) {
+            case 26:
+                {
                 alt8=1;
+                }
+                break;
+            case 23:
+                {
+                alt8=2;
+                }
+                break;
+            case 22:
+                {
+                alt8=3;
+                }
+                break;
+            default:
+                NoViableAltException nvae =
+                    new NoViableAltException("", 8, 0, input);
+
+                throw nvae;
+
             }
+
             switch (alt8) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:52:10: liste_contraintes
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:24: 'sequence'
                     {
-                    pushFollow(FOLLOW_liste_contraintes_in_regle_cycle254);
-                    liste_contraintes();
+                    match(input,26,FOLLOW_26_in_operateur213); 
 
-                    state._fsp--;
+                    opType="OperateurSequence";
 
+                    }
+                    break;
+                case 2 :
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:56:5: 'cycle'
+                    {
+                    match(input,23,FOLLOW_23_in_operateur221); 
+
+                    opType="OperateurCycle";
+
+                    }
+                    break;
+                case 3 :
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:57:4: 'cluster'
+                    {
+                    match(input,22,FOLLOW_22_in_operateur228); 
+
+                    opType="OperateurCluster";
 
                     }
                     break;
@@ -641,44 +611,34 @@ public class batimentParser extends Parser {
             }
 
 
-            match(input,28,FOLLOW_28_in_regle_cycle256); 
+            match(input,13,FOLLOW_13_in_operateur235); 
 
-            match(input,14,FOLLOW_14_in_regle_cycle258); 
+            i2=(Token)match(input,ID,FOLLOW_ID_in_operateur241); 
 
-            match(input,27,FOLLOW_27_in_regle_cycle260); 
+            System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+(i2!=null?i2.getText():null)+"\",\"OPE\");");
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:52:40: ( liste_calcul | '@' c= ID )?
-            int alt9=3;
+            match(input,15,FOLLOW_15_in_operateur247); 
+
+            match(input,28,FOLLOW_28_in_operateur249); 
+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:59:11: (lc= liste_contraintes )?
+            int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( (LA9_0==ID) ) {
+            if ( (LA9_0==ADJ||(LA9_0 >= 12 && LA9_0 <= 13)||LA9_0==20) ) {
                 alt9=1;
-            }
-            else if ( (LA9_0==21) ) {
-                alt9=2;
             }
             switch (alt9) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:52:41: liste_calcul
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:59:12: lc= liste_contraintes
                     {
-                    pushFollow(FOLLOW_liste_calcul_in_regle_cycle263);
-                    liste_calcul();
+                    pushFollow(FOLLOW_liste_contraintes_in_operateur256);
+                    lc=liste_contraintes();
 
                     state._fsp--;
 
 
-                    System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");
-
-                    }
-                    break;
-                case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:53:3: '@' c= ID
-                    {
-                    match(input,21,FOLLOW_21_in_regle_cycle269); 
-
-                    c=(Token)match(input,ID,FOLLOW_ID_in_regle_cycle273); 
-
-                    System.out.println("r"+n+"->calculAtt = new "+(c!=null?c.getText():null)+"();");
+                    for(String s:lc) System.out.println("op"+n2+"->"+s);
 
                     }
                     break;
@@ -686,113 +646,70 @@ public class batimentParser extends Parser {
             }
 
 
-            match(input,28,FOLLOW_28_in_regle_cycle279); 
+            match(input,29,FOLLOW_29_in_operateur261); 
 
-            n++;n2=0;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-
-        finally {
-        	// do for sure before leaving
-        }
-        return ;
-    }
-    // $ANTLR end "regle_cycle"
-
-
-
-    // $ANTLR start "regle_cluster"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:2: regle_cluster : i1= ID '->' 'cluster(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}' ;
-    public final void regle_cluster() throws RecognitionException {
-        Token i1=null;
-        Token i2=null;
-        Token c=null;
-
-        try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:16: (i1= ID '->' 'cluster(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}' )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:55:17: i1= ID '->' 'cluster(' i2= ID ',' '{' ( liste_contraintes )? '}' ')' '{' ( liste_calcul | '@' c= ID )? '}'
-            {
-            i1=(Token)match(input,ID,FOLLOW_ID_in_regle_cluster293); 
-
-            match(input,16,FOLLOW_16_in_regle_cluster295); 
-
-            match(input,23,FOLLOW_23_in_regle_cluster297); 
-
-            i2=(Token)match(input,ID,FOLLOW_ID_in_regle_cluster301); 
-
-            System.out.println("RegleCluster* r"+n+" = new RegleCluster(\""+(i1!=null?i1.getText():null)+"\",\""+(i2!=null?i2.getText():null)+"\");");System.out.println("ajouterRegle(r"+n+");");
-
-            match(input,15,FOLLOW_15_in_regle_cluster306); 
-
-            match(input,27,FOLLOW_27_in_regle_cluster308); 
-
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:56:10: ( liste_contraintes )?
-            int alt10=2;
-            int LA10_0 = input.LA(1);
-
-            if ( (LA10_0==ADJ||(LA10_0 >= 12 && LA10_0 <= 13)||LA10_0==21) ) {
-                alt10=1;
-            }
-            switch (alt10) {
-                case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:56:10: liste_contraintes
-                    {
-                    pushFollow(FOLLOW_liste_contraintes_in_regle_cluster310);
-                    liste_contraintes();
-
-                    state._fsp--;
-
-
-                    }
-                    break;
-
-            }
-
-
-            match(input,28,FOLLOW_28_in_regle_cluster312); 
-
-            match(input,14,FOLLOW_14_in_regle_cluster314); 
-
-            match(input,27,FOLLOW_27_in_regle_cluster316); 
-
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:56:40: ( liste_calcul | '@' c= ID )?
-            int alt11=3;
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:4: ( ',' ( '{' liste_calcul | '@' c= ID ) '}' )?
+            int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( (LA11_0==ID) ) {
+            if ( (LA11_0==15) ) {
                 alt11=1;
-            }
-            else if ( (LA11_0==21) ) {
-                alt11=2;
             }
             switch (alt11) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:56:41: liste_calcul
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:5: ',' ( '{' liste_calcul | '@' c= ID ) '}'
                     {
-                    pushFollow(FOLLOW_liste_calcul_in_regle_cluster319);
-                    liste_calcul();
+                    match(input,15,FOLLOW_15_in_operateur267); 
 
-                    state._fsp--;
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:9: ( '{' liste_calcul | '@' c= ID )
+                    int alt10=2;
+                    int LA10_0 = input.LA(1);
 
+                    if ( (LA10_0==28) ) {
+                        alt10=1;
+                    }
+                    else if ( (LA10_0==20) ) {
+                        alt10=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 10, 0, input);
 
-                    System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");
+                        throw nvae;
 
                     }
-                    break;
-                case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:57:3: '@' c= ID
-                    {
-                    match(input,21,FOLLOW_21_in_regle_cluster325); 
+                    switch (alt10) {
+                        case 1 :
+                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:10: '{' liste_calcul
+                            {
+                            match(input,28,FOLLOW_28_in_operateur270); 
 
-                    c=(Token)match(input,ID,FOLLOW_ID_in_regle_cluster329); 
+                            pushFollow(FOLLOW_liste_calcul_in_operateur272);
+                            liste_calcul();
 
-                    System.out.println("r"+n+"->calculAtt = new "+(c!=null?c.getText():null)+"();");
+                            state._fsp--;
+
+
+                            System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");
+
+                            }
+                            break;
+                        case 2 :
+                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:61:4: '@' c= ID
+                            {
+                            match(input,20,FOLLOW_20_in_operateur279); 
+
+                            c=(Token)match(input,ID,FOLLOW_ID_in_operateur283); 
+
+                            System.out.println("r"+n+"->calculAtt = new "+(c!=null?c.getText():null)+"();");
+
+                            }
+                            break;
+
+                    }
+
+
+                    match(input,29,FOLLOW_29_in_operateur288); 
 
                     }
                     break;
@@ -800,9 +717,9 @@ public class batimentParser extends Parser {
             }
 
 
-            match(input,28,FOLLOW_28_in_regle_cluster335); 
+            match(input,14,FOLLOW_14_in_operateur293); 
 
-            n++;n2=0;
+            System.out.println("v"+n+".push_back(op"+n2+");");n2++;
 
             }
 
@@ -817,45 +734,59 @@ public class batimentParser extends Parser {
         }
         return ;
     }
-    // $ANTLR end "regle_cluster"
+    // $ANTLR end "operateur"
 
 
 
     // $ANTLR start "liste_contraintes"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:59:1: liste_contraintes : contrainte ( '^' contrainte )* ;
-    public final void liste_contraintes() throws RecognitionException {
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:63:1: liste_contraintes returns [List<String> liste] :c= contrainte ( '^' c2= contrainte )* ;
+    public final List<String> liste_contraintes() throws RecognitionException {
+        List<String> liste = null;
+
+
+        String c =null;
+
+        String c2 =null;
+
+
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:59:51: ( contrainte ( '^' contrainte )* )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:2: contrainte ( '^' contrainte )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:63:47: (c= contrainte ( '^' c2= contrainte )* )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:64:2: c= contrainte ( '^' c2= contrainte )*
             {
-            pushFollow(FOLLOW_contrainte_in_liste_contraintes347);
-            contrainte();
+            liste = new LinkedList<String>();
+
+            pushFollow(FOLLOW_contrainte_in_liste_contraintes311);
+            c=contrainte();
 
             state._fsp--;
 
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:13: ( '^' contrainte )*
+            liste.add(c);
+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:64:76: ( '^' c2= contrainte )*
             loop12:
             do {
                 int alt12=2;
                 int LA12_0 = input.LA(1);
 
-                if ( (LA12_0==22) ) {
+                if ( (LA12_0==21) ) {
                     alt12=1;
                 }
 
 
                 switch (alt12) {
             	case 1 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:60:14: '^' contrainte
+            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:64:77: '^' c2= contrainte
             	    {
-            	    match(input,22,FOLLOW_22_in_liste_contraintes350); 
+            	    match(input,21,FOLLOW_21_in_liste_contraintes315); 
 
-            	    pushFollow(FOLLOW_contrainte_in_liste_contraintes352);
-            	    contrainte();
+            	    pushFollow(FOLLOW_contrainte_in_liste_contraintes319);
+            	    c2=contrainte();
 
             	    state._fsp--;
 
+
+            	    liste.add(c2);
 
             	    }
             	    break;
@@ -877,22 +808,22 @@ public class batimentParser extends Parser {
         finally {
         	// do for sure before leaving
         }
-        return ;
+        return liste;
     }
     // $ANTLR end "liste_contraintes"
 
 
 
     // $ANTLR start "liste_calcul"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:62:1: liste_calcul : ( expr_calcul ';' )+ ;
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:66:1: liste_calcul : ( expr_calcul ';' )+ ;
     public final void liste_calcul() throws RecognitionException {
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:63:2: ( ( expr_calcul ';' )+ )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:64:2: ( expr_calcul ';' )+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:67:2: ( ( expr_calcul ';' )+ )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:68:2: ( expr_calcul ';' )+
             {
              System.out.println("class Calcul"+n+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:65:2: ( expr_calcul ';' )+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:69:2: ( expr_calcul ';' )+
             int cnt13=0;
             loop13:
             do {
@@ -906,15 +837,15 @@ public class batimentParser extends Parser {
 
                 switch (alt13) {
             	case 1 :
-            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:65:3: expr_calcul ';'
+            	    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:69:3: expr_calcul ';'
             	    {
-            	    pushFollow(FOLLOW_expr_calcul_in_liste_calcul369);
+            	    pushFollow(FOLLOW_expr_calcul_in_liste_calcul338);
             	    expr_calcul();
 
             	    state._fsp--;
 
 
-            	    match(input,18,FOLLOW_18_in_liste_calcul371); 
+            	    match(input,18,FOLLOW_18_in_liste_calcul340); 
 
             	    }
             	    break;
@@ -949,10 +880,16 @@ public class batimentParser extends Parser {
 
 
     // $ANTLR start "contrainte"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:67:2: contrainte : ( contrainte_egal | contrainte_adj | condition_unique | contrainte_generale | '(' contrainte ')' );
-    public final void contrainte() throws RecognitionException {
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:71:2: contrainte returns [String toString] : (c= contrainte_egal |c= contrainte_adj |c= condition_unique |c= contrainte_generale | '(' c= contrainte ')' );
+    public final String contrainte() throws RecognitionException {
+        String toString = null;
+
+
+        String c =null;
+
+
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:67:39: ( contrainte_egal | contrainte_adj | condition_unique | contrainte_generale | '(' contrainte ')' )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:71:38: (c= contrainte_egal |c= contrainte_adj |c= condition_unique |c= contrainte_generale | '(' c= contrainte ')' )
             int alt14=5;
             switch ( input.LA(1) ) {
             case 12:
@@ -971,7 +908,7 @@ public class batimentParser extends Parser {
                             if ( (LA14_7==19) ) {
                                 alt14=1;
                             }
-                            else if ( (LA14_7==20) ) {
+                            else if ( (LA14_7==OP_COMP) ) {
                                 alt14=3;
                             }
                             else {
@@ -1012,7 +949,7 @@ public class batimentParser extends Parser {
                 alt14=2;
                 }
                 break;
-            case 21:
+            case 20:
                 {
                 alt14=4;
                 }
@@ -1032,61 +969,71 @@ public class batimentParser extends Parser {
 
             switch (alt14) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:68:2: contrainte_egal
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:72:2: c= contrainte_egal
                     {
-                    pushFollow(FOLLOW_contrainte_egal_in_contrainte386);
-                    contrainte_egal();
+                    pushFollow(FOLLOW_contrainte_egal_in_contrainte360);
+                    c=contrainte_egal();
 
                     state._fsp--;
 
+
+                    toString = c;
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:69:2: contrainte_adj
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:73:2: c= contrainte_adj
                     {
-                    pushFollow(FOLLOW_contrainte_adj_in_contrainte390);
-                    contrainte_adj();
+                    pushFollow(FOLLOW_contrainte_adj_in_contrainte368);
+                    c=contrainte_adj();
 
                     state._fsp--;
 
+
+                    toString = c;
 
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:70:2: condition_unique
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:74:2: c= condition_unique
                     {
-                    pushFollow(FOLLOW_condition_unique_in_contrainte394);
-                    condition_unique();
+                    pushFollow(FOLLOW_condition_unique_in_contrainte376);
+                    c=condition_unique();
 
                     state._fsp--;
 
+
+                    toString = c;
 
                     }
                     break;
                 case 4 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:71:2: contrainte_generale
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:75:2: c= contrainte_generale
                     {
-                    pushFollow(FOLLOW_contrainte_generale_in_contrainte398);
-                    contrainte_generale();
+                    pushFollow(FOLLOW_contrainte_generale_in_contrainte384);
+                    c=contrainte_generale();
 
                     state._fsp--;
 
+
+                    toString = c;
 
                     }
                     break;
                 case 5 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:72:2: '(' contrainte ')'
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:76:2: '(' c= contrainte ')'
                     {
-                    match(input,13,FOLLOW_13_in_contrainte402); 
+                    match(input,13,FOLLOW_13_in_contrainte390); 
 
-                    pushFollow(FOLLOW_contrainte_in_contrainte404);
-                    contrainte();
+                    pushFollow(FOLLOW_contrainte_in_contrainte394);
+                    c=contrainte();
 
                     state._fsp--;
 
 
-                    match(input,14,FOLLOW_14_in_contrainte405); 
+                    toString = c;
+
+                    match(input,14,FOLLOW_14_in_contrainte397); 
 
                     }
                     break;
@@ -1101,43 +1048,46 @@ public class batimentParser extends Parser {
         finally {
         	// do for sure before leaving
         }
-        return ;
+        return toString;
     }
     // $ANTLR end "contrainte"
 
 
 
     // $ANTLR start "contrainte_egal"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:74:2: contrainte_egal : '$' i= INT '.' att_i= ID '=' '$' j= INT '.' att_j= ID ;
-    public final void contrainte_egal() throws RecognitionException {
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:78:2: contrainte_egal returns [String toString] : '$' i= INT '.' att_i= ID '=' '$' j= INT '.' att_j= ID ;
+    public final String contrainte_egal() throws RecognitionException {
+        String toString = null;
+
+
         Token i=null;
         Token att_i=null;
         Token j=null;
         Token att_j=null;
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:74:18: ( '$' i= INT '.' att_i= ID '=' '$' j= INT '.' att_j= ID )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:74:20: '$' i= INT '.' att_i= ID '=' '$' j= INT '.' att_j= ID
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:78:43: ( '$' i= INT '.' att_i= ID '=' '$' j= INT '.' att_j= ID )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:78:45: '$' i= INT '.' att_i= ID '=' '$' j= INT '.' att_j= ID
             {
-            match(input,12,FOLLOW_12_in_contrainte_egal415); 
+            match(input,12,FOLLOW_12_in_contrainte_egal410); 
 
-            i=(Token)match(input,INT,FOLLOW_INT_in_contrainte_egal419); 
+            i=(Token)match(input,INT,FOLLOW_INT_in_contrainte_egal414); 
 
-            match(input,17,FOLLOW_17_in_contrainte_egal421); 
+            match(input,17,FOLLOW_17_in_contrainte_egal416); 
 
-            att_i=(Token)match(input,ID,FOLLOW_ID_in_contrainte_egal425); 
+            att_i=(Token)match(input,ID,FOLLOW_ID_in_contrainte_egal420); 
 
-            match(input,19,FOLLOW_19_in_contrainte_egal427); 
+            match(input,19,FOLLOW_19_in_contrainte_egal422); 
 
-            match(input,12,FOLLOW_12_in_contrainte_egal429); 
+            match(input,12,FOLLOW_12_in_contrainte_egal424); 
 
-            j=(Token)match(input,INT,FOLLOW_INT_in_contrainte_egal433); 
+            j=(Token)match(input,INT,FOLLOW_INT_in_contrainte_egal428); 
 
-            match(input,17,FOLLOW_17_in_contrainte_egal435); 
+            match(input,17,FOLLOW_17_in_contrainte_egal430); 
 
-            att_j=(Token)match(input,ID,FOLLOW_ID_in_contrainte_egal439); 
+            att_j=(Token)match(input,ID,FOLLOW_ID_in_contrainte_egal434); 
 
-            System.out.println("r"+n+"->condEgal.push_back(new ConditionEgal("+(i!=null?i.getText():null)+",\""+(att_i!=null?att_i.getText():null)+"\","+(j!=null?j.getText():null)+",\""+(att_j!=null?att_j.getText():null)+"\"));");
+            toString="condEgal.push_back(new ConditionEgal("+(i!=null?i.getText():null)+",\""+(att_i!=null?att_i.getText():null)+"\","+(j!=null?j.getText():null)+",\""+(att_j!=null?att_j.getText():null)+"\"));";
 
             }
 
@@ -1150,49 +1100,52 @@ public class batimentParser extends Parser {
         finally {
         	// do for sure before leaving
         }
-        return ;
+        return toString;
     }
     // $ANTLR end "contrainte_egal"
 
 
 
     // $ANTLR start "contrainte_adj"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:75:2: contrainte_adj : ADJ '(' '$' i= INT '.' att_i= ID ',' '$' j= INT '.' att_j= ID ')' ;
-    public final void contrainte_adj() throws RecognitionException {
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:79:2: contrainte_adj returns [String toString] : ADJ '(' '$' i= INT '.' att_i= ID ',' '$' j= INT '.' att_j= ID ')' ;
+    public final String contrainte_adj() throws RecognitionException {
+        String toString = null;
+
+
         Token i=null;
         Token att_i=null;
         Token j=null;
         Token att_j=null;
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:75:17: ( ADJ '(' '$' i= INT '.' att_i= ID ',' '$' j= INT '.' att_j= ID ')' )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:75:19: ADJ '(' '$' i= INT '.' att_i= ID ',' '$' j= INT '.' att_j= ID ')'
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:79:43: ( ADJ '(' '$' i= INT '.' att_i= ID ',' '$' j= INT '.' att_j= ID ')' )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:79:45: ADJ '(' '$' i= INT '.' att_i= ID ',' '$' j= INT '.' att_j= ID ')'
             {
-            match(input,ADJ,FOLLOW_ADJ_in_contrainte_adj449); 
+            match(input,ADJ,FOLLOW_ADJ_in_contrainte_adj448); 
 
-            match(input,13,FOLLOW_13_in_contrainte_adj451); 
+            match(input,13,FOLLOW_13_in_contrainte_adj450); 
 
-            match(input,12,FOLLOW_12_in_contrainte_adj453); 
+            match(input,12,FOLLOW_12_in_contrainte_adj452); 
 
-            i=(Token)match(input,INT,FOLLOW_INT_in_contrainte_adj457); 
+            i=(Token)match(input,INT,FOLLOW_INT_in_contrainte_adj456); 
 
-            match(input,17,FOLLOW_17_in_contrainte_adj459); 
+            match(input,17,FOLLOW_17_in_contrainte_adj458); 
 
-            att_i=(Token)match(input,ID,FOLLOW_ID_in_contrainte_adj463); 
+            att_i=(Token)match(input,ID,FOLLOW_ID_in_contrainte_adj462); 
 
-            match(input,15,FOLLOW_15_in_contrainte_adj465); 
+            match(input,15,FOLLOW_15_in_contrainte_adj464); 
 
-            match(input,12,FOLLOW_12_in_contrainte_adj467); 
+            match(input,12,FOLLOW_12_in_contrainte_adj466); 
 
-            j=(Token)match(input,INT,FOLLOW_INT_in_contrainte_adj471); 
+            j=(Token)match(input,INT,FOLLOW_INT_in_contrainte_adj470); 
 
-            match(input,17,FOLLOW_17_in_contrainte_adj473); 
+            match(input,17,FOLLOW_17_in_contrainte_adj472); 
 
-            att_j=(Token)match(input,ID,FOLLOW_ID_in_contrainte_adj477); 
+            att_j=(Token)match(input,ID,FOLLOW_ID_in_contrainte_adj476); 
 
-            match(input,14,FOLLOW_14_in_contrainte_adj479); 
+            match(input,14,FOLLOW_14_in_contrainte_adj478); 
 
-            System.out.println("r"+n+"->condAdj.push_back(new ConditionAdj("+(i!=null?i.getText():null)+",\""+(att_i!=null?att_i.getText():null)+"\","+(j!=null?j.getText():null)+",\""+(att_j!=null?att_j.getText():null)+"\"));");
+            toString="condAdj.push_back(new ConditionAdj("+(i!=null?i.getText():null)+",\""+(att_i!=null?att_i.getText():null)+"\","+(j!=null?j.getText():null)+",\""+(att_j!=null?att_j.getText():null)+"\"));";
 
             }
 
@@ -1205,42 +1158,51 @@ public class batimentParser extends Parser {
         finally {
         	// do for sure before leaving
         }
-        return ;
+        return toString;
     }
     // $ANTLR end "contrainte_adj"
 
 
 
     // $ANTLR start "condition_unique"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:77:2: condition_unique : '$' i= INT '.' att_i= ID '==' val= CONST ;
-    public final void condition_unique() throws RecognitionException {
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:81:2: condition_unique returns [String toString] : '$' i= INT '.' att_i= ID op= OP_COMP val= constante ;
+    public final String condition_unique() throws RecognitionException {
+        String toString = null;
+
+
         Token i=null;
         Token att_i=null;
-        Token val=null;
+        Token op=null;
+        batimentParser.constante_return val =null;
+
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:77:19: ( '$' i= INT '.' att_i= ID '==' val= CONST )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:77:21: '$' i= INT '.' att_i= ID '==' val= CONST
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:81:46: ( '$' i= INT '.' att_i= ID op= OP_COMP val= constante )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:81:48: '$' i= INT '.' att_i= ID op= OP_COMP val= constante
             {
             System.out.println("class ConditionUnique"+n+"_"+(++n2)+" : public ConditionUnique{");
             	System.out.println("bool estVerifiee(Noeud* n){return (bool)(");
 
-            match(input,12,FOLLOW_12_in_condition_unique494); 
+            match(input,12,FOLLOW_12_in_condition_unique498); 
 
-            i=(Token)match(input,INT,FOLLOW_INT_in_condition_unique498); 
+            i=(Token)match(input,INT,FOLLOW_INT_in_condition_unique502); 
 
-            match(input,17,FOLLOW_17_in_condition_unique500); 
+            match(input,17,FOLLOW_17_in_condition_unique504); 
 
-            att_i=(Token)match(input,ID,FOLLOW_ID_in_condition_unique504); 
+            att_i=(Token)match(input,ID,FOLLOW_ID_in_condition_unique508); 
 
-            match(input,20,FOLLOW_20_in_condition_unique506); 
+            op=(Token)match(input,OP_COMP,FOLLOW_OP_COMP_in_condition_unique512); 
 
-            val=(Token)match(input,CONST,FOLLOW_CONST_in_condition_unique510); 
+            pushFollow(FOLLOW_constante_in_condition_unique516);
+            val=constante();
 
-            System.out.print("n->getAttribut(\""+(att_i!=null?att_i.getText():null)+"\"))=="+(val!=null?val.getText():null));
+            state._fsp--;
+
+
+            System.out.print("n->getAttribut(\""+(att_i!=null?att_i.getText():null)+"\"))"+(op!=null?op.getText():null)+(val!=null?input.toString(val.start,val.stop):null));
             		System.out.println(";}};");
             		System.out.println("ConditionUnique"+n+"_"+n2+"* c"+n+"_"+n2+" = new ConditionUnique"+n+"_"+n2+"(); c"+n+"_"+n2+"->indice = "+(i!=null?i.getText():null)+";");
-            	System.out.println("r"+n+"->condUnique.push_back(c"+n+"_"+n2+");");
+            	toString = "condUnique.push_back(c"+n+"_"+n2+");";
 
             }
 
@@ -1253,26 +1215,29 @@ public class batimentParser extends Parser {
         finally {
         	// do for sure before leaving
         }
-        return ;
+        return toString;
     }
     // $ANTLR end "condition_unique"
 
 
 
     // $ANTLR start "contrainte_generale"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:85:2: contrainte_generale : '@' i= ID ;
-    public final void contrainte_generale() throws RecognitionException {
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:89:2: contrainte_generale returns [String toString] : '@' i= ID ;
+    public final String contrainte_generale() throws RecognitionException {
+        String toString = null;
+
+
         Token i=null;
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:85:21: ( '@' i= ID )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:85:22: '@' i= ID
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:89:47: ( '@' i= ID )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:89:48: '@' i= ID
             {
-            match(input,21,FOLLOW_21_in_contrainte_generale522); 
+            match(input,20,FOLLOW_20_in_contrainte_generale532); 
 
-            i=(Token)match(input,ID,FOLLOW_ID_in_contrainte_generale526); 
+            i=(Token)match(input,ID,FOLLOW_ID_in_contrainte_generale536); 
 
-            System.out.println("r"+n+"->condGen.push_back(new "+(i!=null?i.getText():null)+"());");
+            toString="condGen.push_back(new "+(i!=null?i.getText():null)+"());";
 
             }
 
@@ -1285,34 +1250,34 @@ public class batimentParser extends Parser {
         finally {
         	// do for sure before leaving
         }
-        return ;
+        return toString;
     }
     // $ANTLR end "contrainte_generale"
 
 
 
     // $ANTLR start "expr_calcul"
-    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:87:2: expr_calcul : att_i= ID '=' '$' j= INT '.' att_j= ID ;
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:91:2: expr_calcul : att_i= ID '=' '$' j= INT '.' att_j= ID ;
     public final void expr_calcul() throws RecognitionException {
         Token att_i=null;
         Token j=null;
         Token att_j=null;
 
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:87:14: (att_i= ID '=' '$' j= INT '.' att_j= ID )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:87:16: att_i= ID '=' '$' j= INT '.' att_j= ID
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:91:14: (att_i= ID '=' '$' j= INT '.' att_j= ID )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:91:16: att_i= ID '=' '$' j= INT '.' att_j= ID
             {
-            att_i=(Token)match(input,ID,FOLLOW_ID_in_expr_calcul539); 
+            att_i=(Token)match(input,ID,FOLLOW_ID_in_expr_calcul549); 
 
-            match(input,19,FOLLOW_19_in_expr_calcul541); 
+            match(input,19,FOLLOW_19_in_expr_calcul551); 
 
-            match(input,12,FOLLOW_12_in_expr_calcul543); 
+            match(input,12,FOLLOW_12_in_expr_calcul553); 
 
-            j=(Token)match(input,INT,FOLLOW_INT_in_expr_calcul547); 
+            j=(Token)match(input,INT,FOLLOW_INT_in_expr_calcul557); 
 
-            match(input,17,FOLLOW_17_in_expr_calcul549); 
+            match(input,17,FOLLOW_17_in_expr_calcul559); 
 
-            att_j=(Token)match(input,ID,FOLLOW_ID_in_expr_calcul553); 
+            att_j=(Token)match(input,ID,FOLLOW_ID_in_expr_calcul563); 
 
             System.out.println("nouveau->setAttribut(\""+(att_i!=null?att_i.getText():null)+"\",nouveau->getEnfants()["+(j!=null?j.getText():null)+"]->getAttribut(\""+(att_j!=null?att_j.getText():null)+"\"));");
 
@@ -1331,123 +1296,141 @@ public class batimentParser extends Parser {
     }
     // $ANTLR end "expr_calcul"
 
+
+    public static class constante_return extends ParserRuleReturnScope {
+    };
+
+
+    // $ANTLR start "constante"
+    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:94:1: constante : ( 'true' | 'false' | INT );
+    public final batimentParser.constante_return constante() throws RecognitionException {
+        batimentParser.constante_return retval = new batimentParser.constante_return();
+        retval.start = input.LT(1);
+
+
+        try {
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:94:11: ( 'true' | 'false' | INT )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:
+            {
+            if ( input.LA(1)==INT||input.LA(1)==24||input.LA(1)==27 ) {
+                input.consume();
+                state.errorRecovery=false;
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                throw mse;
+            }
+
+
+            }
+
+            retval.stop = input.LT(-1);
+
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+        return retval;
+    }
+    // $ANTLR end "constante"
+
     // Delegated rules
 
 
  
 
     public static final BitSet FOLLOW_dinclude_in_grammaire27 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_def_nom_in_grammaire31 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_def_nom_in_grammaire31 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_def_regles_in_grammaire36 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_dinclude48 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_11_in_dinclude48 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_ID_in_dinclude52 = new BitSet(new long[]{0x0000000000000802L});
-    public static final BitSet FOLLOW_25_in_def_nom68 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_25_in_def_nom68 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_ID_in_def_nom72 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_regle_stand_in_def_regles84 = new BitSet(new long[]{0x0000000000000102L});
-    public static final BitSet FOLLOW_regle_seq_in_def_regles86 = new BitSet(new long[]{0x0000000000000102L});
-    public static final BitSet FOLLOW_regle_cycle_in_def_regles88 = new BitSet(new long[]{0x0000000000000102L});
-    public static final BitSet FOLLOW_regle_cluster_in_def_regles90 = new BitSet(new long[]{0x0000000000000102L});
-    public static final BitSet FOLLOW_ID_in_regle_stand104 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_regle_stand106 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_stand115 = new BitSet(new long[]{0x0000000008008000L});
-    public static final BitSet FOLLOW_15_in_regle_stand121 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_stand125 = new BitSet(new long[]{0x0000000008008000L});
-    public static final BitSet FOLLOW_27_in_regle_stand138 = new BitSet(new long[]{0x0000000010203010L});
-    public static final BitSet FOLLOW_liste_contraintes_in_regle_stand140 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_stand142 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_stand145 = new BitSet(new long[]{0x0000000010200100L});
-    public static final BitSet FOLLOW_liste_calcul_in_regle_stand148 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_21_in_regle_stand155 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_stand159 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_stand165 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_regle_seq180 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_regle_seq182 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_regle_seq184 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_seq188 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_regle_seq193 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_seq195 = new BitSet(new long[]{0x0000000010203010L});
-    public static final BitSet FOLLOW_liste_contraintes_in_regle_seq197 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_seq199 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_regle_seq201 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_seq203 = new BitSet(new long[]{0x0000000010200100L});
-    public static final BitSet FOLLOW_liste_calcul_in_regle_seq206 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_21_in_regle_seq212 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_seq216 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_seq222 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_regle_cycle237 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_regle_cycle239 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_regle_cycle241 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_cycle245 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_regle_cycle250 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_cycle252 = new BitSet(new long[]{0x0000000010203010L});
-    public static final BitSet FOLLOW_liste_contraintes_in_regle_cycle254 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_cycle256 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_regle_cycle258 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_cycle260 = new BitSet(new long[]{0x0000000010200100L});
-    public static final BitSet FOLLOW_liste_calcul_in_regle_cycle263 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_21_in_regle_cycle269 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_cycle273 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_cycle279 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_regle_cluster293 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_regle_cluster295 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_regle_cluster297 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_cluster301 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_regle_cluster306 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_cluster308 = new BitSet(new long[]{0x0000000010203010L});
-    public static final BitSet FOLLOW_liste_contraintes_in_regle_cluster310 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_cluster312 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_regle_cluster314 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_regle_cluster316 = new BitSet(new long[]{0x0000000010200100L});
-    public static final BitSet FOLLOW_liste_calcul_in_regle_cluster319 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_21_in_regle_cluster325 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_regle_cluster329 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_regle_cluster335 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_contrainte_in_liste_contraintes347 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_liste_contraintes350 = new BitSet(new long[]{0x0000000000203010L});
-    public static final BitSet FOLLOW_contrainte_in_liste_contraintes352 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_expr_calcul_in_liste_calcul369 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_liste_calcul371 = new BitSet(new long[]{0x0000000000000102L});
-    public static final BitSet FOLLOW_contrainte_egal_in_contrainte386 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_contrainte_adj_in_contrainte390 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_condition_unique_in_contrainte394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_contrainte_generale_in_contrainte398 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_contrainte402 = new BitSet(new long[]{0x0000000000203010L});
-    public static final BitSet FOLLOW_contrainte_in_contrainte404 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_contrainte405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_contrainte_egal415 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_contrainte_egal419 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_contrainte_egal421 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_contrainte_egal425 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_contrainte_egal427 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_contrainte_egal429 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_contrainte_egal433 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_contrainte_egal435 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_contrainte_egal439 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ADJ_in_contrainte_adj449 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_contrainte_adj451 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_contrainte_adj453 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_contrainte_adj457 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_contrainte_adj459 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_contrainte_adj463 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_contrainte_adj465 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_contrainte_adj467 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_contrainte_adj471 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_contrainte_adj473 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_contrainte_adj477 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_contrainte_adj479 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_condition_unique494 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_condition_unique498 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_condition_unique500 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_condition_unique504 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_condition_unique506 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CONST_in_condition_unique510 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_contrainte_generale522 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_contrainte_generale526 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_expr_calcul539 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_expr_calcul541 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_expr_calcul543 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_INT_in_expr_calcul547 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_expr_calcul549 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ID_in_expr_calcul553 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_regle_in_def_regles83 = new BitSet(new long[]{0x0000000000000082L});
+    public static final BitSet FOLLOW_ID_in_regle95 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_regle97 = new BitSet(new long[]{0x0000000004C00080L});
+    public static final BitSet FOLLOW_membre_droit_in_regle106 = new BitSet(new long[]{0x0000000010008000L});
+    public static final BitSet FOLLOW_15_in_regle109 = new BitSet(new long[]{0x0000000004C00080L});
+    public static final BitSet FOLLOW_membre_droit_in_regle111 = new BitSet(new long[]{0x0000000010008000L});
+    public static final BitSet FOLLOW_28_in_regle121 = new BitSet(new long[]{0x0000000020103010L});
+    public static final BitSet FOLLOW_liste_contraintes_in_regle128 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_regle133 = new BitSet(new long[]{0x0000000010000002L});
+    public static final BitSet FOLLOW_28_in_regle138 = new BitSet(new long[]{0x0000000000100080L});
+    public static final BitSet FOLLOW_liste_calcul_in_regle141 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_20_in_regle149 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_regle153 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_regle158 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_membreStandard_in_membre_droit177 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_operateur_in_membre_droit181 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_membreStandard197 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_operateur213 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_23_in_operateur221 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_22_in_operateur228 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_operateur235 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_operateur241 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_operateur247 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_operateur249 = new BitSet(new long[]{0x0000000020103010L});
+    public static final BitSet FOLLOW_liste_contraintes_in_operateur256 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_operateur261 = new BitSet(new long[]{0x000000000000C000L});
+    public static final BitSet FOLLOW_15_in_operateur267 = new BitSet(new long[]{0x0000000010100000L});
+    public static final BitSet FOLLOW_28_in_operateur270 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_liste_calcul_in_operateur272 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_20_in_operateur279 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_operateur283 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_operateur288 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_operateur293 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_contrainte_in_liste_contraintes311 = new BitSet(new long[]{0x0000000000200002L});
+    public static final BitSet FOLLOW_21_in_liste_contraintes315 = new BitSet(new long[]{0x0000000000103010L});
+    public static final BitSet FOLLOW_contrainte_in_liste_contraintes319 = new BitSet(new long[]{0x0000000000200002L});
+    public static final BitSet FOLLOW_expr_calcul_in_liste_calcul338 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_liste_calcul340 = new BitSet(new long[]{0x0000000000000082L});
+    public static final BitSet FOLLOW_contrainte_egal_in_contrainte360 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_contrainte_adj_in_contrainte368 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_condition_unique_in_contrainte376 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_contrainte_generale_in_contrainte384 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_contrainte390 = new BitSet(new long[]{0x0000000000103010L});
+    public static final BitSet FOLLOW_contrainte_in_contrainte394 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_contrainte397 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_contrainte_egal410 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INT_in_contrainte_egal414 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_contrainte_egal416 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_contrainte_egal420 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_contrainte_egal422 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_contrainte_egal424 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INT_in_contrainte_egal428 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_contrainte_egal430 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_contrainte_egal434 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ADJ_in_contrainte_adj448 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_contrainte_adj450 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_contrainte_adj452 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INT_in_contrainte_adj456 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_contrainte_adj458 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_contrainte_adj462 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_contrainte_adj464 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_contrainte_adj466 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INT_in_contrainte_adj470 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_contrainte_adj472 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_contrainte_adj476 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_contrainte_adj478 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_condition_unique498 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INT_in_condition_unique502 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_condition_unique504 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_condition_unique508 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_OP_COMP_in_condition_unique512 = new BitSet(new long[]{0x0000000009000100L});
+    public static final BitSet FOLLOW_constante_in_condition_unique516 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_contrainte_generale532 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_contrainte_generale536 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_expr_calcul549 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_expr_calcul551 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_expr_calcul553 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_INT_in_expr_calcul557 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_expr_calcul559 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_ID_in_expr_calcul563 = new BitSet(new long[]{0x0000000000000002L});
 
 }

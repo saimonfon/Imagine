@@ -7,7 +7,7 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 	/* Utilisation des conditions unitaires pour réduire le domaine */
 	/* Doit être fait au début, une fois pour toute, et pas à chaque appel de cette fonction... */
 	/* Les conditions uniques peuvent être redirigées du parser vers les membres directement.*/
-	set_noeud res = p->noeudsParType[this->nom];
+	set_noeud res = p->noeudsParType[this->name];
 	set<Noeud*> resultats;
 	resultats.insert(res.begin(),res.end());
 	for(vector<ConditionUnique*>::iterator it_cond = parent->condUnique.begin();it_cond!=parent->condUnique.end();it_cond++)
@@ -21,8 +21,11 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 		for(set<Noeud*>::iterator it = toErase.begin();it!=toErase.end();it++)
 		resultats.erase(*it);
 	}
+	//cout<<"Taille du domaine a priori pour l'indice "<<position<<" "<<resultats.size()<<endl;
 	
 	/* Traitement des conditions d'adjacence et égalité */
+	/*if(parent->condAdj.size()>0)
+	cout<<"Taille des tables de hachage :"<<parent->table_adj_i[parent->condAdj[0]].size()<<endl;*/	
 	for(vector<ConditionAdj*>::iterator it = parent->condAdj.begin();it!=parent->condAdj.end();it++)
 		{
 			ConditionAdj* cadj = *it;
@@ -86,6 +89,7 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 				resultats.erase(*it_exclu);
 			//cout<<"Nouvelle taille "<<new_domaines[i].size()<<endl;
 		}
+	//cout<<"Taille du domaine apres traitements des contraintes pour "<<position<<" : "<<resultats.size()<<endl;
 		
 	set<Noeud*> res2;
 	res2.insert(resultats.begin(),resultats.end());
@@ -94,5 +98,5 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 
 MembreStandard::MembreStandard(string nom)
 {
-	this->nom = nom;
+	this->name = nom;
 }

@@ -1,7 +1,0 @@
-#ContrainteOrtho
-#ContrainteOrtho2
-#ContrainteAdjacenceExacte
-grammaire escalier
-escalier->sequence(marche,{adj($0 .top,$1 .front)^ @ContrainteOrtho2}) {}
-marche->rect, rect {$0 .horizontal==true ^ $1 .vertical == true ^ adj($0 .primitive, $1 .primitive) ^ @ContrainteOrtho ^@ContrainteAdjacenceExacte} {top = $0 .primitive;front = $1 .primitive;}
-rect->polygone {$0 .rectangle==true}{primitive = $0 .primitive; horizontal = $0 .horizontal; vertical = $0 .vertical;}

@@ -4,7 +4,7 @@
 class OperateurSequence : public Operateur
 {
 public :
-OperateurSequence(string nom);
+OperateurSequence(string nom, string tempname);
 set<Noeud*> noeudsFromGraphe();
 };
 #endif

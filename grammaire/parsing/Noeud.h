@@ -40,6 +40,8 @@ class Noeud
 	@param s Le nom de l'attribut demandé.
 	@return La valeur de l'attribut (équivalent à getAttribut(s)).*/
 	void* operator[](string s);
+	
+	vector<Noeud*> enfants;
 	protected:
 	map<string,void*> attributs;
 };

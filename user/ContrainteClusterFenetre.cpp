@@ -1,7 +1,7 @@
 #ifndef CONTRAINTE_CLUSTER_FENETRE_H
 #define CONTRAINTE_CLUSTER_FENETRE_H
-#include "condition/ConditionGenerale.h"
-#include "parsing/Noeud.h"
+#include "../grammaire/condition/ConditionGenerale.h"
+#include "../grammaire/parsing/Noeud.h"
 #include "../geometrie/Vec3.h"
 #include <vector>
 #include <iostream>

@@ -15,7 +15,6 @@ class NonTerminal : public Noeud
 	string getType() const;
 	bool equals(const Noeud* n2) const;
 	private :
-	vector<Noeud*> enfants;
 	string type;
 };
 #endif

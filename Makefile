@@ -3,7 +3,7 @@ CFLAGS= -std=c++0x -fpermissive
 INCLUDE = -Iirrlicht-1.7.1/include
 LDFLAGS= -lIrrlicht -Lirrlicht-1.7.1/lib/Win32-gcc/
 EXEC=main
-SRC= $(wildcard *.cpp objLoader/*.cpp convexhull/*.cpp geometrie/*.cpp grammaire/*.cpp grammaire/parsing/*.cpp grammaire/condition/*.cpp grammaire/regles/*.cpp)
+SRC= $(wildcard *.cpp objLoader/*.cpp convexhull/*.cpp geometrie/*.cpp grammaire/*.cpp grammaire/parsing/*.cpp grammaire/condition/*.cpp grammaire/regles/*.cpp user/*.cpp)
 OBJ= $(SRC:.cpp=.o)
 
 all: $(EXEC)

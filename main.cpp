@@ -12,6 +12,8 @@
 #include "grammaire/MembreStandard.h"
 #include "grammaire/OperateurSequence.h"
 #include "grammaire/parsing/Noeud.h"
+#include "user/parserescalier.cpp"
+#include "user/parserHLM.cpp"
 #include <irrlicht.h>
 #include <time.h>
 #include <fstream>
@@ -21,39 +23,42 @@ using namespace irr;
 void irrlichtShowPolygons (vector<Polygone*> v);
 void test(int n);
 /*void test2();
-void test3();
+void test3();*/
 void testAuto();
-void testEscalier();*/
+void testEscalier();
 
-/*void testAuto()
+void testAuto()
 {
 	FileReader f;
-	vector<Polygone*> maison = f.readFile("hlm.txt");
+	vector<Polygone*> maison = f.readFile("hlm1.txt");
+	cout<<"Ok file read"<<endl;
 	ParserHLM* parser = new ParserHLM();
+	cout<<"Ok parser construit"<<endl;
 	parser->adj = f.adj;
+	irrlichtShowPolygons(maison);
+	cout<<"Ok poluygone show"<<endl;
 	parser->parse(maison);
-	//irrlichtShowPolygons(maison);
-}*/
+}
 int main()
 {
 		//test2();
 		/*for(int i=10;i<=1500;i*=2)
 			test(i);*/
-		test(20);
-        return 0; 
+		//test(20);
+        //return 0; 
 		//test3();
-		//testAuto();
+		testAuto();
 		//testEscalier();
 }
 
-/*void testEscalier()
+void testEscalier()
 {
 	FileReader f;
-	vector<Polygone*> maison = f.readFile("christian01.txt");
+	vector<Polygone*> maison = f.readFile("maison3.txt");
 	Parserescalier* parser = new Parserescalier();
 	parser->adj = f.adj;
 	parser->parse(maison);
-}*/
+}
 
 /*void test3()
 {
@@ -147,7 +152,7 @@ Regle* r = new Regle("marche",membresDroits);
 r->condAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
 r->calculAtt = new SyntheseRegle1();
 membresDroits.clear();
-OperateurSequence* op = new OperateurSequence("marche");
+OperateurSequence* op = new OperateurSequence("marche","OPE");
 op->condAdj.push_back(new ConditionAdj(0,"primitive2",1,"primitive1"));
 membresDroits.push_back(op);
 Regle* r2 = new Regle("escalier",membresDroits);
@@ -159,7 +164,7 @@ ofstream f;
 	f.open("temps",ios_base::app);
 f<<(2*n)<<"|"<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
 f.close();
-//irrlichtShowPolygons(escalier);
+irrlichtShowPolygons(escalier);
 }
 
 void irrlichtShowPolygons (vector<Polygone*> v)

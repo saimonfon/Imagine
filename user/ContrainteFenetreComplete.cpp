@@ -1,8 +1,8 @@
 #ifndef CONTRAINTE_FENETRE_COMPLETE_H
 #define CONTRAINTE_FENETRE_COMPLETE_H
-#include "condition/ConditionGenerale.h"
+#include "../grammaire/condition/ConditionGenerale.h"
 #include "ContrainteAdjacenceExacte.cpp"
-#include "parsing/Noeud.h"
+#include "../grammaire/parsing/Noeud.h"
 #include <vector>
 #include <iostream>
 //La contrainte pour une fenetre complete (tout le rebord doit etre adjacent à la fenetre)

@@ -1,6 +1,6 @@
-#include "condition/ConditionGenerale.h"
-#include "parsing/Noeud.h"
-#include "Parser.h"
+#include "../grammaire/condition/ConditionGenerale.h"
+#include "../grammaire/parsing/Noeud.h"
+#include "../grammaire/Parser.h"
 #include <vector>
 #include <iostream>
 //La contrainte pour une fenetre adjacence exacte (égalité des sommets)

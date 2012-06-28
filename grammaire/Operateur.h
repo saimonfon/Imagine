@@ -13,7 +13,7 @@ class Operateur : public MembreDroit
 	public :
 	/** Initialise l'opérateur.
 @param nom Le nom de l'élément répété.*/
-	void init(string nom);
+	void init(string nom, string name);
 	set<Noeud*> getAffectations(Parser* p,Noeud** affectation, int N);
 	/** La fonction spécifique (cycle, séquence...) : retourne les noeuds à partir du graphe de successeurs possibles */
 	virtual set<Noeud*> noeudsFromGraphe()=0;
@@ -23,6 +23,7 @@ class Operateur : public MembreDroit
 	Noeud** affectation;
 	/** Le nom de l'élément répété.*/
 	string nom;
+	string name;
 
 	/** Les conditions portant sur le membre droit (par exemple, chaque marche doit mesurer plus de 30 cm).*/
 	vector<ConditionUnique*> conditions;

@@ -8,8 +8,5 @@ class MembreStandard : public MembreDroit
 public :
 MembreStandard(string nom);
 set<Noeud*> getAffectations(Parser* p,Noeud** affectation, int N);
-private :
-/** Le nom du terminal ou du non-terminal correspondant. */
-string nom;
 };
 #endif

@@ -1,6 +1,6 @@
 #ifndef CALCULATTFC_H
 #define CALCULATTFC_H
-#include "regles/CalculAttributs.h"
+#include "../grammaire/regles/CalculAttributs.h"
 #include "../geometrie/Polygone.h"
 class CalculAttFenetreComplete : public CalculAttributs
 {

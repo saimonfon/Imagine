@@ -1,6 +1,7 @@
 #ifndef MEMBREDROIT_H
 #define MEMBREDROIT_H
 #include <set>
+#include <string>
 class Parser;
 class Regle;
 class Noeud;
@@ -22,6 +23,7 @@ public :
 	@param parent La règle à laquelle appartient le membre droit.
 	@param position Losition du membre droit dans la règle parent.
 	*/
+	string name;
 	void init (Regle* parent, int position);
 };
 #endif

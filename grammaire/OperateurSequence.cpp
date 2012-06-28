@@ -5,15 +5,16 @@
 #include <stack>
 #include "Parser.h"
 #include <list>
-OperateurSequence::OperateurSequence(string nom)
+OperateurSequence::OperateurSequence(string nom, string tempname)
 {
-init(nom);
+init(nom,tempname);
 }
 
 void dfs(Noeud* n, map<Noeud*,set<Noeud*> >& succ, std::list<Noeud*>& order, set<Noeud*>& marque);
 
 set<Noeud*> OperateurSequence::noeudsFromGraphe()
 {
+cout<<"Appel de l'opérateur séquence"<<endl;
 set<Noeud*> res;
 	
 	/*Parcours en profondeur du graphe pour trouver tous les chemins */
@@ -72,7 +73,9 @@ set<Noeud*> res;
 				}
 			if(nb_children==0)
 			{
-				NonTerminal* new_node = new NonTerminal(nom,cur.second);
+				//cout<<"On ajoute le noeud avec enfants "<<cur.second.size()<<endl;
+				NonTerminal* new_node = new NonTerminal(name,cur.second);
+				new_node->setAttribut("size",(void*) cur.second.size());
 				if(calculAtt!=NULL)
 					calculAtt->calculAttrib(new_node);
 				/* bool okExclu = true;
@@ -99,6 +102,7 @@ set<Noeud*> res;
 			}
 		}
 	}
+	//cout<<"OK à la fin de l'opérateur séquence"<<endl;
 	return res;
 	}
 

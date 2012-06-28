@@ -1,7 +1,7 @@
 #ifndef CONTRAINTE_MUR_FENETRE_H
 #define CONTRAINTE_MUR_FENETRE_H
-#include "condition/ConditionGenerale.h"
-#include "parsing/Noeud.h"
+#include "../grammaire/condition/ConditionGenerale.h"
+#include "../grammaire/parsing/Noeud.h"
 #include <vector>
 #include <iostream>
 //La contrainte entre le mur et la fenetre (tout le rebord doit être adjacent au mur)

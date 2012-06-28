@@ -1,6 +1,7 @@
 #include "Operateur.h"
 #include "Parser.h"
 #include <algorithm>
+class Polygone;
 set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 {
 	this->p = p;
@@ -29,7 +30,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			ConditionAdj* cadj = *it;
 			if(affectation[cadj->j]==NULL) //Si la variable en question n'est pas affectée, on traite pas.
 				continue;
-			if(p->adj[(Poygone*) affectation[cadj->j]->getAttribut(cadj->att_j)].count(*ite)==0) //Si l'adjacence n'est pas respectée, on ajoute pas le noeud au graphe.
+			if(p->adj[(Polygone*) affectation[cadj->j]->getAttribut(cadj->att_j)].count((Polygone*) (*ite)->getAttribut(cadj->att_i))==0) //Si l'adjacence n'est pas respectée, on ajoute pas le noeud au graphe.
 			{
 				okCondition = false;
 				break;
@@ -182,19 +183,20 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			succ[*it].insert(*ite);
 		}
 	}
-	cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
+	/*cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
 	for(map<Noeud*,set<Noeud*> >::iterator it = succ.begin();it!=succ.end();it++)
 	{
 		cout<<it->first->nom_parser<<"->";
 		for(set<Noeud*>::iterator it2 = it->second.begin();it2!=it->second.end();it2++)
 			cout<<(*it2)->nom_parser<<", ";
 		cout<<endl;
-	}
+	}*/
 	return noeudsFromGraphe();
 }
 
-void Operateur::init(string nom)
+void Operateur::init(string nom ,string name)
 {
 	this->nom = nom;
+	this->name = name;
 	calculAtt = NULL;
 }
