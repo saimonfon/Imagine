@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g 2012-06-28 11:50:44
+// $ANTLR 3.4 C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g 2012-06-28 16:30:58
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -468,7 +468,7 @@ public class batimentLexer extends Lexer {
         try {
             int _type = OP_COMP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:9: ( '==' | '>' | '<' | '>=' | '<=' | '!=' )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:9: ( '==' | '>' | '<' | '>=' | '<=' | '!=' )
             int alt1=6;
             switch ( input.LA(1) ) {
             case '=':
@@ -515,7 +515,7 @@ public class batimentLexer extends Lexer {
 
             switch (alt1) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:10: '=='
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:10: '=='
                     {
                     match("=="); 
 
@@ -524,21 +524,21 @@ public class batimentLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:15: '>'
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:15: '>'
                     {
                     match('>'); 
 
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:19: '<'
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:19: '<'
                     {
                     match('<'); 
 
                     }
                     break;
                 case 4 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:23: '>='
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:23: '>='
                     {
                     match(">="); 
 
@@ -547,7 +547,7 @@ public class batimentLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:28: '<='
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:28: '<='
                     {
                     match("<="); 
 
@@ -556,7 +556,7 @@ public class batimentLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:95:33: '!='
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:98:33: '!='
                     {
                     match("!="); 
 
@@ -580,8 +580,8 @@ public class batimentLexer extends Lexer {
         try {
             int _type = ADJ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:96:6: ( 'adj' )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:96:8: 'adj'
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:99:6: ( 'adj' )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:99:8: 'adj'
             {
             match("adj"); 
 
@@ -603,8 +603,8 @@ public class batimentLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:97:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:97:7: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:100:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:100:7: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -616,7 +616,7 @@ public class batimentLexer extends Lexer {
             }
 
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:97:31: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:100:31: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop2:
             do {
                 int alt2=2;
@@ -666,10 +666,10 @@ public class batimentLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:100:6: ( ( '0' .. '9' )+ )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:100:7: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:6: ( ( '0' .. '9' )+ )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:7: ( '0' .. '9' )+
             {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:100:7: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:7: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -724,14 +724,14 @@ public class batimentLexer extends Lexer {
         try {
             int _type = FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:106:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
             int alt10=3;
             alt10 = dfa10.predict(input);
             switch (alt10) {
                 case 1 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:106:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
                     {
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:9: ( '0' .. '9' )+
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:106:9: ( '0' .. '9' )+
                     int cnt4=0;
                     loop4:
                     do {
@@ -772,7 +772,7 @@ public class batimentLexer extends Lexer {
 
                     match('.'); 
 
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:25: ( '0' .. '9' )*
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:106:25: ( '0' .. '9' )*
                     loop5:
                     do {
                         int alt5=2;
@@ -806,7 +806,7 @@ public class batimentLexer extends Lexer {
                     } while (true);
 
 
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:37: ( EXPONENT )?
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:106:37: ( EXPONENT )?
                     int alt6=2;
                     int LA6_0 = input.LA(1);
 
@@ -815,7 +815,7 @@ public class batimentLexer extends Lexer {
                     }
                     switch (alt6) {
                         case 1 :
-                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:103:37: EXPONENT
+                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:106:37: EXPONENT
                             {
                             mEXPONENT(); 
 
@@ -829,11 +829,11 @@ public class batimentLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:104:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:107:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
                     {
                     match('.'); 
 
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:104:13: ( '0' .. '9' )+
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:107:13: ( '0' .. '9' )+
                     int cnt7=0;
                     loop7:
                     do {
@@ -872,7 +872,7 @@ public class batimentLexer extends Lexer {
                     } while (true);
 
 
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:104:25: ( EXPONENT )?
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:107:25: ( EXPONENT )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -881,7 +881,7 @@ public class batimentLexer extends Lexer {
                     }
                     switch (alt8) {
                         case 1 :
-                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:104:25: EXPONENT
+                            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:107:25: EXPONENT
                             {
                             mEXPONENT(); 
 
@@ -895,9 +895,9 @@ public class batimentLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:105:9: ( '0' .. '9' )+ EXPONENT
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:108:9: ( '0' .. '9' )+ EXPONENT
                     {
-                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:105:9: ( '0' .. '9' )+
+                    // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:108:9: ( '0' .. '9' )+
                     int cnt9=0;
                     loop9:
                     do {
@@ -957,8 +957,8 @@ public class batimentLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:108:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:108:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:111:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:111:9: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -986,8 +986,8 @@ public class batimentLexer extends Lexer {
     // $ANTLR start "EXPONENT"
     public final void mEXPONENT() throws RecognitionException {
         try {
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:115:19: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:115:21: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:118:19: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:118:21: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -999,7 +999,7 @@ public class batimentLexer extends Lexer {
             }
 
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:115:31: ( '+' | '-' )?
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:118:31: ( '+' | '-' )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1026,7 +1026,7 @@ public class batimentLexer extends Lexer {
             }
 
 
-            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:115:42: ( '0' .. '9' )+
+            // C:\\Users\\simon\\Documents\\prog_grammaires\\compil\\batiment.g:118:42: ( '0' .. '9' )+
             int cnt12=0;
             loop12:
             do {
@@ -1338,7 +1338,7 @@ public class batimentLexer extends Lexer {
             this.transition = DFA10_transition;
         }
         public String getDescription() {
-            return "102:1: FLOAT : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
+            return "105:1: FLOAT : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
         }
     }
     static final String DFA13_eotS =

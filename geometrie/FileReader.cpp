@@ -16,6 +16,7 @@ vector<Polygone*> FileReader::readFile(string fileName)
 vector<Polygone*> res;
 std::ifstream infile(fileName.c_str());
 string line;
+int num=0;
 //Lecture du fichier et ajout des polygones
 while(getline(infile,line))
 {
@@ -48,6 +49,7 @@ while(getline(infile,line))
 	}
 	Polygone* p = new Polygone();
 	p->backRot = rot.transpose();
+	p->number = num++;
 	p->x = x;
 	p->setContour(contour);
 	p->points3D = v;

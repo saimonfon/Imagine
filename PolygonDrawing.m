@@ -1,5 +1,5 @@
 close all
-file = fopen('maison3.txt','r')
+file = fopen('hlm1.txt','r')
 figure;
 hold on
 polygones={}
@@ -20,7 +20,7 @@ while(~feof(file))
     size(X)
     
     %patch(X,Y,Z,randi(200),'FaceAlpha',0.5)
-    patch(X,Y,Z,randi(200),'FaceAlpha',1)
+    patch(X,Y,Z,randi(200),'FaceAlpha',0.5)
 %     if(size(find(mat3==i))>0)
 %         j = find(mat3==i);
 %         j=j(1);
@@ -43,12 +43,12 @@ for i=1:size(polygones,2)%[mat3(2*marche) mat3(2*marche+1)]
     end
 end
 
-%file4 = fopen('liste_meilleur.txt','r')
-file4 = fopen('tous.txt','r')
+file4 = fopen('liste_meilleur.txt','r')
+%file4 = fopen('tous.txt','r')
 i=0;
 figure;
 hold on
-while(~feof(file4))
+while(~feof(file4) & i<5)
     l = fgets(file4);
     mat = sscanf(l,'%i');
 
@@ -59,7 +59,7 @@ while(~feof(file4))
  
     i=i+1;
 end
-for j=1:size(polygones,2)
-      patch(polygones{j}(1,:),polygones{j}(2,:),polygones{j}(3,:),[0.5 0.5 0.5],'FaceAlpha',0.5)
- end
+% for j=1:size(polygones,2)
+%       patch(polygones{j}(1,:),polygones{j}(2,:),polygones{j}(3,:),[0.5 0.5 0.5],'FaceAlpha',0.5)
+%  end
 hold off

@@ -183,7 +183,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			succ[*it].insert(*ite);
 		}
 	}
-	/*cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
+/*	cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
 	for(map<Noeud*,set<Noeud*> >::iterator it = succ.begin();it!=succ.end();it++)
 	{
 		cout<<it->first->nom_parser<<"->";
@@ -191,7 +191,42 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			cout<<(*it2)->nom_parser<<", ";
 		cout<<endl;
 	}*/
-	return noeudsFromGraphe();
+	set<Noeud*> res = noeudsFromGraphe();
+	set<Noeud*> toErase;
+	for(set<Noeud*>::iterator ite = res.begin();ite!=res.end();ite++)
+	{
+	/*S'il y a deux éléments exclusifs, on supprime*/
+	for(vector<Noeud*>::iterator it1 = (*ite)->enfants.begin();it1 != (*ite)->enfants.end();it1++)
+	{
+	bool goOn = true;
+	for(vector<Noeud*>::iterator it2 = (*ite)->enfants.begin();it2 != (*ite)->enfants.end();it2++)
+	{
+		if((it1!=it2) && this->p->exclusivite[*it1].count(*it2)>0)
+		{
+			goOn=false;
+			toErase.insert(*ite);
+			break;
+	}
+	}
+		if(!goOn)
+			break;
+	}
+	for(vector<ConditionUnique*>::iterator it = parent->condUnique.begin();it!=parent->condUnique.end();it++)
+	{
+		if((*it)->indice != this->position)
+			continue;
+		if(!((*it)->estVerifiee(*ite)))
+		{
+			//cout<<"On doit supprimer car size = "<<(int)((*ite)->getAttribut("size"))<<endl;
+			toErase.insert(*ite);
+			break;
+		}
+	}
+	}
+	
+	for(set<Noeud*>::iterator ite = toErase.begin();ite!=toErase.end();ite++)
+		res.erase(*ite);
+	return res;
 }
 
 void Operateur::init(string nom ,string name)

@@ -7,9 +7,9 @@ grammaire HLM
 
 
 murs->cycle(mur,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}
-mur->polygone {$0 .vertical==true} {primitive = $0 .primitive; plan =$0 .plan;}
-mur->mur,cluster_fenetre{@ContrainteMurFenetre} {primitive = $0 .primitive; plan = $0 .plan;}
+premur->polygone {$0 .vertical==true} {primitive = $0 .primitive; plan =$0 .plan;}
+mur->premur	,cluster(fenetre_complete {adj(primitive,#0 .primitive)}, {}) {}{primitive = $0 .primitive; plan = $0 .plan;}
 fenetre->polygone {$0 .vertical==true} {primitive = $0 .primitive;}
-rebord->cycle(rebord_possible,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}
+rebord->cycle(rebord_possible,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte},{primitive = $0 .primitive;}) {$0 .size ==4}{primitive = $0 .primitive;}
 rebord_possible-> polygone{$0 .vert_or_hor == true} {primitive = $0 .primitive;}
-fenetre_complete->fenetre, rebord {adj($0 .primitive,$1 .primitive) ^ @ContrainteFenetreComplete ^$1 .size ==4} {@CalculAttFenetreComplete}
+fenetre_complete->fenetre, rebord {adj($0 .primitive,$1 .primitive) ^@ContrainteFenetreComplete}{@CalculAttFenetreComplete}

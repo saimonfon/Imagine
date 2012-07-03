@@ -75,7 +75,7 @@ set<Noeud*> res;
 			{
 				//cout<<"On ajoute le noeud avec enfants "<<cur.second.size()<<endl;
 				NonTerminal* new_node = new NonTerminal(name,cur.second);
-				new_node->setAttribut("size",(void*) cur.second.size());
+				//new_node->setAttribut("size",(void*) cur.second.size());
 				if(calculAtt!=NULL)
 					calculAtt->calculAttrib(new_node);
 				/* bool okExclu = true;

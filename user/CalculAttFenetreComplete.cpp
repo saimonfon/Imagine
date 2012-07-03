@@ -18,6 +18,7 @@ cout<<"Taille de rebord :"<<rebord->getEnfants().size()<<endl;
 Polygone* r1 = (Polygone*) ((*(rebord->getEnfants()[0]))["primitive"]);
 Polygone* r2 = (Polygone*) ((*(rebord->getEnfants()[2]))["primitive"]);
 cout<<"ok rebords opposés"<<endl;
+nouveau->setAttribut("primitive",r1);
 
 //Trouver les arêtes adjacentes pour ces 2 rebords
 int arete1,arete2;

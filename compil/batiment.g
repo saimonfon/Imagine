@@ -41,8 +41,8 @@ regle	:	i1=ID '->'
 		membre_droit (',' membre_droit)*
 		{System.out.println("Regle* r"+n+" = new Regle(\""+$i1.text+"\",v"+n+");");System.out.println("ajouterRegle(r"+n+");");}
 		'{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("r"+n+"->"+s);})?'}'
-		('{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");}
-	 	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");}) '}')?  {n++;};
+		('{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n2+"();");}
+	 	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");}) '}')?  {n++;n2++;};
 	 	
 membre_droit 
 	:	 membreStandard | operateur
@@ -55,17 +55,20 @@ operateur
 	:	{String opType="";}('sequence' {opType="OperateurSequence";}
 		| 'cycle' {opType="OperateurCycle";}
 		|'cluster' {opType="OperateurCluster";})
-		'(' i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");}
+		'(' i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres '}')?
 		',' '{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("op"+n2+"->"+s);})?'}'
-		 (',' ('{' liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n+"();");}
-		|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");}) '}' )? ')' {System.out.println("v"+n+".push_back(op"+n2+");");n2++;};
+		 (',' ('{' liste_calcul {System.out.println("op"+n2+"->calculAtt = new Calcul"+n2+"();");}
+		|'@' c=ID {System.out.println("op"+n2+"->calculAtt = new "+$c.text+"();");}) '}' )? ')' {System.out.println("v"+n+".push_back(op"+n2+");");n2++;};
 
-liste_contraintes returns [List<String> liste]:
+contrainte_op_membres 
+	:	(ADJ '(' att=ID ',' '#' j=INT '.' att_j=ID ')' {System.out.println("op"+n2+"->condAdjExt.push_back(new ConditionAdj(0,\""+$att.text+"\","+$j.text+",\""+$att_j.text+"\"));");})*;
+
+liste_contraintes returns [List<String> liste]:	
 	{liste = new LinkedList<String>();} c=contrainte {liste.add($c.toString);}('^' c2=contrainte {liste.add($c2.toString);})*;
 
 liste_calcul 
 	:
-	{ System.out.println("class Calcul"+n+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");}
+	{ System.out.println("class Calcul"+n2+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");}
 	(expr_calcul ';')+ {System.out.println("}};");};
 	
 	contrainte returns [String toString]:
@@ -79,9 +82,9 @@ liste_calcul
 	contrainte_adj returns [String toString] : ADJ '(' '$' i=INT '.' att_i=ID ',' '$' j=INT '.' att_j=ID ')' {toString="condAdj.push_back(new ConditionAdj("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
 	
 	condition_unique  returns [String toString] : {System.out.println("class ConditionUnique"+n+"_"+(++n2)+" : public ConditionUnique{");
-	System.out.println("bool estVerifiee(Noeud* n){return (bool)(");}
+	System.out.println("bool estVerifiee(Noeud* n){return ");}
 	'$' i=INT '.' att_i=ID op=OP_COMP val=constante
-		{System.out.print("n->getAttribut(\""+$att_i.text+"\"))"+$op.text+$val.text);
+		{System.out.print("((int) n->getAttribut(\""+$att_i.text+"\"))"+$op.text+$val.text);
 		System.out.println(";}};");
 		System.out.println("ConditionUnique"+n+"_"+n2+"* c"+n+"_"+n2+" = new ConditionUnique"+n+"_"+n2+"(); c"+n+"_"+n2+"->indice = "+$i.text+";");
 	toString = "condUnique.push_back(c"+n+"_"+n2+");";};

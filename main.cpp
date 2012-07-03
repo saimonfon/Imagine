@@ -14,20 +14,19 @@
 #include "grammaire/parsing/Noeud.h"
 #include "user/parserescalier.cpp"
 #include "user/parserHLM.cpp"
-#include <irrlicht.h>
 #include <time.h>
 #include <fstream>
+#include "gui/MainWindow.h"
+#include <QtGui>
 using namespace std;
-using namespace irr;
 
-void irrlichtShowPolygons (vector<Polygone*> v);
 void test(int n);
 /*void test2();
 void test3();*/
-void testAuto();
+void testAuto(int argc, char** argv);
 void testEscalier();
 
-void testAuto()
+void testAuto(int argc, char** argv)
 {
 	FileReader f;
 	vector<Polygone*> maison = f.readFile("hlm1.txt");
@@ -35,11 +34,12 @@ void testAuto()
 	ParserHLM* parser = new ParserHLM();
 	cout<<"Ok parser construit"<<endl;
 	parser->adj = f.adj;
-	irrlichtShowPolygons(maison);
+	//irrlichtShowPolygons(maison);
 	cout<<"Ok poluygone show"<<endl;
 	parser->parse(maison);
+	MainWindow::afficher(parser,argc,argv);
 }
-int main()
+int main(int argc, char** argv)
 {
 		//test2();
 		/*for(int i=10;i<=1500;i*=2)
@@ -47,7 +47,7 @@ int main()
 		//test(20);
         //return 0; 
 		//test3();
-		testAuto();
+		testAuto(argc,argv);
 		//testEscalier();
 }
 
@@ -164,10 +164,9 @@ ofstream f;
 	f.open("temps",ios_base::app);
 f<<(2*n)<<"|"<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
 f.close();
-irrlichtShowPolygons(escalier);
 }
 
-void irrlichtShowPolygons (vector<Polygone*> v)
+/*void irrlichtShowPolygons (vector<Polygone*> v)
 {
 	IrrlichtDevice *device = createDevice(video::EDT_OPENGL,
                 core::dimension2d<u32>(1000, 800));
@@ -230,9 +229,9 @@ while(device->run() && driver)
         }
 
         device->drop();
-}
+}*/
 
-void test2()
+/*void test2()
 {
 objLoader *objData = new objLoader();
 objData->load("models/maison.obj");
@@ -262,7 +261,5 @@ shouldDraw[i]=true;
 else
 shouldDraw[i]=false;
 
-irrlichtShowPolygons(polygones);
-
 delete(objData);
-}
+}*/

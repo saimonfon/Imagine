@@ -11,6 +11,7 @@ class Polygone
 	public:
 	void setContour(vector<point2d> c);
 	float getArea();
+	int number;
 	vector<point2d> contour;
 	vector<Vec3> points3D;
 	float x;

@@ -6,7 +6,7 @@
 #include "../geometrie/Polygone.h"
 #include "parsing/Noeud.h"
 #include "Regle.h"
-#include<unordered_set>
+//#include<unordered_set>
 using namespace std;
 
 class NoeudEq{
@@ -18,7 +18,7 @@ bool operator ()(const Noeud* n1,const Noeud* n2) const
 }
 };
 
-class hashNoeud{
+/*class hashNoeud{
 public:
   size_t operator()(const Noeud* n){
 	size_t val = 0x345678;
@@ -27,9 +27,10 @@ public:
 		val = (val<<1)^ hash<Noeud*>()(*it);
     return hash<string>()(n->getType())^val;
   }
-};
+};*/
 
-typedef unordered_set<Noeud*,hashNoeud,NoeudEq> set_noeud;
+//typedef unordered_set<Noeud*,hashNoeud,NoeudEq> set_noeud;
+typedef set<Noeud*> set_noeud;
 
 class Parser
 {
