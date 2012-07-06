@@ -73,9 +73,9 @@ set<Noeud*> res;
 				}
 			if(nb_children==0)
 			{
-				//cout<<"On ajoute le noeud avec enfants "<<cur.second.size()<<endl;
+				cout<<"On ajoute le noeud avec enfants "<<cur.second.size()<<endl;
 				NonTerminal* new_node = new NonTerminal(name,cur.second);
-				//new_node->setAttribut("size",(void*) cur.second.size());
+				new_node->setAttribut("size",(void*) cur.second.size());
 				if(calculAtt!=NULL)
 					calculAtt->calculAttrib(new_node);
 				/* bool okExclu = true;
@@ -102,7 +102,7 @@ set<Noeud*> res;
 			}
 		}
 	}
-	//cout<<"OK à la fin de l'opérateur séquence"<<endl;
+	cout<<"OK à la fin de l'opérateur séquence "<<res.size()<<endl;
 	return res;
 	}
 

@@ -20,7 +20,7 @@ int i=0;
 for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
 {
 if(colored_ind[i])
-glColor4ub(255, 0,0,100); // on demande du bleu
+glColor4ub(255, 0,0,50); // on demande du bleu
 else
 glColor4ub(255, 255, 255,100); // on demande du bleu
 
@@ -52,7 +52,7 @@ void Viewer::init()
   glDisable(GL_LIGHTING);
   glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   // Opens help window
-  help();
+  //help();
 }
 
 QString Viewer::helpString() const

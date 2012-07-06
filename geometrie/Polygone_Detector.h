@@ -3,7 +3,7 @@
 #include <vector>
 #include "Polygone.h"
 #include "Vec3.h"
-#include "../objLoader/objLoader.h"
+#include "objLoader/objLoader.h"
 #include "Matrice2.h"
 class Polygone_Detector
 {

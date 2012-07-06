@@ -21,19 +21,19 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 		for(set<Noeud*>::iterator it = toErase.begin();it!=toErase.end();it++)
 		resultats.erase(*it);
 	}
-	cout<<"Taille du domaine a priori pour l'indice "<<position<<" "<<resultats.size()<<endl;
+	//cout<<"Taille du domaine a priori pour l'indice "<<position<<" "<<resultats.size()<<endl;
 	
 	/* Traitement des conditions d'adjacence et égalité */
 	if(parent->condAdj.size()>0)
-	cout<<"Taille des tables de hachage :"<<parent->table_adj_i[parent->condAdj[0]].size()<<endl;
+	//cout<<"Taille des tables de hachage :"<<parent->table_adj_i[parent->condAdj[0]].size()<<endl;
 	for(vector<ConditionAdj*>::iterator it = parent->condAdj.begin();it!=parent->condAdj.end();it++)
 		{
 			ConditionAdj* cadj = *it;
 			if(cadj->i==this->position && affectation[cadj->j]!=NULL)
 			{
-			cout<<"Prise en comppte d'une condition d'adjacence"<<endl;
+			//cout<<"Prise en comppte d'une condition d'adjacence"<<endl;
 			set<Polygone*> adj = p->adj[(Polygone*) affectation[cadj->j]->getAttribut(cadj->att_j)];
-			cout<<"Nombre d'éléments adjacents :"<<adj.size()<<endl;
+			//cout<<"Nombre d'éléments adjacents :"<<adj.size()<<endl;
 			set<Noeud*> adj_elem;
 			for(set<Polygone*>::iterator it2 = adj.begin();it2!=adj.end();it2++)
 				adj_elem.insert(parent->table_adj_i[cadj][*it2].begin(),parent->table_adj_i[cadj][*it2].end());
@@ -41,27 +41,27 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 				set_intersection(resultats.begin(),resultats.end(),adj_elem.begin(),adj_elem.end(),std::inserter(new_set, new_set.begin()));
 				resultats = new_set;
 				
-			cout<<"Nombre de successsuers :"<<new_set.size()<<endl;
+			//cout<<"Nombre de successsuers :"<<new_set.size()<<endl;
 			}
 			else if(cadj->j==this->position && affectation[cadj->i]!=NULL)
 			{
-			cout<<"Prise en comppte d'une condition d'adjacence pour j"<<endl;
+			//cout<<"Prise en comppte d'une condition d'adjacence pour j"<<endl;
 			set<Polygone*> adj = p->adj[(Polygone*) affectation[cadj->i]->getAttribut(cadj->att_i)];
-			cout<<"Nombre d'éléments adjacents :"<<adj.size()<<endl;
-			for(set<Polygone*>::iterator it= adj.begin();it!=adj.end();it++)
-				cout<<(*it)->number<<" ";
-			cout<<endl;
+			//cout<<"Nombre d'éléments adjacents :"<<adj.size()<<endl;
+			/*for(set<Polygone*>::iterator it= adj.begin();it!=adj.end();it++)
+				cout<<(*it)->number<<" ";*/
+			//cout<<endl;
 			set<Noeud*> adj_elem;
 			for(set<Polygone*>::iterator it2 = adj.begin();it2!=adj.end();it2++)
 			{
 				adj_elem.insert(parent->table_adj_j[cadj][*it2].begin(),parent->table_adj_j[cadj][*it2].end());
-				cout<<"Nombre de noeuds adjacents à "<<(*it2)->number<<" : "<<parent->table_adj_i[cadj][*it2].size()<<endl;
+				//cout<<"Nombre de noeuds adjacents à "<<(*it2)->number<<" : "<<parent->table_adj_i[cadj][*it2].size()<<endl;
 			}
 			set<Noeud*> new_set;
 				set_intersection(resultats.begin(),resultats.end(),adj_elem.begin(),adj_elem.end(),std::inserter(new_set, new_set.begin()));
 				resultats = new_set;
-			cout<<"Nombre de successsuers :"<<new_set.size()<<endl;
-			cout<<"RESTENT EN LICE"<<resultats.size()<<endl;
+			//cout<<"Nombre de successsuers :"<<new_set.size()<<endl;
+			//cout<<"RESTENT EN LICE"<<resultats.size()<<endl;
 			}
 		}
 		
@@ -93,7 +93,10 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 			//cout<<"Suppression du domaines "<<i<<" de taille "<<new_domaines[i].size()<<endl;
 			//cout<<exclu.size()<<endl;
 			for(set<Noeud*>::iterator it_exclu = exclu.begin();it_exclu!=exclu.end();it_exclu++)
+			{
 				resultats.erase(*it_exclu);
+			//cout<<"On supprime "<<(*it_exclu)->nom_parser<<" des résultats car "<<parent->membresDroits[i]->name<<" vaut "<<affectation[i]->nom_parser<<endl;
+			}
 			//cout<<"Nouvelle taille "<<new_domaines[i].size()<<endl;
 		}
 	//cout<<"Taille du domaine apres traitements des contraintes pour "<<position<<" : "<<resultats.size()<<endl;

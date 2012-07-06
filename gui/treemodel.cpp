@@ -160,7 +160,6 @@
  for(vector<Noeud*>::iterator it = p->foret.begin();it!=p->foret.end();it++)
 	{
 	queue<pair<Noeud*,TreeItem*> > aVoir;
-		cout<<"Ok dans tous "<<(*it)->getEnfants().size()<<endl;
 		aVoir.push(pair<Noeud*,TreeItem*>(*it,parent));
 	while(!aVoir.empty())
 	{

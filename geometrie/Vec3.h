@@ -1,6 +1,6 @@
 #ifndef VEC3_H
 #define VEC3_H
-#include "../objLoader/objLoader.h"
+#include "objLoader/objLoader.h"
 #include <cmath>
 class Vec3
 {

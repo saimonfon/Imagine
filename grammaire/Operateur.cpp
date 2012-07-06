@@ -1,6 +1,7 @@
 #include "Operateur.h"
 #include "Parser.h"
 #include <algorithm>
+#include "parsing/NonTerminal.h"
 class Polygone;
 set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 {
@@ -9,9 +10,11 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 	/** Construire le graphe ici */
 	set_noeud candidats = p->noeudsParType[this->nom];
 	int itt =0;
+	dejaTraites = set<Noeud*>();
+	succ = map<Noeud*,set<Noeud*> >(); 
 	for(set_noeud::iterator ite = candidats.begin();ite!=candidats.end();ite++)
 	{
-		cout<<"traitement noeud "<<(++itt)<<endl;
+		//cout<<"traitement noeud "<<(++itt)<<endl;
 		if(dejaTraites.count(*ite)>0)
 		continue;
 		bool okCondition = true;
@@ -28,9 +31,24 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		for(vector<ConditionAdj*>::iterator it = condAdjExt.begin();it!=condAdjExt.end();it++)
 		{
 			ConditionAdj* cadj = *it;
+			cout<<"Traitement d'une condition d'adjacence dans la construction du graphe"<<endl;
 			if(affectation[cadj->j]==NULL) //Si la variable en question n'est pas affectée, on traite pas.
 				continue;
+			cout<<"Ok condition adjacecne, l'autre est affecté"<<endl;
 			if(p->adj[(Polygone*) affectation[cadj->j]->getAttribut(cadj->att_j)].count((Polygone*) (*ite)->getAttribut(cadj->att_i))==0) //Si l'adjacence n'est pas respectée, on ajoute pas le noeud au graphe.
+			{
+				okCondition = false;
+				cout<<"On vire le noeud"<<(*ite)->nom_parser<<" car il est pas adjacenct"<<endl;
+				break;
+			}
+		}
+		if(!okCondition)
+			continue;
+			
+		/* Traitement de l'exclusivité : si l'élément est exclusif d'un élément déjà affecté, on le met pas dans le graphe.*/
+		for(int i=0;i<N;i++)
+		{
+			if(affectation[i]!=NULL && p->exclusivite[affectation[i]].count(*ite)>0)
 			{
 				okCondition = false;
 				break;
@@ -38,7 +56,6 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		}
 		if(!okCondition)
 			continue;
-		
 		dejaTraites.insert(*ite);
 		//Ajout à la table de hachage
 		for(vector<ConditionAdj*>::iterator it = condAdj.begin();it!=condAdj.end();it++)
@@ -101,7 +118,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 				possible.erase(*it_exclu);
 				//cout<<"On supprime "<<(*it_exclu)->nom_parser<<" des succ de "<<(*ite)->nom_parser<<endl;
 		}
-		cout<<"Taille de possible"<<possible.size()<<endl;
+		//cout<<"Taille de possible"<<possible.size()<<endl;
 		//cout<<"Ok avant vérif conditions générales"<<endl;
 		/*Conditions générales entre deux éléments successifs*/
 		for(set<Noeud*>::iterator it=possible.begin();it!=possible.end();it++)
@@ -165,7 +182,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		{
 				possible.erase(*it_exclu);
 		}
-		cout<<"Taille de possible"<<possible.size()<<endl;
+		//cout<<"Taille de possible"<<possible.size()<<endl;
 		/* Ajout des noeuds et vérif des contraintes générales*/
 		for(set<Noeud*>::iterator it=possible.begin();it!=possible.end();it++)
 		{
@@ -183,15 +200,16 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			succ[*it].insert(*ite);
 		}
 	}
-/*	cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
+	cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
 	for(map<Noeud*,set<Noeud*> >::iterator it = succ.begin();it!=succ.end();it++)
 	{
 		cout<<it->first->nom_parser<<"->";
 		for(set<Noeud*>::iterator it2 = it->second.begin();it2!=it->second.end();it2++)
 			cout<<(*it2)->nom_parser<<", ";
 		cout<<endl;
-	}*/
+	}
 	set<Noeud*> res = noeudsFromGraphe();
+	cout<<"On a récupéré "<<res.size()<<" résultats"<<endl;
 	set<Noeud*> toErase;
 	for(set<Noeud*>::iterator ite = res.begin();ite!=res.end();ite++)
 	{
@@ -226,6 +244,8 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 	
 	for(set<Noeud*>::iterator ite = toErase.begin();ite!=toErase.end();ite++)
 		res.erase(*ite);
+		if(res.size()==0)
+			res.insert(new NonTerminal(name,vector<Noeud*>()));
 	return res;
 }
 

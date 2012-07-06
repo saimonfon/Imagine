@@ -8,6 +8,7 @@
 #include "condition/ConditionGenerale.h"
 #include "regles/CalculAttributs.h"
 class Polygone;
+typedef set<Noeud*> setNoeud;
 class Operateur : public MembreDroit
 {
 	public :

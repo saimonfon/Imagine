@@ -24,12 +24,12 @@ vector<Noeud*> Regle::appliquer(Parser* p)
 			for(set_noeud::iterator ite = p->noeudsParType[membresDroits[cadj->i]->name].begin();ite!=p->noeudsParType[membresDroits[cadj->i]->name].end();ite++)
 			{
 				table_adj_i[cadj][(Polygone*)(*ite)->getAttribut(cadj->att_i)].insert(*ite);
-				cout<<"Inserting "<<(*ite)->nom_parser<<" for key" <<((Polygone*)(*ite)->getAttribut(cadj->att_i))->number<<endl;
+				//cout<<"Inserting "<<(*ite)->nom_parser<<" for key" <<((Polygone*)(*ite)->getAttribut(cadj->att_i))->number<<endl;
 			}
 			for(set_noeud::iterator ite = p->noeudsParType[membresDroits[cadj->j]->name].begin();ite!=p->noeudsParType[membresDroits[cadj->j]->name].end();ite++)
 			{
 				table_adj_j[cadj][(Polygone*)(*ite)->getAttribut(cadj->att_j)].insert(*ite);
-				cout<<"Inserting "<<(*ite)->nom_parser<<" for key" <<((Polygone*)(*ite)->getAttribut(cadj->att_j))->number<<endl;
+				//cout<<"Inserting "<<(*ite)->nom_parser<<" for key" <<((Polygone*)(*ite)->getAttribut(cadj->att_j))->number<<endl;
 				}
 		}
 		for(vector<ConditionEgal*>::iterator it = condEgal.begin();it!=condEgal.end();it++)
@@ -92,11 +92,11 @@ void Regle::solveCSP(Noeud** affectPart, int curInd)
 			if(!((*it)->estVerifiee(enfants,this->p)))
 			return;
 		}
-		cout<<"Ok on a une affectation complète, on a  vérifiéééé les contraintes"<<endl;
+		//cout<<"Ok on a une affectation complète, on a  vérifiéééé les contraintes"<<endl;
 		NonTerminal* new_node = new NonTerminal(nom,enfants);
 		if(calculAtt!=NULL)
 		{
-			cout<<"Ok calcul des attributs"<<endl;
+			//cout<<"Ok calcul des attributs"<<endl;
 			calculAtt->calculAttrib(new_node);
 		}
 		

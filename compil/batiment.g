@@ -18,6 +18,7 @@ System.out.println("#include \"../grammaire/OperateurCycle.h\"");
 System.out.println("#include \"../grammaire/MembreStandard.h\"");
 System.out.println("#include \"../grammaire/OperateurSequence.h\"");
 System.out.println("#include \"../grammaire/OperateurCluster.h\"");
+System.out.println("#include \"../grammaire/OperateurEnsemble.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionAdj.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionEgal.h\"");
 System.out.println("#include \"../grammaire/regles/CalculAttributs.h\"");}
@@ -54,7 +55,8 @@ membreStandard
 operateur 
 	:	{String opType="";}('sequence' {opType="OperateurSequence";}
 		| 'cycle' {opType="OperateurCycle";}
-		|'cluster' {opType="OperateurCluster";})
+		|'cluster' {opType="OperateurCluster";}
+		|'ensemble' {opType="OperateurEnsemble";})
 		'(' i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres '}')?
 		',' '{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("op"+n2+"->"+s);})?'}'
 		 (',' ('{' liste_calcul {System.out.println("op"+n2+"->calculAtt = new Calcul"+n2+"();");}
@@ -114,5 +116,6 @@ WS  :   ( ' '
         | '\n'
         ) {$channel=HIDDEN;}
     ;
+   
     
 fragment EXPONENT : ('e'|'E') ('+'|'-')? ('0'..'9')+ ;

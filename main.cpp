@@ -1,4 +1,3 @@
-#include "objLoader/objLoader.h"
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -17,6 +16,7 @@
 #include <time.h>
 #include <fstream>
 #include "gui/MainWindow.h"
+#include "geometrie/ObjReader.h"
 #include <QtGui>
 using namespace std;
 
@@ -24,7 +24,18 @@ void test(int n);
 /*void test2();
 void test3();*/
 void testAuto(int argc, char** argv);
-void testEscalier();
+void testEscalier(int argc, char** argv);
+void testMerge()
+{
+	ObjReader r("../models/immeuble.obj");
+	r.polygones();
+}
+
+void gui(int argc, char** argv)
+{
+ParserHLM* parser = new ParserHLM();
+MainWindow::afficher(parser,argc,argv);
+}
 
 void testAuto(int argc, char** argv)
 {
@@ -47,17 +58,20 @@ int main(int argc, char** argv)
 		//test(20);
         //return 0; 
 		//test3();
-		testAuto(argc,argv);
-		//testEscalier();
+		//testAuto(argc,argv);
+		//testEscalier(argc,argv);
+		gui(argc,argv);
+		//testMerge();
 }
 
-void testEscalier()
+void testEscalier(int argc, char** argv)
 {
 	FileReader f;
 	vector<Polygone*> maison = f.readFile("maison3.txt");
 	Parserescalier* parser = new Parserescalier();
 	parser->adj = f.adj;
 	parser->parse(maison);
+	MainWindow::afficher(parser,argc,argv);
 }
 
 /*void test3()

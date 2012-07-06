@@ -3,6 +3,7 @@
 #include "../grammaire/Parser.h"
 #include <QtGui>
 class Viewer;
+class Polygone;
 class MainWindow: public QMainWindow
 {
 	Q_OBJECT
@@ -10,9 +11,19 @@ class MainWindow: public QMainWindow
 	MainWindow(Parser* p);
 	static int afficher(Parser* p,int& argc,char** argv);
 	Viewer* v;
+	QTabWidget* tabs;
 	public slots : 
 	void afficherElems(const QModelIndex& index);
+	void afficherExclu();
+	void afficherAdj();
+	void afficherArbre();
+	void chargerFichierTexte();
+	void executer();
 	private :
 	Parser* p;
+	QTreeView* view;
+	vector<Polygone*> model;
+	QWidget* modelWidget;
+	QWidget* resultWidget;
 };
 #endif

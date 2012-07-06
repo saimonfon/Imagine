@@ -52,5 +52,6 @@ class Parser
 		map<Noeud*,set<Noeud*> > exclusivite ; /** Relation d'exclusivité. A chaque noeud est associé la liste des noeuds qui ne peuvent apparaître dans le même arbre. */
 		//map<string,set<RegleSequence*> >  reglesSequence; /** Associe à chaque non-terminal les règles séquence dans lesquelles il apparait. */ 
 		void afficherMeilleur(string axiome);
+		void generateDot(string filename, Noeud* racine);
 		};
 #endif

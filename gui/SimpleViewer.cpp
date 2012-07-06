@@ -20,9 +20,9 @@ int i=0;
 for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
 {
 if(colored_ind[i])
-glColor4ub(255, 0,0,100); // on demande du bleu
+glColor4ub(255, 0,0,50); // on demande du bleu
 else
-glColor4ub(255, 255, 255,100); // on demande du bleu
+glColor4ub(255, 255, 255,50); // on demande du bleu
 
 glBegin(GL_POLYGON); // debut du dessin
 for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
