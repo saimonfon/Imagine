@@ -18,6 +18,7 @@ class MainWindow: public QMainWindow
 	void afficherAdj();
 	void afficherArbre();
 	void chargerFichierTexte();
+	void chargerFichierObj();
 	void executer();
 	private :
 	Parser* p;

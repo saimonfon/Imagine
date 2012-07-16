@@ -1,11 +1,45 @@
 #include "simpleViewer.h"
-
+ #ifndef CALLBACK
+   #define CALLBACK
+   #endif
 using namespace std;
 
 Viewer::Viewer(vector<Polygone*> p)
 {
 this->p = p;
+colored_ind = new bool[p.size()];
+for(int i=0;i<p.size();i++)
+	colored_ind[i]=false;
 
+/* Générer les listes OpenGL pour accélérer le rendu */
+/*base_ind = glGenLists(p.size());
+int i=0;
+for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
+{
+glNewList(base_ind+i,GL_COMPILE);
+GLUtriangulatorObj *tess;
+tess = gluNewTess();
+gluTessCallback(tess, GLU_TESS_VERTEX,
+                   (GLvoid (CALLBACK*) ()) &glVertex3dv);
+   gluTessCallback(tess, GLU_TESS_BEGIN,
+                   (GLvoid (CALLBACK*) ()) &glBegin);
+   gluTessCallback(tess, GLU_TESS_END,
+                   (GLvoid (CALLBACK*) ()) &glEnd);
+gluBeginPolygon(tess);
+for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+{
+  GLdouble* location = new GLdouble[3];
+  location[0] = (*it2).x;
+  location[1] = (*it2).y;
+  location[2] = (*it2).z;
+  gluTessVertex(tess, location, location);
+  delete location;
+}
+gluEndPolygon(tess);
+gluDeleteTess(tess);
+glEndList();
+i++;
+}*/
 }
 
 void Viewer::setColoredIndices(bool* colored_ind)
@@ -13,36 +47,39 @@ void Viewer::setColoredIndices(bool* colored_ind)
 	this->colored_ind = colored_ind;
 }
 
-// Draws a spiral
+
 void Viewer::draw()
 {
 int i=0;
 for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
 {
+GLUtriangulatorObj *tess;
+tess = gluNewTess();
+gluTessCallback(tess, GLU_TESS_VERTEX,
+                   (GLvoid (CALLBACK*) ()) &glVertex3dv);
+   gluTessCallback(tess, GLU_TESS_BEGIN,
+                   (GLvoid (CALLBACK*) ()) &glBegin);
+   gluTessCallback(tess, GLU_TESS_END,
+                   (GLvoid (CALLBACK*) ()) &glEnd);
 if(colored_ind[i])
 glColor4ub(255, 0,0,50); // on demande du bleu
 else
 glColor4ub(255, 255, 255,50); // on demande du bleu
 
-glBegin(GL_POLYGON); // debut du dessin
+gluBeginPolygon(tess);
 for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
 {
-	//cout<<"("<<(*it2).x<<" "<<(*it2).y<<" "<<(*it2).z<<") -> ";
-	glVertex3f((*it2).x/1000,(*it2).y/1000,(*it2).z/1000);
-	}
-	//cout<<endl;
-glEnd(); // fin du dessin
-i++;
+  GLdouble* location = new GLdouble[3];
+  location[0] = (*it2).x/50;
+  location[1] = (*it2).y/50;
+  location[2] = (*it2).z/50;
+  gluTessVertex(tess, location, location);
+ //delete location;
 }
-/*glColor3ub(255, 255, 255); // on demande du bleu
-glBegin(GL_POLYGON); // debut du dessin
-	glVertex2f(-.5,  -1); // envoi du premier sommet
-	glVertex2f( -1,   0); // puis le second
-	glVertex2f(-.5,   1); // ect
-	glVertex2f( .5,   1);
-	glVertex2f(  1,   0);
-	glVertex2f( .5,  -1); // jusqu'au dernier
-glEnd(); // fin du dessin*/
+gluEndPolygon(tess);
+i++;
+gluDeleteTess(tess);
+}
 }
 
 void Viewer::init()

@@ -10,16 +10,20 @@
 #include <map>
 #include "../geometrie/FileReader.h"
  #include <QSvgWidget>
+ #include "../geometrie/ObjReader.h"
 MainWindow::MainWindow(Parser* p) : QMainWindow()
 {
 	this->p = p;
 	
 	QMenu* fileMenu = menuBar()->addMenu(tr("&Fichier"));
 	QAction* chargerTxt = new QAction("Charger modèle texte",fileMenu);
+	QAction* chargerObj = new QAction("Charger modèle Obj",fileMenu);
 	QAction* a_executer = new QAction("Exécuter",fileMenu);
 	fileMenu->addAction(chargerTxt);
+	fileMenu->addAction(chargerObj);
 	fileMenu->addAction(a_executer);
 	connect(chargerTxt,SIGNAL(triggered()),this,SLOT(chargerFichierTexte()));
+	connect(chargerObj,SIGNAL(triggered()),this,SLOT(chargerFichierObj()));
 	connect(a_executer,SIGNAL(triggered()),this,SLOT(executer()));
 	QMenu* graphMenu = menuBar()->addMenu(tr("&Graphes"));
 	QAction* exclu = new QAction("Graphe d'exclusivité",graphMenu);
@@ -139,6 +143,18 @@ void MainWindow::chargerFichierTexte()
 	tabs->insertTab(0,modelWidget,"Modèle");
 }
 
+void MainWindow::chargerFichierObj()
+{
+	QString fileName = QFileDialog::getOpenFileName(this,"Charger un modèle au format obj",QString(),"Fichiers Wavefront (*.obj)");
+	ObjReader f(fileName.toStdString());
+	model = f.
+	//p->adj = f.adj; A REMETTRE
+	tabs->removeTab(0);
+	delete modelWidget;
+	modelWidget = new Viewer(model);
+	tabs->insertTab(0,modelWidget,"Modèle");
+}
+
 void MainWindow::executer()
 {
 p->parse(model);
@@ -162,5 +178,5 @@ v= new Viewer(p->terminaux);
 	tabs->removeTab(1);
 	delete resultWidget;
 	resultWidget = s;
-	tabs->insertTab(1,resultWidget,"Modèle");
+	tabs->insertTab(1,resultWidget,"Résultat");
 }

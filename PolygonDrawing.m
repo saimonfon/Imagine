@@ -1,5 +1,5 @@
 close all
-file = fopen('hlm1.txt','r')
+file = fopen('test.txt','r')
 figure;
 hold on
 polygones={}
@@ -20,7 +20,7 @@ while(~feof(file))
     size(X)
     
     %patch(X,Y,Z,randi(200),'FaceAlpha',0.5)
-    patch(X,Y,Z,randi(200),'FaceAlpha',0.5)
+    patch(X,Y,Z,randi(200),'FaceAlpha',1)
 %     if(size(find(mat3==i))>0)
 %         j = find(mat3==i);
 %         j=j(1);
@@ -30,6 +30,7 @@ while(~feof(file))
 %     end
     i=i+1;
 end
+return
 size(polygones)
 file2 = fopen('adja.txt','r');
 mat2 = fscanf(file2,'%i');

@@ -18,12 +18,13 @@ class MainWindow: public QMainWindow
 	void afficherAdj();
 	void afficherArbre();
 	void chargerFichierTexte();
+	void chargerFichierObj()
+	void executer();
 	private :
 	Parser* p;
 	QTreeView* view;
 	vector<Polygone*> model;
 	QWidget* modelWidget;
 	QWidget* resultWidget;
-	void executer();
 };
 #endif
