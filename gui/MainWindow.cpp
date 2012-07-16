@@ -141,6 +141,7 @@ void MainWindow::chargerFichierTexte()
 	delete modelWidget;
 	modelWidget = new Viewer(model);
 	tabs->insertTab(0,modelWidget,"Modèle");
+	setWindowTitle(QString::number(model.size())+" primitives");
 }
 
 void MainWindow::chargerFichierObj()
@@ -153,6 +154,7 @@ void MainWindow::chargerFichierObj()
 	delete modelWidget;
 	modelWidget = new Viewer(model);
 	tabs->insertTab(0,modelWidget,"Modèle");
+	setWindowTitle(QString::number(model.size())+" primitives");
 }
 
 void MainWindow::executer()

@@ -13,4 +13,5 @@ protected :
   vector<Polygone*> p;
   bool* colored_ind;
   GLuint base_ind ;
+  float scale;
 };

@@ -67,6 +67,13 @@ class Vec3
 		return sqrt(x*x+y*y+z*z);
 	}
 	
+	void inverserYetZ()
+	{	
+		float tmp = y;
+		y=z;
+		z=tmp;
+	}
+	
 	float x,y,z;
 };
 #endif

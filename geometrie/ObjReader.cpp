@@ -17,6 +17,9 @@ vector<Polygone*> ObjReader::polygones()
 	for (int i=0;i<M;i++)
 	{
 		normales[i] = this->normale(objData->faceList[i],objData->vertexList);
+		//Inverser y et z pour avoir l'axe z vertical
+		normales[i].inverserYetZ();
+		
 		//cout<<normales[i].x<<" "<<normales[i].y<<" "<<normales[i].z<<endl;
 	}
 		
@@ -131,7 +134,9 @@ Polygone* ObjReader::composante(int i,bool* marque)
 	while(true)
 	{
 		bool found=false;
-		res.push_back(Vec3(objData->vertexList[cur.first]));
+		Vec3 v(objData->vertexList[cur.first]);
+		v.inverserYetZ();
+		res.push_back(v);
 		cout<<"( "<<cur.first<<" -> "<<cur.second<<" ) ";
 		//Trouver la suite (i.e. une arête de bord pas marquée adjacente à celle-là par la 2e extrémité)
 		for(int k=0;k<bords.size();k++)
@@ -180,9 +185,9 @@ Polygone* ObjReader::composante(int i,bool* marque)
 	
 	Polygone* p = new Polygone();
 	p->equation = new float[4];
-	p->equation[0] = normales[0].x;
-	p->equation[1] = normales[0].y;
-	p->equation[2] = normales[0].z;
+	p->equation[0] = normales[i].x;
+	p->equation[1] = normales[i].y;
+	p->equation[2] = normales[i].z;
 	p->points3D = res;
 	return p;
 }

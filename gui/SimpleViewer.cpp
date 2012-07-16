@@ -10,6 +10,22 @@ this->p = p;
 colored_ind = new bool[p.size()];
 for(int i=0;i<p.size();i++)
 	colored_ind[i]=false;
+	
+/* Scaling pour que le modèle soit inclus dans le carré de côté 1*/
+float max_size=0;	
+for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
+{
+for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+{
+  if((*it2).x > max_size)
+	max_size = (*it2).x;
+  if((*it2).y > max_size)
+	max_size = (*it2).y;
+	  if((*it2).z > max_size)
+	max_size = (*it2).z;
+}
+}
+scale = 1 / max_size;
 
 /* Générer les listes OpenGL pour accélérer le rendu */
 /*base_ind = glGenLists(p.size());
@@ -62,7 +78,7 @@ gluTessCallback(tess, GLU_TESS_VERTEX,
    gluTessCallback(tess, GLU_TESS_END,
                    (GLvoid (CALLBACK*) ()) &glEnd);
 if(colored_ind[i])
-glColor4ub(255, 0,0,50); // on demande du bleu
+glColor4ub(255, 0,0,255); // on demande du bleu
 else
 glColor4ub(255, 255, 255,50); // on demande du bleu
 
@@ -70,9 +86,9 @@ gluBeginPolygon(tess);
 for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
 {
   GLdouble* location = new GLdouble[3];
-  location[0] = (*it2).x/50;
-  location[1] = (*it2).y/50;
-  location[2] = (*it2).z/50;
+  location[0] = (*it2).x*scale;
+  location[1] = (*it2).y*scale;
+  location[2] = (*it2).z*scale;
   gluTessVertex(tess, location, location);
  //delete location;
 }

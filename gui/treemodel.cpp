@@ -76,12 +76,18 @@
  {
      if (!index.isValid())
          return QVariant();
-
-     if (role != Qt::DisplayRole)
-         return QVariant();
-
+		 
      TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
+     if( role == Qt::ToolTipRole)
+	 {
+		QString s;
+		for(map<string,void*>::const_iterator it = item->n->attributs.begin();it!=item->n->attributs.end();it++)
+			s+= QString::fromStdString(it->first)+" : "+QString::number((int) it->second);
+		return s;
+	 }
+	if(role!=Qt::DisplayRole)
+		return QVariant();
      return item->data(index.column());
  }
 

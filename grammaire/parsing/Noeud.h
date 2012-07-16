@@ -42,7 +42,6 @@ class Noeud
 	void* operator[](string s);
 	
 	vector<Noeud*> enfants;
-	protected:
 	map<string,void*> attributs;
 };
 #endif
