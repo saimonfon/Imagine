@@ -9,10 +9,10 @@ class ContrainteOrtho2 : public ConditionGenerale
 public: 
 bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 {
-	Polygone* p1 = (Polygone*) (*enfants[0])["top"];
-	Polygone* p2 = (Polygone*) (*enfants[1])["front"];
-	Polygone* p3 = (Polygone*) (*enfants[0])["front"];
-	Polygone* p4 = (Polygone*) (*enfants[1])["top"];
+	Polygone* p1 = (*enfants[0])["top"]->polygoneValue();
+	Polygone* p2 = (*enfants[1])["front"]->polygoneValue();
+	Polygone* p3 = (*enfants[0])["front"]->polygoneValue();
+	Polygone* p4 = (*enfants[1])["top"]->polygoneValue();
 	Vec3 n1(p1->equation[0],p1->equation[1],p1->equation[2]);
 	Vec3 n2(p2->equation[0],p2->equation[1],p2->equation[2]);
 	Vec3 n3(p3->equation[0],p3->equation[1],p3->equation[2]);

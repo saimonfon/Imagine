@@ -3,6 +3,8 @@
 #include "objLoader/objLoader.h"
 #include <string>
 #include <vector>
+#include <map>
+#include <set>
 #include "Polygone.h"
 class Vec3;
 class ObjReader
@@ -10,11 +12,13 @@ class ObjReader
 public :
 ObjReader(string fileName);
 vector<Polygone*> polygones();
+map<Polygone*, set<Polygone*> > adj;
 private :
 objLoader *objData;
 Vec3 normale(obj_face* f,obj_vector** vertices);
 Vec3* normales;
-Polygone* composante(int i,bool* marque);
+Polygone* composante(int i,int cur_comp,bool* marque);
 vector<int>* incidence;
+int* composantes;
 };
 #endif

@@ -11,8 +11,8 @@ class ContrainteClusterFenetre : public ConditionGenerale
 public: 
 bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 {
-	float* plan1 = (float*) (*enfants[0])["plan"];
-	float* plan2 = (float*) (*enfants[1])["plan"];
+	float* plan1 = (float*) (*enfants[0])["plan"]->ptrValue();
+	float* plan2 = (float*) (*enfants[1])["plan"]->ptrValue();
 	float norm = 0;
 for(int i=0;i<4;i++)
 	norm+=(plan1[i]-plan2[i])*(plan1[i]-plan2[i]);

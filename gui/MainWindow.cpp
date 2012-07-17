@@ -149,7 +149,7 @@ void MainWindow::chargerFichierObj()
 	QString fileName = QFileDialog::getOpenFileName(this,"Charger un modèle au format obj",QString(),"Fichiers Wavefront (*.obj)");
 	ObjReader f(fileName.toStdString());
 	model = f.polygones();
-	//p->adj = f.adj; A REMETTRE
+	p->adj = f.adj;
 	tabs->removeTab(0);
 	delete modelWidget;
 	modelWidget = new Viewer(model);

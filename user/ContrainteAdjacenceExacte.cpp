@@ -11,8 +11,8 @@ class ContrainteAdjacenceExacte : public ConditionGenerale
 public: 
 bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 {
-	Polygone* p1 = (Polygone*) (*enfants[0])["primitive"];
-	Polygone* p2 = (Polygone*) (*enfants[1])["primitive"];
+	Polygone* p1 = (*enfants[0])["primitive"]->polygoneValue();
+	Polygone* p2 = (*enfants[1])["primitive"]->polygoneValue();
 		//S'ils ont une arête en commun c'est bon.
 		for(int k=0;k<p1->size();k++)
 			for(int l=0;l<p2->size();l++)
