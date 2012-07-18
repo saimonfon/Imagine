@@ -1,0 +1,7 @@
+doc/
+*.o
+*.bak
+*.txt
+*.dot
+debug/
+release/
