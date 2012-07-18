@@ -18,7 +18,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	vector<Noeud*> rebords = rebord->getEnfants();
 	for(vector<Noeud*>::iterator it = rebords.begin();it!=rebords.end();it++)
 	{
-		if(p->adj[(Polygone*) (*fenetre)["primitive"]].count((Polygone*) ((*(*it))["primitive"]))==0) //si un des rebords n'est pas adjacent à la fenetre
+		if(p->adj[((*fenetre)["primitive"])->polygoneValue()].count(((*(*it))["primitive"])->polygoneValue())==0) //si un des rebords n'est pas adjacent à la fenetre
 			return false;
 		vector<Noeud*> v;
 		v.push_back(rebord);

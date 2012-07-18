@@ -106,7 +106,7 @@ bool OperateurCycle::backtrack(int v)
 					if(!dejaVu)
 					{
 						NonTerminal* new_node = new NonTerminal(name,children);
-						new_node->setAttribut("size",(void*) children.size());
+						new_node->setAttribut("size",new AttributInt(children.size()));
 						if(calculAtt!=NULL)
 						{
 							calculAtt->calculAttrib(new_node);

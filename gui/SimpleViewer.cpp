@@ -78,7 +78,7 @@ gluTessCallback(tess, GLU_TESS_VERTEX,
    gluTessCallback(tess, GLU_TESS_END,
                    (GLvoid (CALLBACK*) ()) &glEnd);
 if(colored_ind[i])
-glColor4ub(255, 0,0,255); // on demande du bleu
+glColor4ub(255, 0,0,100); // on demande du bleu
 else
 glColor4ub(255, 255, 255,50); // on demande du bleu
 

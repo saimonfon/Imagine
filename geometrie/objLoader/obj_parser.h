@@ -15,7 +15,7 @@ typedef struct obj_face
 	int texture_index[MAX_VERTEX_COUNT];
 	int vertex_count;
 	int material_index;
-};
+} obj_face;
 
 typedef struct obj_sphere
 {
@@ -24,7 +24,7 @@ typedef struct obj_sphere
 	int equator_normal_index;
 	int texture_index[MAX_VERTEX_COUNT];
 	int material_index;
-};
+} obj_sphere;
 
 typedef struct obj_plane
 {
@@ -33,12 +33,12 @@ typedef struct obj_plane
 	int rotation_normal_index;
 	int texture_index[MAX_VERTEX_COUNT];
 	int material_index;
-};
+} obj_plane;
 
 typedef struct obj_vector
 {
 	double e[3];
-};
+} obj_vector;
 
 typedef struct obj_material
 {
@@ -53,33 +53,33 @@ typedef struct obj_material
 	double shiny;
 	double glossy;
 	double refract_index;
-};
+} obj_material;
 
 typedef struct obj_camera
 {
 	int camera_pos_index;
 	int camera_look_point_index;
 	int camera_up_norm_index;
-};
+} obj_camera;
 
 typedef struct obj_light_point
 {
 	int pos_index;
 	int material_index;
-};
+} obj_light_point;
 
 typedef struct obj_light_disc
 {
 	int pos_index;
 	int normal_index;
 	int material_index;
-};
+} obj_light_disc;
 
 typedef struct obj_light_quad
 {
 	int vertex_index[MAX_VERTEX_COUNT];
 	int material_index;
-};
+} obj_light_quad;
 
 typedef struct obj_growable_scene_data
 {
@@ -102,7 +102,7 @@ typedef struct obj_growable_scene_data
 	list material_list;
 	
 	obj_camera *camera;
-};
+} obj_growable_scene_data;
 
 typedef struct obj_scene_data
 {
@@ -135,7 +135,7 @@ typedef struct obj_scene_data
 	int material_count;
 
 	obj_camera *camera;
-};
+} obj_scene_data;
 
 int parse_obj_scene(obj_scene_data *data_out, char *filename);
 void delete_obj_data(obj_scene_data *data_out);

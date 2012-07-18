@@ -17,7 +17,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	vector<Noeud*> murs = m->getEnfants();
 	for(vector<Noeud*>::iterator it = murs.begin();it!=murs.end();it++)
 	{
-		if(p->adj[(Polygone*) (s->getAttribut("primitive"))].count((Polygone*) ((*it)->getAttribut("primitive")))==0) //si un des mur n'est pas adjacent au sol
+		if(p->adj[s->getAttribut("primitive")->polygoneValue()].count((*it)->getAttribut("primitive")->polygoneValue())==0) //si un des mur n'est pas adjacent au sol
 			return false;
 	}
 	//Gérer le toit ici
@@ -31,7 +31,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 		bool murOK = false;
 		for(int j=0;j<nt;j++)
 		{
-			if(p->adj[(Polygone*) (toits[j]->getAttribut("primitive"))].count((Polygone*) (murs[i]->getAttribut("primitive")))>0)
+			if(p->adj[toits[j]->getAttribut("primitive")->polygoneValue()].count(murs[i]->getAttribut("primitive")->polygoneValue())>0)
 			{
 				toitOK[j]=true;
 				murOK = true;

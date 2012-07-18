@@ -35,25 +35,47 @@ vector<Polygone*> ObjReader::polygones()
 	
 	/*Recherche des composantes connexes*/
 	vector<Polygone*> res;
+	composantes = new int[M];
 	bool* marque = new bool[M];
 	for(int i=0;i<M;i++)
 		marque[i]=false;
+	int cur_comp = 0;
 	for(int i=0;i<M;i++)
 	{
 		if(marque[i])
 			continue;
 		marque[i]=true;
-		Polygone* p =composante(i,marque);
+		Polygone* p =composante(i,cur_comp,marque);
 		if(p!=NULL)
+		{
 		res.push_back(p);
+		cur_comp++;
+		}
 	}
 	
-	/*Simplification des contours */
-	
+	/*Construction du graphe d'adjacence */
+	for (int j=0;j<M;j++)
+	{
+		//cout<<j<<":"<<composantes[j]<<endl;
+		for(int k=0;k<objData->faceList[j]->vertex_count;k++)
+		{
+			int s = objData->faceList[j]->vertex_index[k];
+			for(vector<int>::iterator it = incidence[s].begin();it!=incidence[s].end();it++)
+			{
+			int voisin = *it;
+			if(composantes[voisin]!=composantes[j]) //Si deux faces adjacentes ne sont pas coplanaires, on marque les polygones correspondants comme adjacents.
+			{
+				//cout<<"Adjacence entre "<<composantes[voisin]<<" et "<<composantes[j]<<endl;
+				adj[res[composantes[voisin]]].insert(res[composantes[j]]);
+				adj[res[composantes[j]]].insert(res[composantes[voisin]]);
+			}
+			}
+		}
+	}
 	return res;
 }
 
-Polygone* ObjReader::composante(int i,bool* marque)
+Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 {
 	vector<int> faces;
 	stack<int> aVoir;
@@ -63,6 +85,7 @@ Polygone* ObjReader::composante(int i,bool* marque)
 		int j = aVoir.top();
 		aVoir.pop();
 		faces.push_back(j);
+		composantes[j] = cur_comp;
 		//cout<<"Traitment du noeud "<<j<<endl;
 		for(int k=0;k<objData->faceList[j]->vertex_count;k++)
 		{
@@ -189,6 +212,7 @@ Polygone* ObjReader::composante(int i,bool* marque)
 	p->equation[1] = normales[i].y;
 	p->equation[2] = normales[i].z;
 	p->points3D = res;
+	p->number = cur_comp;
 	return p;
 }
 

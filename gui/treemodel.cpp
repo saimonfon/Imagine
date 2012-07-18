@@ -49,12 +49,13 @@
 #include <queue>
  #include "treeitem.h"
  #include "treemodel.h"
+ #include "../grammaire/attributs/Attribut.h"
 
  TreeModel::TreeModel(Parser* p, QObject *parent)
      : QAbstractItemModel(parent)
  {
      QList<QVariant> rootData;
-     rootData << "Title" << "Summary";
+     rootData << "Title";
      rootItem = new TreeItem(rootData);
      setupModelData(p, rootItem);
  }
@@ -82,8 +83,8 @@
      if( role == Qt::ToolTipRole)
 	 {
 		QString s;
-		for(map<string,void*>::const_iterator it = item->n->attributs.begin();it!=item->n->attributs.end();it++)
-			s+= QString::fromStdString(it->first)+" : "+QString::number((int) it->second);
+		for(map<string,Attribut*>::const_iterator it = item->n->attributs.begin();it!=item->n->attributs.end();it++)
+			s+= QString::fromStdString(it->first)+" : "+it->second->toString();
 		return s;
 	 }
 	if(role!=Qt::DisplayRole)
