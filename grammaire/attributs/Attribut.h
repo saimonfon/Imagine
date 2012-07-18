@@ -5,12 +5,12 @@
 class Attribut
 {
 public:
-int intValue(){return -1;}
-bool boolValue(){return false;}
-float floatValue(){return 0;}
-Polygone* polygoneValue(){return NULL;}
-string strValue(){return string();}
-void* ptrValue(){return NULL;}
+virtual int intValue(){return -1;}
+virtual bool boolValue(){return false;}
+virtual float floatValue(){return 0;}
+virtual Polygone* polygoneValue(){return NULL;}
+virtual string strValue(){return string();}
+virtual void* ptrValue(){return NULL;}
 virtual QString toString()=0;
 };
 

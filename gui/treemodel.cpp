@@ -55,7 +55,7 @@
      : QAbstractItemModel(parent)
  {
      QList<QVariant> rootData;
-     rootData << "Title" << "Summary";
+     rootData << "Title";
      rootItem = new TreeItem(rootData);
      setupModelData(p, rootItem);
  }

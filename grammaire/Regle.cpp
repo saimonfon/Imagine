@@ -23,12 +23,13 @@ vector<Noeud*> Regle::appliquer(Parser* p)
 			ConditionAdj* cadj = *it;
 			for(set_noeud::iterator ite = p->noeudsParType[membresDroits[cadj->i]->name].begin();ite!=p->noeudsParType[membresDroits[cadj->i]->name].end();ite++)
 			{
-				table_adj_i[cadj][(Polygone*)(*ite)->getAttribut(cadj->att_i)].insert(*ite);
+				table_adj_i[cadj][(*ite)->getAttribut(cadj->att_i)->polygoneValue()].insert(*ite);
 				//cout<<"Inserting "<<(*ite)->nom_parser<<" for key" <<((Polygone*)(*ite)->getAttribut(cadj->att_i))->number<<endl;
 			}
 			for(set_noeud::iterator ite = p->noeudsParType[membresDroits[cadj->j]->name].begin();ite!=p->noeudsParType[membresDroits[cadj->j]->name].end();ite++)
-			{
-				table_adj_j[cadj][(Polygone*)(*ite)->getAttribut(cadj->att_j)].insert(*ite);
+            {
+                Polygone* p =(*ite)->getAttribut(cadj->att_j)->polygoneValue();
+                table_adj_j[cadj][p].insert(*ite);
 				//cout<<"Inserting "<<(*ite)->nom_parser<<" for key" <<((Polygone*)(*ite)->getAttribut(cadj->att_j))->number<<endl;
 				}
 		}
@@ -108,10 +109,10 @@ void Regle::solveCSP(Noeud** affectPart, int curInd)
 	set<Noeud*> vals = membresDroits[curInd]->getAffectations(this->p,affectPart,N); //Récupérer les valeurs possibles pour le membre droit en cours de traitement.
 		
 	for(set<Noeud*>::iterator ite = vals.begin();ite!=vals.end();ite++)
-	{
+    {
 		//cout<<(w++)<<endl;
 		//cout<<"Valeur "<<(*ite)->nom_parser<<"pour la variable "<<var<<endl;
-		//Affecter à la variable var la valeur it
+        //Affecter à la variable var la valeur ite
 		affectPart[var] = *ite;
 		solveCSP(affectPart,curInd+1);
 	}

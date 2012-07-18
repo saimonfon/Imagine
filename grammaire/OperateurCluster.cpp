@@ -40,6 +40,7 @@ set<Noeud*> OperateurCluster::noeudsFromGraphe()
 			}
 		}
 		NonTerminal* new_node = new NonTerminal(name,cluster);
+		new_node->setAttribut("size",new AttributInt(cluster.size()));
 		cout<<"Cluster trouvé : ";
 		for(vector<Noeud*>::iterator it = cluster.begin();it!=cluster.end();it++)
 			cout<<(*it)->nom_parser<<" ";

@@ -21,7 +21,8 @@ System.out.println("#include \"../grammaire/OperateurCluster.h\"");
 System.out.println("#include \"../grammaire/OperateurEnsemble.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionAdj.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionEgal.h\"");
-System.out.println("#include \"../grammaire/regles/CalculAttributs.h\"");}
+System.out.println("#include \"../grammaire/regles/CalculAttributs.h\"");
+System.out.println("#include \"../grammaire/attributs/Attribut.h\"");}
 
 dinclude
 dnom=def_nom {System.out.println("class Parser"+$dnom.nom+" : public Parser {");
@@ -85,9 +86,9 @@ liste_calcul
 	
 	condition_unique  returns [String toString] : {System.out.println("class ConditionUnique"+n+"_"+(++n2)+" : public ConditionUnique{");
 	System.out.println("bool estVerifiee(Noeud* n){return ");}
-	'$' i=INT '.' att_i=ID op=OP_COMP val=constante
-		{System.out.print("((int) n->getAttribut(\""+$att_i.text+"\"))"+$op.text+$val.text);
-		System.out.println(";}};");
+	'$' i=INT '.' att_i=ID op=OP_COMP {System.out.print("(n->getAttribut(\""+$att_i.text+"\")->");}
+	(val=INT {System.out.print("intValue()"+$op.text+$val.text);} | val=BOOL {System.out.print("boolValue()"+$op.text+$val.text);})
+		{System.out.println(");}};");
 		System.out.println("ConditionUnique"+n+"_"+n2+"* c"+n+"_"+n2+" = new ConditionUnique"+n+"_"+n2+"(); c"+n+"_"+n2+"->indice = "+$i.text+";");
 	toString = "condUnique.push_back(c"+n+"_"+n2+");";};
 	
@@ -96,7 +97,7 @@ liste_calcul
 	expr_calcul : att_i=ID '=' '$' j=INT '.' att_j=ID {System.out.println("nouveau->setAttribut(\""+$att_i.text+"\",nouveau->getEnfants()["+$j.text+"]->getAttribut(\""+$att_j.text+"\"));");};
 /*Règles du lexer*/
 
-constante	:	'true'|'false'|INT;
+BOOL 	:	 'true'|'false';
 OP_COMP :'=='|'>'|'<'|'>='|'<='|'!=';
 ADJ 	: 'adj';
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
