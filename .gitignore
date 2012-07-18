@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 doc/
 *.o
 *.bak
@@ -6,9 +5,4 @@ doc/
 *.dot
 debug/
 release/
-=======
-*.o
-moc_*.cpp
 Makefile
-
->>>>>>> 99956ad0346fa96dd508379a1b932995be330b95
