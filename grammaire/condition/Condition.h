@@ -1,6 +1,6 @@
 #ifndef CONDITION_H
 #define CONDITION_H
-#include <Vector>
+#include <vector>
 /** Classe abstraite décrivant une condition (i.e. une contrainte).*/
 class Condition
 {

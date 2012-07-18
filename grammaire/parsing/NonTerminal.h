@@ -1,7 +1,7 @@
 #ifndef NONTERMINAL_H
 #define NONTERMINAL_H
 #include "Noeud.h"
-#include <Map>
+#include <map>
 using namespace std;
 /** Classe décrivant un non-terminal reconnu.*/
 class NonTerminal : public Noeud

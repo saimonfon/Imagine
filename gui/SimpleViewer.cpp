@@ -1,4 +1,4 @@
-#include "simpleViewer.h"
+#include "SimpleViewer.h"
  #ifndef CALLBACK
    #define CALLBACK
    #endif

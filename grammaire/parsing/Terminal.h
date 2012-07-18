@@ -1,7 +1,7 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 #include "Noeud.h"
-#include <Map>
+#include <map>
 #include "../../geometrie/Polygone.h"
 using namespace std;
 /** Classe décrivant un terminal (i.e. un polygone).*/
