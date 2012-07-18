@@ -1,8 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
-#include <Vector>
-#include <Set>
-#include <Map>
+#include <vector>
+#include <set>
+#include <map>
 #include "../geometrie/Polygone.h"
 #include "parsing/Noeud.h"
 #include "Regle.h"

@@ -1,8 +1,8 @@
 #ifndef NOEUD_H
 #define NOEUD_H
-#include <Vector>
+#include <vector>
 #include <string>
-#include <Map>
+#include <map>
 #include "../attributs/Attribut.h"
 using namespace std;
 /** Classe décrivant un noeud (i.e. un non-terminal) reconnu.*/
