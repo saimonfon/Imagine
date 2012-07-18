@@ -4,8 +4,10 @@ import java.util.LinkedList;
 }
 
 @members{
-int n=0;
-int n2=0;}
+int n=0; //compteur pour les règles
+int n2=0; //compteur pour les membres droits
+int n3 = 0; //compteur pour les conditions et règles de calcul
+}
 /* Règles du parser*/
 //class batimentParser extends Parser;
 
@@ -43,8 +45,8 @@ regle	:	i1=ID '->'
 		membre_droit (',' membre_droit)*
 		{System.out.println("Regle* r"+n+" = new Regle(\""+$i1.text+"\",v"+n+");");System.out.println("ajouterRegle(r"+n+");");}
 		'{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("r"+n+"->"+s);})?'}'
-		('{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n2+"();");}
-	 	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");}) '}')?  {n++;n2++;};
+		('{' (liste_calcul {System.out.println("r"+n+"->calculAtt = new Calcul"+n3+"();");n3++;}
+	 	|'@' c=ID {System.out.println("r"+n+"->calculAtt = new "+$c.text+"();");}) '}')?  {n++;};
 	 	
 membre_droit 
 	:	 membreStandard | operateur
@@ -60,7 +62,7 @@ operateur
 		|'ensemble' {opType="OperateurEnsemble";})
 		'(' i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres '}')?
 		',' '{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("op"+n2+"->"+s);})?'}'
-		 (',' ('{' liste_calcul {System.out.println("op"+n2+"->calculAtt = new Calcul"+n2+"();");}
+		 (',' ('{' liste_calcul {System.out.println("op"+n2+"->calculAtt = new Calcul"+n3+"();");n3++;}
 		|'@' c=ID {System.out.println("op"+n2+"->calculAtt = new "+$c.text+"();");}) '}' )? ')' {System.out.println("v"+n+".push_back(op"+n2+");");n2++;};
 
 contrainte_op_membres 
@@ -71,7 +73,7 @@ liste_contraintes returns [List<String> liste]:
 
 liste_calcul 
 	:
-	{ System.out.println("class Calcul"+n2+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");}
+	{ System.out.println("class Calcul"+n3+" : public CalculAttributs {");System.out.println("void calculAttrib(Noeud* nouveau){");}
 	(expr_calcul ';')+ {System.out.println("}};");};
 	
 	contrainte returns [String toString]:
@@ -84,13 +86,13 @@ liste_calcul
 	contrainte_egal returns [String toString]: '$' i=INT '.' att_i=ID '=' '$' j=INT '.' att_j=ID {toString="condEgal.push_back(new ConditionEgal("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
 	contrainte_adj returns [String toString] : ADJ '(' '$' i=INT '.' att_i=ID ',' '$' j=INT '.' att_j=ID ')' {toString="condAdj.push_back(new ConditionAdj("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
 	
-	condition_unique  returns [String toString] : {System.out.println("class ConditionUnique"+n+"_"+(++n2)+" : public ConditionUnique{");
+	condition_unique  returns [String toString] : {System.out.println("class ConditionUnique"+n+"_"+(++n3)+" : public ConditionUnique{");
 	System.out.println("bool estVerifiee(Noeud* n){return ");}
 	'$' i=INT '.' att_i=ID op=OP_COMP {System.out.print("(n->getAttribut(\""+$att_i.text+"\")->");}
-	(val=INT {System.out.print("intValue()"+$op.text+$val.text);} | val=BOOL {System.out.print("boolValue()"+$op.text+$val.text);})
+	(val=INT {System.out.print("intValue()"+$op.text+$val.text);} | val=BOOL {System.out.print("boolValue()"+$op.text+$val.text);} | val=FLOAT {System.out.print("floatValue()"+$op.text+$val.text);})
 		{System.out.println(");}};");
-		System.out.println("ConditionUnique"+n+"_"+n2+"* c"+n+"_"+n2+" = new ConditionUnique"+n+"_"+n2+"(); c"+n+"_"+n2+"->indice = "+$i.text+";");
-	toString = "condUnique.push_back(c"+n+"_"+n2+");";};
+		System.out.println("ConditionUnique"+n+"_"+n3+"* c"+n+"_"+n3+" = new ConditionUnique"+n+"_"+n3+"(); c"+n+"_"+n3+"->indice = "+$i.text+";");
+	toString = "condUnique.push_back(c"+n+"_"+n3+");";};
 	
 	contrainte_generale returns [String toString]:'@' i=ID{toString="condGen.push_back(new "+$i.text+"());";};
 	

@@ -9,7 +9,6 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 	this->affectation  =affectation;
 	/** Construire le graphe ici */
 	set_noeud candidats = p->noeudsParType[this->nom];
-	int itt =0;
 	dejaTraites = set<Noeud*>();
 	succ = map<Noeud*,set<Noeud*> >(); 
 	for(set_noeud::iterator ite = candidats.begin();ite!=candidats.end();ite++)
@@ -18,7 +17,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		if(dejaTraites.count(*ite)>0)
 		continue;
 		bool okCondition = true;
-		for(vector<ConditionUnique*>::iterator it = conditions.begin();it!=conditions.end();it++)
+		for(vector<ConditionUnique*>::iterator it = condUnique.begin();it!=condUnique.end();it++)
 		if(!((*it)->estVerifiee(*ite)))
 		{
 			okCondition = false;
@@ -31,14 +30,14 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		for(vector<ConditionAdj*>::iterator it = condAdjExt.begin();it!=condAdjExt.end();it++)
 		{
 			ConditionAdj* cadj = *it;
-			cout<<"Traitement d'une condition d'adjacence dans la construction du graphe"<<endl;
+			//cout<<"Traitement d'une condition d'adjacence dans la construction du graphe"<<endl;
 			if(affectation[cadj->j]==NULL) //Si la variable en question n'est pas affectée, on traite pas.
 				continue;
-			cout<<"Ok condition adjacecne, l'autre est affecté"<<endl;
+			//cout<<"Ok condition adjacecne, l'autre est affecté"<<endl;
 			if(p->adj[affectation[cadj->j]->getAttribut(cadj->att_j)->polygoneValue()].count((*ite)->getAttribut(cadj->att_i)->polygoneValue())==0) //Si l'adjacence n'est pas respectée, on ajoute pas le noeud au graphe.
 			{
 				okCondition = false;
-				cout<<"On vire le noeud"<<(*ite)->nom_parser<<" car il est pas adjacenct"<<endl;
+				//cout<<"On vire le noeud"<<(*ite)->nom_parser<<" car il est pas adjacenct"<<endl;
 				break;
 			}
 		}

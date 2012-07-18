@@ -27,7 +27,7 @@ class Operateur : public MembreDroit
 	string name;
 
 	/** Les conditions portant sur le membre droit (par exemple, chaque marche doit mesurer plus de 30 cm).*/
-	vector<ConditionUnique*> conditions;
+	vector<ConditionUnique*> condUnique;
 	/** Les conditions d'adjacence entre attributs de deux éléments consécutifs. */
 	vector<ConditionAdj*> condAdj;
 	/** Les conditions d'égalité entre attributs de deux éléments consécutifs. */

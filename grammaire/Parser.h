@@ -36,7 +36,7 @@ class Parser
 {
 	public :
 		Parser();
-		void parse(vector<Polygone*> terminaux);
+		void parse(vector<Polygone*> terminaux,int max_iter=0);
 		void tous(string axiome);
 		void ajouterNoeud(Noeud* n);
 		vector<Polygone*> terminaux;

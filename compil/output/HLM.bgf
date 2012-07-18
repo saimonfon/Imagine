@@ -7,9 +7,9 @@ grammaire HLM
 
 
 murs->cycle(mur,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}
-premur->polygone {$0 .vertical==true} {primitive = $0 .primitive; plan =$0 .plan;}
+premur->polygone {$0 .vertical==true ^ $0 .area > 0.1} {primitive = $0 .primitive; plan =$0 .plan;}
 mur->premur	,ensemble(fenetre_complete {adj(primitive,#0 .primitive)}, {}) {}{primitive = $0 .primitive; plan = $0 .plan;}
 fenetre->polygone {$0 .vertical==true} {primitive = $0 .primitive;}
 rebord->cycle(rebord_possible,{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte},{primitive = $0 .primitive;}) {$0 .size ==4}{primitive = $0 .primitive;}
 rebord_possible-> polygone{$0 .vert_or_hor == true ^ $0 .rectangle==true} {primitive = $0 .primitive;}
-fenetre_complete->fenetre, rebord {adj($0 .primitive,$1 .primitive) ^@ContrainteFenetreComplete}{@CalculAttFenetreComplete}
+fenetre_complete->fenetre, cycle(rebord_possible{adj(primitive,#0 .primitive)},{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte},{primitive = $0 .primitive;}) {$1 .size==4^@ContrainteFenetreComplete}{@CalculAttFenetreComplete}

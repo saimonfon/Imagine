@@ -84,7 +84,7 @@
 	 {
 		QString s;
 		for(map<string,Attribut*>::const_iterator it = item->n->attributs.begin();it!=item->n->attributs.end();it++)
-			s+= QString::fromStdString(it->first)+" : "+it->second->toString();
+			s+= QString::fromStdString(it->first)+" : "+it->second->toString()+"<br>";
 		return s;
 	 }
 	if(role!=Qt::DisplayRole)

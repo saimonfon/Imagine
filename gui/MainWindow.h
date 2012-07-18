@@ -20,6 +20,7 @@ class MainWindow: public QMainWindow
 	void chargerFichierTexte();
 	void chargerFichierObj();
 	void executer();
+	void executerPartiel();
 	private :
 	Parser* p;
 	QTreeView* view;

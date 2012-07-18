@@ -18,13 +18,18 @@ MainWindow::MainWindow(Parser* p) : QMainWindow()
 	QMenu* fileMenu = menuBar()->addMenu(tr("&Fichier"));
 	QAction* chargerTxt = new QAction("Charger modèle texte",fileMenu);
 	QAction* chargerObj = new QAction("Charger modèle Obj",fileMenu);
-	QAction* a_executer = new QAction("Exécuter",fileMenu);
 	fileMenu->addAction(chargerTxt);
 	fileMenu->addAction(chargerObj);
-	fileMenu->addAction(a_executer);
 	connect(chargerTxt,SIGNAL(triggered()),this,SLOT(chargerFichierTexte()));
 	connect(chargerObj,SIGNAL(triggered()),this,SLOT(chargerFichierObj()));
+	QMenu* execMenu = menuBar()->addMenu(tr("&Exécuter"));
+	QAction* a_executer = new QAction("Totalement",execMenu);
+	execMenu->addAction(a_executer);
 	connect(a_executer,SIGNAL(triggered()),this,SLOT(executer()));
+	QAction* a_executerPartiel = new QAction("Partiellement",execMenu);
+	execMenu->addAction(a_executerPartiel);
+	connect(a_executerPartiel,SIGNAL(triggered()),this,SLOT(executerPartiel()));
+	
 	QMenu* graphMenu = menuBar()->addMenu(tr("&Graphes"));
 	QAction* exclu = new QAction("Graphe d'exclusivité",graphMenu);
 	QAction* adj = new QAction("Graphe d'adjacence",graphMenu);
@@ -67,7 +72,7 @@ for(int i=0;i<p->terminaux.size();i++)
 		if(n->getType().compare("polygone")==0)
 		{
 			qDebug()<<QString::number(n->getAttribut("number")->intValue()-1)<<endl;
-			indices[n->getAttribut("number")->intValue()-1] = true;
+			indices[n->getAttribut("number")->intValue()] = true;
 		}
 		vector<Noeud*> enfants = n->getEnfants();
 		for(vector<Noeud*>::iterator it = enfants.begin();it!=enfants.end();it++)
@@ -137,6 +142,8 @@ svgWidget->show();
 void MainWindow::chargerFichierTexte()
 {
 	QString fileName = QFileDialog::getOpenFileName(this,"Charger un modèle au format texte",QString(),"Fichiers texte (*.txt)");
+	if(fileName.isNull())
+		return;
 	FileReader f;
 	model = f.readFile(fileName.toStdString());
 	p->adj = f.adj;
@@ -150,6 +157,8 @@ void MainWindow::chargerFichierTexte()
 void MainWindow::chargerFichierObj()
 {
 	QString fileName = QFileDialog::getOpenFileName(this,"Charger un modèle au format obj",QString(),"Fichiers Wavefront (*.obj)");
+	if(fileName.isNull())
+		return;
 	ObjReader f(fileName.toStdString());
 	model = f.polygones();
 	p->adj = f.adj;
@@ -163,6 +172,36 @@ void MainWindow::chargerFichierObj()
 void MainWindow::executer()
 {
 p->parse(model);
+v= new Viewer(p->terminaux);
+	bool * indices = new bool[p->terminaux.size()];
+	v->setColoredIndices(indices); 
+     TreeModel* model = new TreeModel(p);
+	 view = new QTreeView();
+	 connect(view,SIGNAL(activated(const QModelIndex&)), this, SLOT(afficherElems(const QModelIndex&)));
+     view->setModel(model);
+	 QSplitter* s = new QSplitter();
+	s->addWidget(view);
+	s->addWidget(v);
+	QList<int> sizes;
+	sizes<<200<<200;
+	s->setSizes(sizes);
+	view->setContextMenuPolicy(Qt::ActionsContextMenu);
+	QAction* showTree = new QAction("Arbre de dérivation",view);
+	connect(showTree,SIGNAL(triggered()),this,SLOT(afficherArbre()));
+	view->addAction(showTree);
+	tabs->removeTab(1);
+	delete resultWidget;
+	resultWidget = s;
+	tabs->insertTab(1,resultWidget,"Résultat");
+}
+
+void MainWindow::executerPartiel()
+{
+bool ok;
+int nb_iter = QInputDialog::getInt (this,"Execution partielle","Nombre maximal d'itérations :", 3, 1,1000, 1, &ok);
+if(!ok)
+	return;
+p->parse(model,nb_iter);
 v= new Viewer(p->terminaux);
 	bool * indices = new bool[p->terminaux.size()];
 	v->setColoredIndices(indices); 

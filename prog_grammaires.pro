@@ -110,18 +110,7 @@ SOURCES += main.cpp \
 QT *= opengl xml svg	
 LIBS *=-lQGLViewerd2
 QMAKE_LIBDIR  += .
-=======
-
-QT *= opengl xml svg
-LIBS *=-lQGLViewerd2
-QMAKE_LIBDIR += .
->>>>>>> attributs
 INCLUDEPATH += . ../QGLViewer/
-
 QMAKE_CXXFLAGS+= -fpermissive
 CXXFLAGS+= -fpermissive
-<<<<<<< HEAD
 CONFIG += console
-=======
-CONFIG += console
->>>>>>> attributs
