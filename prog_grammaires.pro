@@ -107,7 +107,12 @@ SOURCES += main.cpp \
            grammaire/parsing/NonTerminal.cpp \
            grammaire/parsing/Terminal.cpp
 QT *= opengl xml svg	
-LIBS *=-lQGLViewerd2
+win32 {
+    LIBS *= -lQGLViewer
+}
+unix {
+    LIBS *= -lqglviewer-qt4 -lGLU
+}
 QMAKE_LIBDIR  += .
 INCLUDEPATH += . ../QGLViewer/
 
