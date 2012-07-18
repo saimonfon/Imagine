@@ -45,6 +45,13 @@ class Vec3
 		return Vec3(this->x+other.x,this->y+other.y,this->z+other.z);
 	}
 	
+	void operator+=(const Vec3& other)
+	{
+		this->x+=other.x;
+		this->y+=other.y;
+		this->z+=other.z;
+	}
+	
 	float operator*(const Vec3& other) const
 	{
 		return this->x*other.x + this->y*other.y + this->z*other.z;

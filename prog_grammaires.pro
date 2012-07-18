@@ -108,7 +108,7 @@ SOURCES += main.cpp \
            grammaire/parsing/Terminal.cpp
 QT *= opengl xml svg	
 win32 {
-    LIBS *= -lQGLViewer
+    LIBS *= -lQGLViewerd2
 }
 unix {
     LIBS *= -lqglviewer-qt4 -lGLU

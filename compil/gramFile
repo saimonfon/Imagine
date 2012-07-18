@@ -1,4 +1,0 @@
-grammaire test
-a->b,c
-a->sequence(b)
-b->c,d

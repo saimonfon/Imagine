@@ -1,16 +1,16 @@
 #include "Noeud.h"
 
-void* Noeud::getAttribut(string nom)
+Attribut* Noeud::getAttribut(string nom)
 	{
 		return attributs[nom];
 	}
 	
-	map<string,void*> Noeud::getAttributs()
+	map<string,Attribut*> Noeud::getAttributs()
 	{
 		return attributs;
 	}
 	
-	void Noeud::setAttribut(string nom,void* val)
+	void Noeud::setAttribut(string nom,Attribut* val)
 	{
 		attributs[nom] = val;
 	}
@@ -21,7 +21,7 @@ void* Noeud::getAttribut(string nom)
 		return getEnfants()[i];
 	}
 	
-	void* Noeud::operator[](string s)
+	Attribut* Noeud::operator[](string s)
 	{
 		return attributs[s];
 	}

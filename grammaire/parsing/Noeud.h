@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "../attributs/Attribut.h"
 using namespace std;
 /** Classe décrivant un noeud (i.e. un non-terminal) reconnu.*/
 class Noeud
@@ -15,15 +16,15 @@ class Noeud
 	/** Retourne la valeur d'un attribut du nom.
 	@param nom Le nom de l'attribut demandé.
 	@return Un pointeur sur la valeur de l'attribut.*/
-	void* getAttribut(string nom);
+	Attribut* getAttribut(string nom);
 	/** Retourne les attributs du noeud.
 	@return Les attributs du noeud, sous la forme d'un dictionnaire.*/
-	map<string,void*> getAttributs();
+	map<string,Attribut*> getAttributs();
 	string nom_parser;
 	/** Modifie la valeur d'un attribut du noeud.
 	@param nom Le nom de l'attribut à modifier.
 	@param val La nouvelle valeur de l'attribut.*/
-	void setAttribut(string nom,void* val);
+	void setAttribut(string nom,Attribut* val);
 	
 	/** Test d'égalité entre deux noeuds. Utilisé par le parser pour ne pas ajouter plusieurs fois le même noeud à la forêt.
 	@param n2 Un pointeur sur le noeud à comparer.
@@ -39,9 +40,9 @@ class Noeud
 	/** Accesseur sur les attributs du noeud.
 	@param s Le nom de l'attribut demandé.
 	@return La valeur de l'attribut (équivalent à getAttribut(s)).*/
-	void* operator[](string s);
+	Attribut* operator[](string s);
 	
 	vector<Noeud*> enfants;
-	map<string,void*> attributs;
+	map<string,Attribut*> attributs;
 };
 #endif

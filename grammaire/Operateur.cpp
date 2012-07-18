@@ -35,7 +35,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			if(affectation[cadj->j]==NULL) //Si la variable en question n'est pas affectée, on traite pas.
 				continue;
 			cout<<"Ok condition adjacecne, l'autre est affecté"<<endl;
-			if(p->adj[(Polygone*) affectation[cadj->j]->getAttribut(cadj->att_j)].count((Polygone*) (*ite)->getAttribut(cadj->att_i))==0) //Si l'adjacence n'est pas respectée, on ajoute pas le noeud au graphe.
+			if(p->adj[affectation[cadj->j]->getAttribut(cadj->att_j)->polygoneValue()].count((*ite)->getAttribut(cadj->att_i)->polygoneValue())==0) //Si l'adjacence n'est pas respectée, on ajoute pas le noeud au graphe.
 			{
 				okCondition = false;
 				cout<<"On vire le noeud"<<(*ite)->nom_parser<<" car il est pas adjacenct"<<endl;
@@ -61,8 +61,8 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		for(vector<ConditionAdj*>::iterator it = condAdj.begin();it!=condAdj.end();it++)
 		{
 			ConditionAdj* cadj = *it;
-			table_adj_i[cadj][(Polygone*)(*ite)->getAttribut(cadj->att_i)].insert(*ite);
-			table_adj_j[cadj][(Polygone*)(*ite)->getAttribut(cadj->att_j)].insert(*ite);
+			table_adj_i[cadj][(*ite)->getAttribut(cadj->att_i)->polygoneValue()].insert(*ite);
+			table_adj_j[cadj][(*ite)->getAttribut(cadj->att_j)->polygoneValue()].insert(*ite);
 		}
 		for(vector<ConditionEgal*>::iterator it = condEgal.begin();it!=condEgal.end();it++)
 		{
@@ -76,7 +76,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		for(vector<ConditionAdj*>::iterator it = condAdj.begin();it!=condAdj.end();it++)
 		{
 				ConditionAdj* cadj = *it;
-				set<Polygone*> adj = p->adj[(Polygone*) (*ite)->getAttribut(cadj->att_i)];
+				set<Polygone*> adj = p->adj[(*ite)->getAttribut(cadj->att_i)->polygoneValue()];
 				set<Noeud*> adj_elem;
 				for(set<Polygone*>::iterator it2 = adj.begin();it2!=adj.end();it2++)
 				adj_elem.insert(table_adj_j[cadj][*it2].begin(),table_adj_j[cadj][*it2].end());
@@ -143,7 +143,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		for(vector<ConditionAdj*>::iterator it = condAdj.begin();it!=condAdj.end();it++)
 		{
 				ConditionAdj* cadj = *it;
-				set<Polygone*> adj = p->adj[(Polygone*) (*ite)->getAttribut(cadj->att_j)];
+				set<Polygone*> adj = p->adj[(*ite)->getAttribut(cadj->att_j)->polygoneValue()];
 				set<Noeud*> adj_elem;
 				for(set<Polygone*>::iterator it2 = adj.begin();it2!=adj.end();it2++)
 				adj_elem.insert(table_adj_i[cadj][*it2].begin(),table_adj_i[cadj][*it2].end());
@@ -221,6 +221,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 	{
 		if((it1!=it2) && this->p->exclusivite[*it1].count(*it2)>0)
 		{
+			cout<<"On supprime un noeud car "<<(*it1)->nom_parser<<" et "<<(*it2)->nom_parser<<" sont exclusifs"<<endl;
 			goOn=false;
 			toErase.insert(*ite);
 			break;
@@ -229,13 +230,15 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		if(!goOn)
 			break;
 	}
+    cout<<parent<<" : "<<parent->condUnique.size();
 	for(vector<ConditionUnique*>::iterator it = parent->condUnique.begin();it!=parent->condUnique.end();it++)
 	{
+        cout<<"Traitement de la condition unique "<<(*it)->indice<<" et this->position vaut "<<this->position<<endl;
 		if((*it)->indice != this->position)
 			continue;
 		if(!((*it)->estVerifiee(*ite)))
 		{
-			//cout<<"On doit supprimer car size = "<<(int)((*ite)->getAttribut("size"))<<endl;
+            cout<<"On doit supprimer car size = "<<(*ite)->getAttribut("size")->intValue()<<endl;
 			toErase.insert(*ite);
 			break;
 		}
@@ -244,8 +247,8 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 	
 	for(set<Noeud*>::iterator ite = toErase.begin();ite!=toErase.end();ite++)
 		res.erase(*ite);
-		if(res.size()==0)
-			res.insert(new NonTerminal(name,vector<Noeud*>()));
+		/*if(res.size()==0)
+			res.insert(new NonTerminal(name,vector<Noeud*>()));*/
 	return res;
 }
 

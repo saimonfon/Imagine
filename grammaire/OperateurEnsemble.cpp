@@ -26,6 +26,7 @@ set<Noeud*> OperateurEnsemble::noeudsFromGraphe()
 		}
 		cout<<endl;
 		NonTerminal* n = new NonTerminal(name,enfants);
+		n->setAttribut("size",new AttributInt(enfants.size()));
 		if(calculAtt!=NULL)
 			calculAtt->calculAttrib(n);
 		res.insert(n);

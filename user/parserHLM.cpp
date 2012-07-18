@@ -10,6 +10,7 @@
 #include "../grammaire/condition/ConditionAdj.h"
 #include "../grammaire/condition/ConditionEgal.h"
 #include "../grammaire/regles/CalculAttributs.h"
+#include "../grammaire/attributs/Attribut.h"
 #include "ContrainteAdjacenceExacte.cpp"
 #include "ContrainteMurFenetre.cpp"
 #include "ContrainteFenetreComplete.cpp"
@@ -36,7 +37,7 @@ Regle* r1 = new Regle("premur",v1);
 ajouterRegle(r1);
 class ConditionUnique1_3 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-((int) n->getAttribut("vertical"))==true;}};
+(n->getAttribut("vertical")->boolValue()==true);}};
 ConditionUnique1_3* c1_3 = new ConditionUnique1_3(); c1_3->indice = 0;
 r1->condUnique.push_back(c1_3);
 class Calcul3 : public CalculAttributs {
@@ -64,7 +65,7 @@ Regle* r3 = new Regle("fenetre",v3);
 ajouterRegle(r3);
 class ConditionUnique3_7 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-((int) n->getAttribut("vertical"))==true;}};
+(n->getAttribut("vertical")->boolValue()==true);}};
 ConditionUnique3_7* c3_7 = new ConditionUnique3_7(); c3_7->indice = 0;
 r3->condUnique.push_back(c3_7);
 class Calcul7 : public CalculAttributs {
@@ -85,10 +86,13 @@ v4.push_back(op8);
 Regle* r4 = new Regle("rebord",v4);
 ajouterRegle(r4);
 class ConditionUnique4_10 : public ConditionUnique{
-bool estVerifiee(Noeud* n){return 
-((int) n->getAttribut("size"))==4;}};
+bool estVerifiee(Noeud* n){
+cout<<"On vérifie la condition Sur le rebord"<<" : "<<n->getAttribut("size")->intValue()<<endl;
+return 
+(n->getAttribut("size")->intValue()==4);}};
 ConditionUnique4_10* c4_10 = new ConditionUnique4_10(); c4_10->indice = 0;
 r4->condUnique.push_back(c4_10);
+cout<<r4<<" : "<<r4->condUnique.size()<<endl;
 class Calcul10 : public CalculAttributs {
 void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
@@ -100,11 +104,11 @@ Regle* r5 = new Regle("rebord_possible",v5);
 ajouterRegle(r5);
 class ConditionUnique5_12 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-((int) n->getAttribut("vert_or_hor"))==true;}};
+(n->getAttribut("vert_or_hor")->boolValue()==true);}};
 ConditionUnique5_12* c5_12 = new ConditionUnique5_12(); c5_12->indice = 0;
 class ConditionUnique5_13 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-((int) n->getAttribut("rectangle"))==true;}};
+(n->getAttribut("rectangle")->boolValue()==true);}};
 ConditionUnique5_13* c5_13 = new ConditionUnique5_13(); c5_13->indice = 0;
 r5->condUnique.push_back(c5_12);
 r5->condUnique.push_back(c5_13);

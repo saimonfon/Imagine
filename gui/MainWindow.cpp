@@ -65,7 +65,10 @@ for(int i=0;i<p->terminaux.size();i++)
 		Noeud* n = aVoir.front();
 		aVoir.pop();
 		if(n->getType().compare("polygone")==0)
-			indices[(int)((*n)["number"])-1] = true;
+		{
+			qDebug()<<QString::number(n->getAttribut("number")->intValue()-1)<<endl;
+			indices[n->getAttribut("number")->intValue()-1] = true;
+		}
 		vector<Noeud*> enfants = n->getEnfants();
 		for(vector<Noeud*>::iterator it = enfants.begin();it!=enfants.end();it++)
 		{
@@ -149,7 +152,7 @@ void MainWindow::chargerFichierObj()
 	QString fileName = QFileDialog::getOpenFileName(this,"Charger un modèle au format obj",QString(),"Fichiers Wavefront (*.obj)");
 	ObjReader f(fileName.toStdString());
 	model = f.polygones();
-	//p->adj = f.adj; A REMETTRE
+	p->adj = f.adj;
 	tabs->removeTab(0);
 	delete modelWidget;
 	modelWidget = new Viewer(model);

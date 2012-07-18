@@ -12,6 +12,7 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 	resultats.insert(res.begin(),res.end());
 	for(vector<ConditionUnique*>::iterator it_cond = parent->condUnique.begin();it_cond!=parent->condUnique.end();it_cond++)
 	{
+         cout<<"Traitement de la condition unique "<<(*it_cond)->indice<<" et this->position vaut "<<this->position<<endl;
 		if((*it_cond)->indice !=this->position)
 			continue;
 		set<Noeud*> toErase;
@@ -32,7 +33,7 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 			if(cadj->i==this->position && affectation[cadj->j]!=NULL)
 			{
 			//cout<<"Prise en comppte d'une condition d'adjacence"<<endl;
-			set<Polygone*> adj = p->adj[(Polygone*) affectation[cadj->j]->getAttribut(cadj->att_j)];
+			set<Polygone*> adj = p->adj[affectation[cadj->j]->getAttribut(cadj->att_j)->polygoneValue()];
 			//cout<<"Nombre d'éléments adjacents :"<<adj.size()<<endl;
 			set<Noeud*> adj_elem;
 			for(set<Polygone*>::iterator it2 = adj.begin();it2!=adj.end();it2++)
@@ -46,7 +47,7 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 			else if(cadj->j==this->position && affectation[cadj->i]!=NULL)
 			{
 			//cout<<"Prise en comppte d'une condition d'adjacence pour j"<<endl;
-			set<Polygone*> adj = p->adj[(Polygone*) affectation[cadj->i]->getAttribut(cadj->att_i)];
+			set<Polygone*> adj = p->adj[affectation[cadj->i]->getAttribut(cadj->att_i)->polygoneValue()];
 			//cout<<"Nombre d'éléments adjacents :"<<adj.size()<<endl;
 			/*for(set<Polygone*>::iterator it= adj.begin();it!=adj.end();it++)
 				cout<<(*it)->number<<" ";*/
@@ -65,6 +66,7 @@ set<Noeud*> MembreStandard::getAffectations(Parser* p,Noeud** affectation, int N
 			}
 		}
 		
+		/* Le == marche plus, il faut modifier la classe Attribut pour redéfinir l'égalité (ou plutot l'inégalité*/
 		for(vector<ConditionEgal*>::iterator it = parent->condEgal.begin();it!=parent->condEgal.end();it++)
 		{
 			ConditionEgal* ceg = *it;

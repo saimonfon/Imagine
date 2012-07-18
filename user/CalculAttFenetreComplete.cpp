@@ -2,6 +2,7 @@
 #define CALCULATTFC_H
 #include "../grammaire/regles/CalculAttributs.h"
 #include "../geometrie/Polygone.h"
+#include "../grammaire/attributs/Attribut.h"
 class CalculAttFenetreComplete : public CalculAttributs
 {
 //Trouver le plan d'accroche au mur
@@ -10,15 +11,15 @@ cout<<"Début du calcul des attributs"<<endl;
 cout<<"Taille de eefenfants"<<nouveau->getEnfants().size()<<endl;
 cout<<nouveau->getEnfants()[0]->nom_parser<<endl;
 cout<<(*(nouveau->getEnfants()[0]))["primitive"]<<endl;
-Polygone* f = (Polygone*) (*(nouveau->getEnfants()[0]))["primitive"];
+Polygone* f = (nouveau->getEnfants()[0])->getAttribut("primitive")->polygoneValue();
 cout<<"Ok fenetre"<<endl;
 Noeud* rebord = nouveau->getEnfants()[1];
 //Prendre deux rebords opposés.
 cout<<"Taille de rebord :"<<rebord->getEnfants().size()<<endl;
-Polygone* r1 = (Polygone*) ((*(rebord->getEnfants()[0]))["primitive"]);
-Polygone* r2 = (Polygone*) ((*(rebord->getEnfants()[2]))["primitive"]);
+Polygone* r1 = (rebord->getEnfants()[0])->getAttribut("primitive")->polygoneValue();
+Polygone* r2 = (rebord->getEnfants()[2])->getAttribut("primitive")->polygoneValue();
 cout<<"ok rebords opposés"<<endl;
-nouveau->setAttribut("primitive",r1);
+nouveau->setAttribut("primitive",new AttributPoly(r1));
 
 //Trouver les arêtes adjacentes pour ces 2 rebords
 int arete1,arete2;
@@ -66,7 +67,7 @@ if(normale.y<0)
 	equation[1]  = normale.y;
 	equation[2]  = normale.z;
 	equation[3]  = d;
-nouveau->setAttribut("plan",equation);
+nouveau->setAttribut("plan",new AttributPtr(equation));
 cout<<"Fin du calcul des attributs"<<endl;
 cout<<"Fenetre complete :"<<equation[0]<<" "<<equation[1]<<" "<<equation[2]<<" "<<equation[3]<<endl;
 }

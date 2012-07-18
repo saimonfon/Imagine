@@ -24,8 +24,6 @@ class Polygone
 	Vec3& operator[](int i);
 	int size();
 	private:
-	float area;
-	void computeArea();
 	void computePoints3D();
 
 };
