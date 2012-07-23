@@ -10,6 +10,7 @@ class Polygone
 {
 	public:
 	void setContour(vector<point2d> c);
+	void computeAttributs();
 	float getArea();
 	int number;
 	vector<point2d> contour;
@@ -19,12 +20,12 @@ class Polygone
 	float* equation;
 	unsigned short* belongingFaces;
 	int nb_faces;
-	//Rajouter les trous
+	vector<Polygone*> trous;
 	bool egal(const Polygone* p) const;
 	Vec3& operator[](int i);
 	int size();
 	private:
 	void computePoints3D();
-
+float area;
 };
 #endif

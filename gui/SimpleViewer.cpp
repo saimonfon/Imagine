@@ -1,4 +1,5 @@
 #include "SimpleViewer.h"
+#include <stdio.h>
  #ifndef CALLBACK
    #define CALLBACK
    #endif
@@ -11,22 +12,8 @@ colored_ind = new bool[p.size()];
 for(int i=0;i<p.size();i++)
 	colored_ind[i]=false;
 	
-/* Scaling pour que le modèle soit inclus dans le carré de côté 1*/
-float max_size=0;	
-for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
-{
-for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
-{
-  if((*it2).x > max_size)
-	max_size = (*it2).x;
-  if((*it2).y > max_size)
-	max_size = (*it2).y;
-	  if((*it2).z > max_size)
-	max_size = (*it2).z;
-}
-}
-scale = 1 / max_size;
 
+setViewPrimitives();
 /* Générer les listes OpenGL pour accélérer le rendu */
 /*base_ind = glGenLists(p.size());
 int i=0;
@@ -60,7 +47,18 @@ i++;
 
 void Viewer::setColoredIndices(bool* colored_ind)
 {
+	delete[] this->colored_ind;
 	this->colored_ind = colored_ind;
+	mode=0;
+}
+
+void Viewer::setViewPrimitives()
+{
+	/*Calculer aléatoirement une couleur par primitive*/
+	primColors = new int[3*p.size()];
+	for(int i=0;i<3*p.size();i++)
+		primColors[i] = rand()%256;
+	mode=1;
 }
 
 
@@ -77,18 +75,24 @@ gluTessCallback(tess, GLU_TESS_VERTEX,
                    (GLvoid (CALLBACK*) ()) &glBegin);
    gluTessCallback(tess, GLU_TESS_END,
                    (GLvoid (CALLBACK*) ()) &glEnd);
+if(mode==0)
+{
 if(colored_ind[i])
 glColor4ub(255, 0,0,100); // on demande du bleu
 else
 glColor4ub(255, 255, 255,50); // on demande du bleu
-
+}
+else
+{
+	glColor4ub(primColors[3*i],primColors[3*i+1],primColors[3*i+2],255);
+}
 gluBeginPolygon(tess);
 for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
 {
   GLdouble* location = new GLdouble[3];
-  location[0] = (*it2).x*scale;
-  location[1] = (*it2).y*scale;
-  location[2] = (*it2).z*scale;
+  location[0] =  it2->x;
+  location[1] = it2->y;
+  location[2] = it2->z;
   gluTessVertex(tess, location, location);
  //delete location;
 }

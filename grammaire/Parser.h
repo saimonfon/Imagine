@@ -4,6 +4,7 @@
 #include <set>
 #include <map>
 #include "../geometrie/Polygone.h"
+#include "../geometrie/Modele.h"
 #include "parsing/Noeud.h"
 #include "Regle.h"
 //#include<unordered_set>
@@ -36,7 +37,7 @@ class Parser
 {
 	public :
 		Parser();
-		void parse(vector<Polygone*> terminaux,int max_iter=0);
+		void parse(Modele* modele,int max_iter=0);
 		void tous(string axiome);
 		void ajouterNoeud(Noeud* n);
 		vector<Polygone*> terminaux;

@@ -12,6 +12,7 @@ string Terminal::getType() const
 
 Terminal::Terminal(Polygone* polygone, int number)
 {
+	polygone->computeAttributs();
 	attributs = map<string,Attribut*>();
 	attributs["primitive"] = new AttributPoly(polygone);
 	attributs["number"] = new AttributInt(number);

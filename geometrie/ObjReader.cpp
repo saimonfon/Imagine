@@ -8,7 +8,7 @@ objData = new objLoader();
 objData->load(fileName.c_str());
 }
 
-vector<Polygone*> ObjReader::polygones()
+Modele* ObjReader::polygones()
 {
 	int M = objData->faceCount;
 	int N = objData->vertexCount;
@@ -72,11 +72,12 @@ vector<Polygone*> ObjReader::polygones()
 			}
 		}
 	}
-	return res;
+	return new Modele(res,adj);
 }
 
 Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 {
+	cout<<"TRAITEMENT D'UN NOUVEAU POLYGONE"<<endl;
 	vector<int> faces;
 	stack<int> aVoir;
 	aVoir.push(i);
@@ -104,6 +105,14 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 			}
 			}
 		}
+	}
+	for(vector<int>::iterator it = faces.begin();it!=faces.end();it++)
+	{
+		cout<<"(";
+		int nAretes = objData->faceList[*it]->vertex_count;
+		for(int k = 0;k<nAretes;k++)
+			cout<<objData->faceList[*it]->vertex_index[k]<<", ";
+		cout<<") ";
 	}
 	//cout<<"Ok avant copntour"<<endl;
 	/* Extraire le contour.
@@ -136,31 +145,34 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 	vector< pair<int,int> > bords;
 	for(map<pair<int,int>,int>::iterator it = nbFacesAdjacentes.begin();it!=nbFacesAdjacentes.end();it++)
 	{
-		//cout<<it->first.first<<" -> "<<it->first.second<<" : "<<it->second<<endl;
+		cout<<it->first.first<<" -> "<<it->first.second<<" : "<<it->second<<endl;
 		if(it->second == 1)
 		{
 			bords.push_back(it->first);
 			cout<<"( "<<it->first.first<<" -> "<<it->first.second<<" ) ";
 		}
 	}
-	cout<<endl;
+	//cout<<endl;
 	//cout<<"Ok apres les bords"<<endl;
 	/*Pour l'instant, on prend seulement le premier bord, comme des sagouins*/
 	//cout<<"Niombre d'arêtes de bord :"<<bords.size()<<endl;
 	bool* marque2 = new bool[bords.size()];
 	for(int k=0;k<bords.size();k++)
 		marque2[k] = false;
-	pair<int,int> cur = bords[0];
-	marque2[0]=true;
-	vector<Vec3> res;//vector<vector<Vec3> > res;
-	cout<<"Bord trouvé :";
+	vector<Polygone*> res;
+	/* On cherche tous les bords */
+	for(int i=0;i<bords.size();i++)
+	{
+	if(marque2[i])
+		continue;
+	pair<int,int> cur = bords[i];
+	marque2[i]=true;
+	vector<Vec3> cur_bord;
 	while(true)
 	{
 		bool found=false;
 		Vec3 v(objData->vertexList[cur.first]);
-		v.inverserYetZ();
-		res.push_back(v);
-		cout<<"( "<<cur.first<<" -> "<<cur.second<<" ) ";
+		cur_bord.push_back(v);
 		//Trouver la suite (i.e. une arête de bord pas marquée adjacente à celle-là par la 2e extrémité)
 		for(int k=0;k<bords.size();k++)
 		{
@@ -185,35 +197,57 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 		if(!found)
 			break;
 	}
-	cout<<endl;
-	cout<<"Taille du contour :"<<res.size()<<endl;
-	//cout<<"Ok poiur la construction du polygone"<<endl;
 	
 	/*Simplification du contour*/
 	int j = 0;
-	while(j<res.size())
+	cout<<cur_bord.size()<<endl;
+	for(int i=0;i<cur_bord.size();i++)
+		cout<<"("<<cur_bord[i].x<<" , "<<cur_bord[i].y<<" , "<<cur_bord[i].z<<" ) ->";
+	cout<<endl;
+	/*while(j<cur_bord.size())
 	{
-		int N = res.size();
+		int N = cur_bord.size();
 		//Vérifier si les points j,j+1 et j+2 sont colinéaires (i.e. que leur produit vectoriel vaut 0 à une erreur près).
-		if(((res[(j+1)%N]-res[j])^(res[(j+2)%N]-res[j])).norm()<0.00001)
-			res.erase(res.begin()+(j+1)%N);
+		if(((cur_bord[(j+1)%N]-cur_bord[j]).normalize()^(cur_bord[(j+2)%N]-cur_bord[j]).normalize()).norm()<1e-3)
+			cur_bord.erase(cur_bord.begin()+(j+1)%N);
 		else
 			j=j+1;
+	}*/
+	if(cur_bord.size()==0) //Devrait normalement pas arriver, mais certains modèles sont dégénérés (triangles plats)
+		continue;
+	//On a trouvé un bord, on construit un polygone avec
+	Polygone* p = new Polygone();
+	p->points3D = cur_bord;
+	p->computeAttributs();
+	res.push_back(p);
 	}
-	if(res.size()==0)
+	/* On a tous les bords, on choisit le polygone de plus grande aire comme contour, les autres sont des trous */
+	int best = -1;
+	float best_area = 0;
+	for(int i=0;i<res.size();i++)
 	{
-		cout<<"Bugggggg, polygone vide"<<endl;
+		if(res[i]->getArea()>best_area)
+		{
+			best = i;
+			best_area = res[i]->getArea();
+		}
+	}
+	if(best==-1) //Devrait pas arriver
+	{
+		cout<<"BUUUUUGGGGG"<<endl;
 		return NULL;
 	}
-	
-	Polygone* p = new Polygone();
-	p->equation = new float[4];
-	p->equation[0] = normales[i].x;
-	p->equation[1] = normales[i].y;
-	p->equation[2] = normales[i].z;
-	p->points3D = res;
+	Polygone* p =new Polygone();
+	p->points3D = res[best]->points3D;
 	p->number = cur_comp;
+	res.erase(res.begin()+best);
+	p->trous = res;
+	/*for(int i=0;i<res.size();i++)
+	{
+		this->res.push_back(res[i]);
+		}*/
 	return p;
+	//return NULL;
 }
 
 Vec3 ObjReader::normale(obj_face* f,obj_vector** vertices)

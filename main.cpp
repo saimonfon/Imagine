@@ -25,19 +25,21 @@ void test(int n);
 void test3();*/
 void testAuto(int argc, char** argv);
 void testEscalier(int argc, char** argv);
-void testMerge()
+/*void testMerge()
 {
 	ObjReader r("../models/immeuble.obj");
 	r.polygones();
-}
+}*/
 
-void gui(int argc, char** argv)
+int gui(int argc, char** argv)
 {
-ParserHLM* parser = new ParserHLM();
-MainWindow::afficher(parser,argc,argv);
+QApplication app(argc, argv);
+    MainWindow fenetre;
+    fenetre.show();
+	return app.exec();
 }
 
-void testAuto(int argc, char** argv)
+/*void testAuto(int argc, char** argv)
 {
 	FileReader f;
 	vector<Polygone*> maison = f.readFile("hlm1.txt");
@@ -48,8 +50,7 @@ void testAuto(int argc, char** argv)
 	//irrlichtShowPolygons(maison);
 	cout<<"Ok poluygone show"<<endl;
 	parser->parse(maison);
-	MainWindow::afficher(parser,argc,argv);
-}
+}*/
 int main(int argc, char** argv)
 {
 		//test2();
@@ -64,15 +65,14 @@ int main(int argc, char** argv)
 		//testMerge();
 }
 
-void testEscalier(int argc, char** argv)
+/*void testEscalier(int argc, char** argv)
 {
 	FileReader f;
 	vector<Polygone*> maison = f.readFile("maison3.txt");
 	Parserescalier* parser = new Parserescalier();
 	parser->adj = f.adj;
 	parser->parse(maison);
-	MainWindow::afficher(parser,argc,argv);
-}
+}*/
 
 /*void test3()
 {
@@ -103,7 +103,7 @@ p->parse(plusieurs_cycles);
 cout<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
 }*/
 
-void test(int n)
+/*void test(int n)
 {
 
 class SyntheseRegle1 : public CalculAttributs
@@ -178,7 +178,7 @@ ofstream f;
 	f.open("temps",ios_base::app);
 f<<(2*n)<<"|"<<(((double)clock() - start) / CLOCKS_PER_SEC)<<endl;
 f.close();
-}
+}*/
 
 /*void irrlichtShowPolygons (vector<Polygone*> v)
 {

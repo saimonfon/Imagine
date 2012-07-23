@@ -11,9 +11,13 @@
 #include "../geometrie/FileReader.h"
  #include <QSvgWidget>
  #include "../geometrie/ObjReader.h"
-MainWindow::MainWindow(Parser* p) : QMainWindow()
+ #include "../geometrie/Modele.h"
+#include "../user/ParserHLM.cpp"
+#include "../user/parserescalier.cpp"
+
+class Parserescalier;
+MainWindow::MainWindow() : QMainWindow()
 {
-	this->p = p;
 	
 	QMenu* fileMenu = menuBar()->addMenu(tr("&Fichier"));
 	QAction* chargerTxt = new QAction("Charger modèle texte",fileMenu);
@@ -22,6 +26,26 @@ MainWindow::MainWindow(Parser* p) : QMainWindow()
 	fileMenu->addAction(chargerObj);
 	connect(chargerTxt,SIGNAL(triggered()),this,SLOT(chargerFichierTexte()));
 	connect(chargerObj,SIGNAL(triggered()),this,SLOT(chargerFichierObj()));
+	QAction*  gHLMAct = new QAction(tr("&HLM"), fileMenu);
+	QAction*  gescAct = new QAction(tr("&Escalier"), fileMenu);
+     gHLMAct->setCheckable(true);
+	 gescAct->setCheckable(true);
+	 QActionGroup* choixGram = new QActionGroup(fileMenu);
+	 choixGram->addAction(gHLMAct);
+	 choixGram->addAction(gescAct);
+	 QMenu* gMenu = fileMenu->addMenu("&Grammaire");
+	 gMenu->addAction(gHLMAct);
+	 gMenu->addAction(gescAct);
+	connect(chargerTxt,SIGNAL(triggered()),this,SLOT(chargerFichierTexte()));
+	QSignalMapper *signalMapper = new QSignalMapper(this);
+	 signalMapper->setMapping(gHLMAct, 0);
+	  signalMapper->setMapping(gescAct, 1);
+	  connect(gHLMAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
+	  connect(gescAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
+    connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(changerGrammaire(int)));
+	 gHLMAct->setChecked(true);
+	 changerGrammaire(0);
+	
 	QMenu* execMenu = menuBar()->addMenu(tr("&Exécuter"));
 	QAction* a_executer = new QAction("Totalement",execMenu);
 	execMenu->addAction(a_executer);
@@ -29,6 +53,11 @@ MainWindow::MainWindow(Parser* p) : QMainWindow()
 	QAction* a_executerPartiel = new QAction("Partiellement",execMenu);
 	execMenu->addAction(a_executerPartiel);
 	connect(a_executerPartiel,SIGNAL(triggered()),this,SLOT(executerPartiel()));
+	
+	QMenu* modelMenu = menuBar()->addMenu(tr("&Modèle"));
+	QAction* inverser = new QAction("Inverser axes Y et Z",modelMenu);
+	modelMenu->addAction(inverser);
+	connect(inverser,SIGNAL(triggered()),this,SLOT(inverserAxesModele()));
 	
 	QMenu* graphMenu = menuBar()->addMenu(tr("&Graphes"));
 	QAction* exclu = new QAction("Graphe d'exclusivité",graphMenu);
@@ -44,14 +73,6 @@ MainWindow::MainWindow(Parser* p) : QMainWindow()
 	tabs->addTab(resultWidget,"Résultat");
 	this->setCentralWidget(tabs);
 	
-}
-
-static int MainWindow::afficher(Parser* p,int& argc,char** argv)
-{
-QApplication app(argc, argv);
-    MainWindow fenetre(p);
-    fenetre.show();
-	return app.exec();
 }
 
 void MainWindow::afficherElems(const QModelIndex& index)
@@ -145,13 +166,53 @@ void MainWindow::chargerFichierTexte()
 	if(fileName.isNull())
 		return;
 	FileReader f;
-	model = f.readFile(fileName.toStdString());
-	p->adj = f.adj;
-	tabs->removeTab(0);
-	delete modelWidget;
-	modelWidget = new Viewer(model);
-	tabs->insertTab(0,modelWidget,"Modèle");
-	setWindowTitle(QString::number(model.size())+" primitives");
+	modele = f.readFile(fileName.toStdString());
+	scaleModel();
+	afficherModele();
+}
+
+void MainWindow::inverserAxesModele()
+{
+qDebug()<<"Inversion des axes !"<<endl;
+for(vector<Polygone*>::iterator it = modele->polygones.begin();it!=modele->polygones.end();it++)
+{
+	for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+	{
+	cout<<it2->y<<" "<<it2->z;
+		it2->inverserYetZ();
+	cout<<"--->"<<it2->y<<" "<<it2->z<<endl;
+	}
+}
+afficherModele();
+}
+
+void MainWindow::scaleModel()
+{
+/* Scaling pour que le modèle soit inclus dans le carré de côté 1*/
+float max_size=0;	
+for(vector<Polygone*>::iterator it = modele->polygones.begin();it!=modele->polygones.end();it++)
+{
+for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+{
+  if((*it2).x > max_size)
+	max_size = (*it2).x;
+  if((*it2).y > max_size)
+	max_size = (*it2).y;
+	  if((*it2).z > max_size)
+	max_size = (*it2).z;
+}
+}
+float scale = 1 / max_size;
+
+for(vector<Polygone*>::iterator it = modele->polygones.begin();it!=modele->polygones.end();it++)
+{
+for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+{
+  it2->x  =it2->x*scale;
+  it2->y  =it2->y*scale;
+  it2->z  =it2->z*scale;
+}
+}
 }
 
 void MainWindow::chargerFichierObj()
@@ -160,18 +221,23 @@ void MainWindow::chargerFichierObj()
 	if(fileName.isNull())
 		return;
 	ObjReader f(fileName.toStdString());
-	model = f.polygones();
-	p->adj = f.adj;
-	tabs->removeTab(0);
+	modele = f.polygones();
+	scaleModel();
+	afficherModele();
+}
+
+void MainWindow::afficherModele()
+{
+tabs->removeTab(0);
 	delete modelWidget;
-	modelWidget = new Viewer(model);
+	modelWidget = new Viewer(modele->polygones);
 	tabs->insertTab(0,modelWidget,"Modèle");
-	setWindowTitle(QString::number(model.size())+" primitives");
+	setWindowTitle(QString::number(modele->polygones.size())+" primitives");
 }
 
 void MainWindow::executer()
 {
-p->parse(model);
+p->parse(modele);
 v= new Viewer(p->terminaux);
 	bool * indices = new bool[p->terminaux.size()];
 	v->setColoredIndices(indices); 
@@ -201,7 +267,7 @@ bool ok;
 int nb_iter = QInputDialog::getInt (this,"Execution partielle","Nombre maximal d'itérations :", 3, 1,1000, 1, &ok);
 if(!ok)
 	return;
-p->parse(model,nb_iter);
+p->parse(modele,nb_iter);
 v= new Viewer(p->terminaux);
 	bool * indices = new bool[p->terminaux.size()];
 	v->setColoredIndices(indices); 
@@ -223,4 +289,20 @@ v= new Viewer(p->terminaux);
 	delete resultWidget;
 	resultWidget = s;
 	tabs->insertTab(1,resultWidget,"Résultat");
+}
+
+void MainWindow::changerGrammaire(int grammaire)
+{
+	switch(grammaire)
+	{
+		case 0:
+		p = new ParserHLM();
+		break;
+		case 1:
+		p = new Parserescalier();
+		break;
+		default :
+		p=new ParserHLM();
+		break;
+	}
 }

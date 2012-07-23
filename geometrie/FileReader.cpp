@@ -11,7 +11,7 @@
 #define RTOD 57.2957795
 
 using namespace std;
-vector<Polygone*> FileReader::readFile(string fileName)
+Modele* FileReader::readFile(string fileName)
 {
 vector<Polygone*> res;
 std::ifstream infile(fileName.c_str());
@@ -75,7 +75,7 @@ while(getline(infile,line))
 //Précalcul des adjacences
 //Ne traite pas les polygones coplanaires
 //cf http://stackoverflow.com/questions/6195413/intersection-between-3d-flat-polygons
-adj.clear();
+	map<Polygone*, set<Polygone*> > adj;
 for(int i=0;i<res.size();i++)
 	for(int j=0;j<res.size();j++)
 	{
@@ -134,7 +134,7 @@ for(int k=0;k<res[i]->points3D.size();k++)
 			}*/
 
 			//Ecriture dans un fichier texte de l'adjacence pour affichage Matlab
-ofstream adjfile;
+/* ofstream adjfile;
   adjfile.open ("adja.txt");
   for(int i=0;i<res.size();i++)
   {
@@ -145,9 +145,9 @@ ofstream adjfile;
 			adjfile<<"0 ";
 		adjfile<<endl;
   }
-  adjfile.close();
+  adjfile.close(); */
 
-return res;
+return new Modele(res,adj);
 }
 
 Vec3 FileReader::projectionSurPlan(Vec3 point,Vec3 normale, float d)

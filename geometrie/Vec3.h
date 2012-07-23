@@ -61,12 +61,13 @@ class Vec3
 	return (this->x == other.x) && (this->y == other.y) && (this->z == other.z);
 	}
 	
-	void normalize()
+	Vec3 normalize()
 	{
 		float n = norm();
 		this->x/=n;
 		this->y/=n;
 		this->z/=n;
+		return *this;
 	}
 	
 	float norm() const

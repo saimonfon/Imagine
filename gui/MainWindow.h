@@ -3,13 +3,12 @@
 #include "../grammaire/Parser.h"
 #include <QtGui>
 class Viewer;
-class Polygone;
+class Modele;
 class MainWindow: public QMainWindow
 {
 	Q_OBJECT
 	public :
-	MainWindow(Parser* p);
-	static int afficher(Parser* p,int& argc,char** argv);
+	MainWindow();
 	Viewer* v;
 	QTabWidget* tabs;
 	public slots : 
@@ -21,10 +20,14 @@ class MainWindow: public QMainWindow
 	void chargerFichierObj();
 	void executer();
 	void executerPartiel();
+	void inverserAxesModele();
+	void changerGrammaire(int grammaire);
 	private :
+	void afficherModele();
+	void scaleModel();
 	Parser* p;
+	Modele* modele;
 	QTreeView* view;
-	vector<Polygone*> model;
 	QWidget* modelWidget;
 	QWidget* resultWidget;
 };
