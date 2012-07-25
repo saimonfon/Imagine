@@ -2,6 +2,7 @@
 #include <iostream>
 #include <list>
 #include "parsing/NonTerminal.h"
+#include "Parser.h"
 OperateurCluster::OperateurCluster(string nom, string tempname)
 {
 	init(nom, tempname);
@@ -29,6 +30,18 @@ set<Noeud*> OperateurCluster::noeudsFromGraphe()
 		{
 			Noeud* n = aVoir.front();
 			aVoir.pop_front();
+			//Vérifier ici que l'élément qu'on va ajouter n'est pas exclusif des autres déjà dans le cluster (algo glouton mais bon)
+			bool ok=true;
+			for(vector<Noeud*>::iterator itc = cluster.begin();itc!=cluster.end();itc++)
+			{
+				if(p->exclusivite[*itc].count(n)>0)
+				{
+					ok=false;
+					break;
+				}
+			}
+			if(!ok) //on ne peut pas ajouter le noeud n car le cluster contient un élément exclusif, on se casse
+				continue;
 			cluster.push_back(n);
 			marque.insert(n);
 			for(set<Noeud*>::iterator it2 = succ[n].begin();it2!=succ[n].end();it2++)
@@ -50,5 +63,7 @@ set<Noeud*> OperateurCluster::noeudsFromGraphe()
 		//INTEGRER L'EXCLUSIVITE !!!!!!
 		res.insert(new_node);
 	}
+	if(res.size()==0)
+			res.insert(new NonTerminal(name,vector<Noeud*>()));
 	return res;
 }

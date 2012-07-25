@@ -12,11 +12,11 @@ string Terminal::getType() const
 
 Terminal::Terminal(Polygone* polygone, int number)
 {
-	polygone->computeAttributs();
 	attributs = map<string,Attribut*>();
 	attributs["primitive"] = new AttributPoly(polygone);
 	attributs["number"] = new AttributInt(number);
 	attributs["plan"] =  new AttributPtr(polygone->equation);
+	attributs["trous"] = new AttributInt(polygone->trous.size());
 	if(polygone->points3D.size()>0) //Utilise t on les coordonnées 3D ?
 	{
 	cout<<number<<" "<<abs(Vec3(polygone->equation[0],polygone->equation[1],polygone->equation[2])*Vec3(0,0,1))<<" "<<polygone->getArea()<<endl;

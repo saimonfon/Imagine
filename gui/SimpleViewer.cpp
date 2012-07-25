@@ -69,6 +69,7 @@ for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
 {
 GLUtriangulatorObj *tess;
 tess = gluNewTess();
+//gluTessProperty(tess, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_EVEN);
 gluTessCallback(tess, GLU_TESS_VERTEX,
                    (GLvoid (CALLBACK*) ()) &glVertex3dv);
    gluTessCallback(tess, GLU_TESS_BEGIN,
@@ -80,14 +81,29 @@ if(mode==0)
 if(colored_ind[i])
 glColor4ub(255, 0,0,100); // on demande du bleu
 else
-glColor4ub(255, 255, 255,50); // on demande du bleu
+glColor4ub(255, 255, 255,10); // on demande du bleu
 }
 else
 {
 	glColor4ub(primColors[3*i],primColors[3*i+1],primColors[3*i+2],255);
 }
 gluBeginPolygon(tess);
+ gluTessBeginContour(tess);
 for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+{
+  GLdouble* location = new GLdouble[3];
+  location[0] =  it2->x;
+  location[1] = it2->y;
+  location[2] = it2->z;
+ //delete location;
+  gluTessVertex(tess, location, location);
+}
+gluTessEndContour(tess);
+/* Dessin des trous */
+for(vector<Polygone*>::iterator it3 = (*it)->trous.begin();it3!=(*it)->trous.end();it3++)
+{
+ gluTessBeginContour(tess);
+for(vector<Vec3>::iterator it2 = (*it3)->points3D.begin();it2!=(*it3)->points3D.end();it2++)
 {
   GLdouble* location = new GLdouble[3];
   location[0] =  it2->x;
@@ -95,6 +111,8 @@ for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.en
   location[2] = it2->z;
   gluTessVertex(tess, location, location);
  //delete location;
+}
+gluTessEndContour(tess);
 }
 gluEndPolygon(tess);
 i++;

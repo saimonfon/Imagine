@@ -93,6 +93,7 @@ SOURCES += main.cpp \
            user/ContrainteOrtho.cpp \
            user/ContrainteOrtho2.cpp \
            user/parserescalier.cpp \
+           user/parsermurs.cpp \
            user/parserHLM.bgf.cpp \
            user/parserHLM.cpp \
            geometrie/objLoader/list.cpp \

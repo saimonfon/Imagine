@@ -24,8 +24,8 @@ class Polygone
 	bool egal(const Polygone* p) const;
 	Vec3& operator[](int i);
 	int size();
+float area;
 	private:
 	void computePoints3D();
-float area;
 };
 #endif

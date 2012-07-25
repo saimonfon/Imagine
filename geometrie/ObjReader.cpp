@@ -204,7 +204,7 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 	for(int i=0;i<cur_bord.size();i++)
 		cout<<"("<<cur_bord[i].x<<" , "<<cur_bord[i].y<<" , "<<cur_bord[i].z<<" ) ->";
 	cout<<endl;
-	/*while(j<cur_bord.size())
+	while(j<cur_bord.size())
 	{
 		int N = cur_bord.size();
 		//Vérifier si les points j,j+1 et j+2 sont colinéaires (i.e. que leur produit vectoriel vaut 0 à une erreur près).
@@ -212,7 +212,7 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 			cur_bord.erase(cur_bord.begin()+(j+1)%N);
 		else
 			j=j+1;
-	}*/
+	}
 	if(cur_bord.size()==0) //Devrait normalement pas arriver, mais certains modèles sont dégénérés (triangles plats)
 		continue;
 	//On a trouvé un bord, on construit un polygone avec
