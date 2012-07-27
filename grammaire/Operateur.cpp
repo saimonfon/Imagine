@@ -7,10 +7,9 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 {
 	this->p = p;
 	this->affectation  =affectation;
-	/** Construire le graphe ici */
 	set_noeud candidats = p->noeudsParType[this->nom];
 	dejaTraites = set<Noeud*>();
-	succ = map<Noeud*,set<Noeud*> >(); 
+	succ = map<Noeud*,set<Noeud*> >();
 	for(set_noeud::iterator ite = candidats.begin();ite!=candidats.end();ite++)
 	{
 		//cout<<"traitement noeud "<<(++itt)<<endl;
@@ -200,6 +199,9 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 		}
 	}
 	cout<<"OOKKK GRAPHE CONSTRUIT"<<endl;
+	cout<<"Noeuds du graphe :"<<endl;
+	for(set<Noeud*>::iterator it=dejaTraites.begin();it!=dejaTraites.end();it++)
+		cout<<(*it)->nom_parser<<endl;
 	for(map<Noeud*,set<Noeud*> >::iterator it = succ.begin();it!=succ.end();it++)
 	{
 		cout<<it->first->nom_parser<<"->";

@@ -71,7 +71,7 @@ vector<Noeud*> Regle::appliquer(Parser* p)
 			if((*it2)->getType().compare("OPE")!=0)
 				e.push_back(*it2);
 				else
-				e.insert(e.end(),(*it2)->enfants.begin(),(*it2)->enfants.end());
+				e.push_back(p->ajouterNoeud(*it2));
 		}
 		(*it)->enfants = e;
 	}

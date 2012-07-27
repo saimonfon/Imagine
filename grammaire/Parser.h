@@ -39,7 +39,7 @@ class Parser
 		Parser();
 		void parse(Modele* modele,int max_iter=0);
 		void tous(string axiome);
-		void ajouterNoeud(Noeud* n);
+		Noeud* ajouterNoeud(Noeud* n);
 		vector<Polygone*> terminaux;
 		void computeAdjacencies();
 		void ajouterRegle(Regle* r);

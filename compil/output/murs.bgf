@@ -1,0 +1,5 @@
+#ContrainteAdjacenceExacte
+grammaire murs
+
+mur->polygone {$0 .vertical==true ^ $0 .area>2.0} {primitive = $0 .primitive; plan =$0 .plan;}
+murs->cycle(mur,{adj($0 .primitive,$1 .primitive) ^ @ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}

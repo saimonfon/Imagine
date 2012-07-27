@@ -84,7 +84,11 @@
 	 {
 		QString s;
 		for(map<string,Attribut*>::const_iterator it = item->n->attributs.begin();it!=item->n->attributs.end();it++)
+		{
+			if(it->second==NULL)
+				continue; //Sinon le programme bugge, mais c'est pas normal qu'il y ait un attribut null dans la map...
 			s+= QString::fromStdString(it->first)+" : "+it->second->toString()+"<br>";
+		}
 		return s;
 	 }
 	if(role!=Qt::DisplayRole)

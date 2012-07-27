@@ -11,6 +11,9 @@ class FileReader
 {
 	public : 
 	Modele* readFile(string fileName);
+	Modele* readFile(string fileName, string adjFileName);
+	vector<Polygone*> lirePolygones(string fileName);
+	map<Polygone*, set<Polygone*> > calculAdjacences(vector<Polygone*> res);
 	Vec3 normale(obj_face* f,obj_vector** vertices);
 	Vec3 projectionSurPlan(Vec3 point,Vec3 normale, float d);
 	Matrice2 rotationPlan(Vec3 normale, float d);

@@ -15,6 +15,7 @@
 #include "../user/ParserHLM.cpp"
 #include "../user/parserescalier.cpp"
 #include "../user/parsermurs.cpp"
+#include "../user/ParserHLMSimple.cpp"
 
 class Parserescalier;
 MainWindow::MainWindow() : QMainWindow()
@@ -30,25 +31,30 @@ MainWindow::MainWindow() : QMainWindow()
 	QAction*  gHLMAct = new QAction(tr("&HLM"), fileMenu);
 	QAction*  gescAct = new QAction(tr("&Escalier"), fileMenu);
 	QAction*  gmursAct = new QAction(tr("&Murs"), fileMenu);
+	QAction*  gHLMsimpleAct = new QAction(tr("&HLM Simple"), fileMenu);
      gHLMAct->setCheckable(true);
 	 gescAct->setCheckable(true);
 	 gmursAct->setCheckable(true);
+	 gHLMsimpleAct->setCheckable(true);
 	 QActionGroup* choixGram = new QActionGroup(fileMenu);
 	 choixGram->addAction(gHLMAct);
 	 choixGram->addAction(gescAct);
 	 choixGram->addAction(gmursAct);
+	 choixGram->addAction(gHLMsimpleAct);
 	 QMenu* gMenu = fileMenu->addMenu("&Grammaire");
 	 gMenu->addAction(gHLMAct);
 	 gMenu->addAction(gescAct);
 	 gMenu->addAction(gmursAct);
-	connect(chargerTxt,SIGNAL(triggered()),this,SLOT(chargerFichierTexte()));
+	 gMenu->addAction(gHLMsimpleAct);
 	QSignalMapper *signalMapper = new QSignalMapper(this);
 	 signalMapper->setMapping(gHLMAct, 0);
 	  signalMapper->setMapping(gescAct, 1);
 	  signalMapper->setMapping(gmursAct, 2);
+	  signalMapper->setMapping(gHLMsimpleAct, 3);
 	  connect(gHLMAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	  connect(gescAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	  connect(gmursAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
+	  connect(gHLMsimpleAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
     connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(changerGrammaire(int)));
 	 gHLMAct->setChecked(true);
 	 changerGrammaire(0);
@@ -87,6 +93,8 @@ void MainWindow::afficherElems(const QModelIndex& index)
 TreeItem* item = static_cast<TreeItem*>(index.internalPointer());
 	qDebug()<<QString::fromStdString(item->n->nom_parser)<<" "<<endl;
 Noeud* n = item->n;	
+if(n==NULL)
+	return;
 bool * indices = new bool[p->terminaux.size()];
 for(int i=0;i<p->terminaux.size();i++)
 	indices[i]=false;
@@ -172,8 +180,12 @@ void MainWindow::chargerFichierTexte()
 	QString fileName = QFileDialog::getOpenFileName(this,"Charger un modèle au format texte",QString(),"Fichiers texte (*.txt)");
 	if(fileName.isNull())
 		return;
+	QString fileName2 = QFileDialog::getOpenFileName(this,"Choisir le fichier contenant les adjacences (si annulation, calcul automatique)",QString(),"Fichiers texte (*.txt)");
 	FileReader f;
-	modele = f.readFile(fileName.toStdString());
+	if(fileName2.isNull())
+		modele = f.readFile(fileName.toStdString());
+	else
+		modele = f.readFile(fileName.toStdString(),fileName2.toStdString());
 	scaleModel();
 	afficherModele();
 }
@@ -286,6 +298,9 @@ void MainWindow::changerGrammaire(int grammaire)
 		break;
 		case 2 :
 		p = new Parsermurs();
+		break;
+		case 3 :
+		p = new ParserHLMSimple();
 		break;
 		default :
 		p=new ParserHLM();

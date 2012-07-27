@@ -77,7 +77,7 @@ Modele* ObjReader::polygones()
 
 Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 {
-	cout<<"TRAITEMENT D'UN NOUVEAU POLYGONE"<<endl;
+	//cout<<"TRAITEMENT D'UN NOUVEAU POLYGONE"<<endl;
 	vector<int> faces;
 	stack<int> aVoir;
 	aVoir.push(i);
@@ -106,14 +106,14 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 			}
 		}
 	}
-	for(vector<int>::iterator it = faces.begin();it!=faces.end();it++)
+	/*for(vector<int>::iterator it = faces.begin();it!=faces.end();it++)
 	{
 		cout<<"(";
 		int nAretes = objData->faceList[*it]->vertex_count;
 		for(int k = 0;k<nAretes;k++)
 			cout<<objData->faceList[*it]->vertex_index[k]<<", ";
 		cout<<") ";
-	}
+	}*/
 	//cout<<"Ok avant copntour"<<endl;
 	/* Extraire le contour.
 	Cela se fait en trouvant les cycles d'arêtes adjacente à une seule face, puis en cherchant les cycles de ces arêtes.
@@ -145,11 +145,11 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 	vector< pair<int,int> > bords;
 	for(map<pair<int,int>,int>::iterator it = nbFacesAdjacentes.begin();it!=nbFacesAdjacentes.end();it++)
 	{
-		cout<<it->first.first<<" -> "<<it->first.second<<" : "<<it->second<<endl;
+		//cout<<it->first.first<<" -> "<<it->first.second<<" : "<<it->second<<endl;
 		if(it->second == 1)
 		{
 			bords.push_back(it->first);
-			cout<<"( "<<it->first.first<<" -> "<<it->first.second<<" ) ";
+			//cout<<"( "<<it->first.first<<" -> "<<it->first.second<<" ) ";
 		}
 	}
 	//cout<<endl;
@@ -200,10 +200,10 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 	
 	/*Simplification du contour*/
 	int j = 0;
-	cout<<cur_bord.size()<<endl;
+	/*cout<<cur_bord.size()<<endl;
 	for(int i=0;i<cur_bord.size();i++)
 		cout<<"("<<cur_bord[i].x<<" , "<<cur_bord[i].y<<" , "<<cur_bord[i].z<<" ) ->";
-	cout<<endl;
+	cout<<endl;*/
 	while(j<cur_bord.size())
 	{
 		int N = cur_bord.size();

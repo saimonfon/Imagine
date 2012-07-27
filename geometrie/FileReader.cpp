@@ -11,7 +11,8 @@
 #define RTOD 57.2957795
 
 using namespace std;
-Modele* FileReader::readFile(string fileName)
+
+vector<Polygone*> FileReader::lirePolygones(string fileName)
 {
 vector<Polygone*> res;
 std::ifstream infile(fileName.c_str());
@@ -69,9 +70,42 @@ while(getline(infile,line))
 	if(pasDedans)
 		res.push_back(p);
 }
+return res;	
+}
 
+Modele* FileReader::readFile(string fileName)
+{
+vector<Polygone*> res = lirePolygones(fileName);
+return new Modele(res,calculAdjacences(res));
+}
 
-	
+Modele* FileReader::readFile(string fileName, string adjFileName)
+{
+	vector<Polygone*> res = lirePolygones(fileName);
+	int N = res.size();
+	map<Polygone*, set<Polygone*> > adj;
+	std::ifstream infile(fileName.c_str());
+string line;
+int num=0;
+//Lecture du fichier et ajout des polygones
+while(getline(infile,line))
+{
+	std::istringstream iss(line);
+	for(int i=0;i<N;i++)
+	{
+	int v;
+	iss>>v;
+	if(v!=0)
+		adj[res[num]].insert(res[i]);
+		adj[res[i]].insert(res[num]);
+	}
+	num++;
+}
+	return new Modele(res,adj);
+}
+
+map<Polygone*, set<Polygone*> > FileReader::calculAdjacences(vector<Polygone*> res)
+{
 //Précalcul des adjacences
 //Ne traite pas les polygones coplanaires
 //cf http://stackoverflow.com/questions/6195413/intersection-between-3d-flat-polygons
@@ -120,35 +154,9 @@ for(int i=0;i<res.size();i++)
 			//cout<<"ADJACENTS "<<i<<" "<<j<<endl;
 		}
 	}
-	
-
-//Affichage des coordonnées 3D pour verif
-/*for(int i=0;i<res.size();i++)
-{
-for(int k=0;k<res[i]->points3D.size();k++)
-{
-			Vec3 p1 = res[i]->points3D[k];
-			cout<<"("<<p1.x<<","<<p1.y<<","<<p1.z<<") ";
-			}
-			cout<<endl;
-			}*/
-
-			//Ecriture dans un fichier texte de l'adjacence pour affichage Matlab
-/* ofstream adjfile;
-  adjfile.open ("adja.txt");
-  for(int i=0;i<res.size();i++)
-  {
-	for(int j=0;j<res.size();j++)
-		if(adj[res[i]].count(res[j])>0)
-			adjfile<<"1 ";
-		else
-			adjfile<<"0 ";
-		adjfile<<endl;
-  }
-  adjfile.close(); */
-
-return new Modele(res,adj);
+	return adj;
 }
+
 
 Vec3 FileReader::projectionSurPlan(Vec3 point,Vec3 normale, float d)
 {

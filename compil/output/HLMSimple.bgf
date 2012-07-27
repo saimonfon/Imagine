@@ -3,16 +3,12 @@
 #ContrainteFenetreComplete
 #ContrainteClusterFenetre
 #CalculAttFenetreComplete
-grammaire HLM
+grammaire HLMSimple
 
 
 premur->polygone {$0 .vertical==true ^ $0 .area > 2.0} {primitive = $0 .primitive; plan =$0 .plan;}
-sol_balcon->polygone{$0 .horizontal==true ^ $0 .area >0.5 ^ $0 .area<3.0}{primitive = $0 .primitive;}
 fenetre->polygone {$0 .vertical==true ^ $0 .area > 0.1 ^ $0 .area < 2.0} {primitive = $0 .primitive;}
 rebord_possible-> polygone{$0 .vert_or_hor == true ^ $0 .rectangle==true ^ $0 .area<0.5} {primitive = $0 .primitive;}
 fenetre_complete->fenetre, cycle(rebord_possible{adj(primitive,#0 .primitive)},{adj($0 .primitive,$1 .primitive) ^@ContrainteAdjacenceExacte},{primitive = $0 .primitive;}) {$1 .size==4^@ContrainteFenetreComplete}{@CalculAttFenetreComplete}
-rambarde->polygone {$0 .vertical==true ^ $0 .area > 0.2 ^ $0 .area < 2.0} {primitive = $0 .primitive; plan =$0 .plan;}
-balcon->sol_balcon, sequence(rambarde {adj(primitive,#0 .primitive)},{adj($0 .primitive, $1 .primitive)}) {} {primitive = $0 .primitive;}
-premur_avec_balcon->premur, cluster(balcon {adj(primitive,#0 .primitive)},{}) {}{primitive = $0 .primitive; plan =$0 .plan;}
-mur->premur_avec_balcon	,cluster(fenetre_complete {adj(primitive,#0 .primitive)}, {}) {}{primitive = $0 .primitive; plan = $0 .plan;}
+mur->premur	,cluster(fenetre_complete {adj(primitive,#0 .primitive)}, {}) {}{primitive = $0 .primitive; plan = $0 .plan;}
 murs->cycle(mur,{adj($0 .primitive,$1 .primitive) ^ @ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}

@@ -64,6 +64,6 @@ set<Noeud*> OperateurCluster::noeudsFromGraphe()
 		res.insert(new_node);
 	}
 	if(res.size()==0)
-			res.insert(new NonTerminal(name,vector<Noeud*>()));
+			res.insert(p->ajouterNoeud(new NonTerminal("EnsembleVide",vector<Noeud*>()))); //Important d'avoir un noeud correspondant à l'ensemble vide, doit être traité différement dans le calcul de l'exclusivité.
 	return res;
 }

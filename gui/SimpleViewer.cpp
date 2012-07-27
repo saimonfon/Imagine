@@ -47,7 +47,7 @@ i++;
 
 void Viewer::setColoredIndices(bool* colored_ind)
 {
-	delete[] this->colored_ind;
+	//delete[] this->colored_ind;
 	this->colored_ind = colored_ind;
 	mode=0;
 }
