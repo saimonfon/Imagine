@@ -72,7 +72,7 @@ Modele* ObjReader::polygones()
 			}
 		}
 	}
-	return new Modele(res,adj);
+	return new Modele(res,adj,true);
 }
 
 Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
@@ -246,6 +246,13 @@ Polygone* ObjReader::composante(int i,int cur_comp,bool* marque)
 	{
 		this->res.push_back(res[i]);
 		}*/
+	for(vector<int>::iterator it = faces.begin();it!=faces.end();it++)
+	{
+		Vec3* vertices = new Vec3[3];
+		for(int i=0;i<3;i++)
+			vertices[i] = Vec3(objData->vertexList[objData->faceList[*it]->vertex_index[i]]);
+		p->triangles.push_back(vertices);
+	}
 	return p;
 	//return NULL;
 }

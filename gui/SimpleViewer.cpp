@@ -67,6 +67,30 @@ void Viewer::draw()
 int i=0;
 for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
 {
+if(mode==0)
+{
+if(colored_ind[i])
+glColor4ub(255, 0,0,100); // on demande du bleu
+else
+glColor4ub(120, 120, 120,10); // on demande du bleu
+}
+else
+{
+	glColor4ub(primColors[3*i],primColors[3*i+1],primColors[3*i+2],255);
+}
+if((*it)->triangles.size()>0)
+{
+		glBegin( GL_TRIANGLES);
+	for(vector<Vec3*>::iterator it2 = (*it)->triangles.begin();it2!=(*it)->triangles.end();it2++)
+	{
+		for(int k=0;k<3;k++)
+			glVertex3f((*it2)[k].x,(*it2)[k].y,(*it2)[k].z);
+
+	}
+		glEnd();
+}
+else
+{
 GLUtriangulatorObj *tess;
 tess = gluNewTess();
 //gluTessProperty(tess, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_EVEN);
@@ -76,17 +100,6 @@ gluTessCallback(tess, GLU_TESS_VERTEX,
                    (GLvoid (CALLBACK*) ()) &glBegin);
    gluTessCallback(tess, GLU_TESS_END,
                    (GLvoid (CALLBACK*) ()) &glEnd);
-if(mode==0)
-{
-if(colored_ind[i])
-glColor4ub(255, 0,0,100); // on demande du bleu
-else
-glColor4ub(255, 255, 255,10); // on demande du bleu
-}
-else
-{
-	glColor4ub(primColors[3*i],primColors[3*i+1],primColors[3*i+2],255);
-}
 gluBeginPolygon(tess);
  gluTessBeginContour(tess);
 for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
@@ -115,17 +128,27 @@ for(vector<Vec3>::iterator it2 = (*it3)->points3D.begin();it2!=(*it3)->points3D.
 gluTessEndContour(tess);
 }
 gluEndPolygon(tess);
-i++;
 gluDeleteTess(tess);
+}
+//DESSIN DU CONTOUR (dans les deux cas)
+glColor4ub(0, 0, 0,255); 
+glBegin(GL_LINE_LOOP);
+for(vector<Vec3>::iterator it2 = (*it)->points3D.begin();it2!=(*it)->points3D.end();it2++)
+	glVertex3f(it2->x,it2->y,it2->z);
+glEnd();
+i++;
 }
 }
 
 void Viewer::init()
 {
   // Restore previous viewer state.
-  restoreStateFromFile();
+  restoreStateFromFile(); 
+  glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
   glDisable(GL_LIGHTING);
+  glEnable(GL_DEPTH_TEST);
   glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 
   // Opens help window
   //help();
 }

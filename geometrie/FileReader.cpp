@@ -76,7 +76,7 @@ return res;
 Modele* FileReader::readFile(string fileName)
 {
 vector<Polygone*> res = lirePolygones(fileName);
-return new Modele(res,calculAdjacences(res));
+return new Modele(res,calculAdjacences(res),false);
 }
 
 Modele* FileReader::readFile(string fileName, string adjFileName)
@@ -84,33 +84,47 @@ Modele* FileReader::readFile(string fileName, string adjFileName)
 	vector<Polygone*> res = lirePolygones(fileName);
 	int N = res.size();
 	map<Polygone*, set<Polygone*> > adj;
-	std::ifstream infile(fileName.c_str());
+	std::ifstream infile(adjFileName.c_str());
 string line;
 int num=0;
-//Lecture du fichier et ajout des polygones
-while(getline(infile,line))
-{
-	std::istringstream iss(line);
-	for(int i=0;i<N;i++)
+int num_adj=0,num_adj_b=0,num_adj_p=0;
+int adj_value;
+
+	for (unsigned int i=0;i<N;++i)
 	{
-	int v;
-	iss>>v;
-	if(v!=0)
-		adj[res[num]].insert(res[i]);
-		adj[res[i]].insert(res[num]);
+		for (unsigned int j=0;j<N;++j)
+		{
+			infile >> adj_value;
+			if(adj_value>0)
+			{
+			adj[res[j]].insert(res[i]);
+			adj[res[i]].insert(res[j]);
+			}
+			//cout<<"Adjacence de type "<<adj_value<<" entre "<<j<<" et "<<i<<endl;
+			if(adj_value==1)
+				num_adj_b++;
+			else if(adj_value==2)
+				num_adj_p++;
+			num_adj++;
+		}
 	}
-	num++;
-}
-	return new Modele(res,adj);
+	infile.close();
+	cout<<"Nombre d'adjacences "<<num_adj<<" "<<num_adj_b<<" "<<num_adj_p<<endl;
+	return new Modele(res,adj,false);
 }
 
 map<Polygone*, set<Polygone*> > FileReader::calculAdjacences(vector<Polygone*> res)
 {
+float thres_adj_border = 0.1;
+float thres_adj_proj = 0.3;
+ofstream adj_proj;
+  adj_proj.open ("adj_proj.txt");
 //Précalcul des adjacences
 //Ne traite pas les polygones coplanaires
 //cf http://stackoverflow.com/questions/6195413/intersection-between-3d-flat-polygons
 	map<Polygone*, set<Polygone*> > adj;
 for(int i=0;i<res.size();i++)
+{
 	for(int j=0;j<res.size();j++)
 	{
 		bool adjacent=false;
@@ -119,7 +133,7 @@ for(int i=0;i<res.size();i++)
 			for(int l=0;l<res[j]->points3D.size();l++)
 			{
 				//cout<<i<<" "<<j<<(res[i]->points3D[k]-res[j]->points3D[l]).norm()<<endl;
-				if((res[i]->points3D[k]-res[j]->points3D[l]).norm()<1)
+				if((res[i]->points3D[k]-res[j]->points3D[l]).norm()<thres_adj_border)
 				{
 					adj[res[i]].insert(res[j]);
 					adj[res[j]].insert(res[i]);
@@ -130,6 +144,8 @@ for(int i=0;i<res.size();i++)
 			}
 		//Sinon
 		//Pour chaque arete du premier polygone, intersection avec le plan du second
+		if(!adjacent)
+		{
 		for(int k=0;k<res[i]->points3D.size();k++)
 		{
 			Vec3 p1 = res[i]->points3D[k];
@@ -147,6 +163,30 @@ for(int i=0;i<res.size();i++)
 				break;
 			}
 		}
+		}
+		
+		/*Adjacence de projection */
+		/* Pour chaque point du contour, on regarde à quelle distance il est du plan de l'autre. Si moins du seuil, on regarde si le projeté est à l'intérieur de l'autre polygone. SI oui adjacence.*/
+		/*if(!adjacent)
+		{
+		for(int k=0;k<res[i]->points3D.size();k++)
+		{
+			Vec3 pt = res[i]->points3D[k];
+			float dist = pt.distancePlan(res[j]->equation);
+			if(dist>thres_adj_proj) //Si le point est trop loin du plan, on zappe.
+				continue;
+			Vec3 pt_projete = pt.projetePlan(res[j]->equation);
+			//cout<<fabs(CalcAngleSum(pt_projete,res[j]->points3D)-TWOPI)<<endl;
+			//if(fabs(CalcAngleSum(pt_projete,res[j]->points3D)-TWOPI)<0.1) //Si le projeté est dans le polygone, on considère qu'ils sont adjacents.
+			//{
+				//cout<<"adjacence projection"<<endl;
+				adjacent = true;
+				adj_proj<<i<<" "<<j<<endl;
+				break;
+			//}
+		}
+		}*/
+		
 		if(adjacent)
 		{
 			adj[res[i]].insert(res[j]);
@@ -154,6 +194,25 @@ for(int i=0;i<res.size();i++)
 			//cout<<"ADJACENTS "<<i<<" "<<j<<endl;
 		}
 	}
+	cout<<i<<endl;
+}
+adj_proj.close();
+	/* Ecriture dans un fichier texte (adj.txt) */
+	ofstream myfile;
+  myfile.open ("adj_auto.txt");
+	for(int i=0;i<res.size();i++)
+	{
+		for(int j=0;j<res.size();j++)
+		{
+			if(adj[res[i]].count(res[j]))
+				myfile<<1;
+				else
+				myfile<<0;
+			myfile<<" ";
+		}
+		myfile<<endl;
+	}
+  myfile.close();
 	return adj;
 }
 
@@ -204,8 +263,9 @@ double FileReader::CalcAngleSum(Vec3 q,vector<Vec3> p)
          return(TWOPI); /* We are on a node, consider this inside */
       else
          costheta = p1*p2 / (m1*m2);
-		
+		if(costheta>1) //a cause des erreurs d'arrondi...
+			costheta = 1;
       anglesum += acos(costheta);
    }
-   return(anglesum);
+   return anglesum;
 }

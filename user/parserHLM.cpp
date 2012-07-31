@@ -208,4 +208,9 @@ void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
 }};
 r9->calculAtt = new Calcul24();
+vector<MembreDroit*> v10;
+OperateurCluster* op5= new OperateurCluster("murs","OPE");
+v10.push_back(op5);
+Regle* r10 = new Regle("hlm",v10);
+ajouterRegle(r10);
 }};

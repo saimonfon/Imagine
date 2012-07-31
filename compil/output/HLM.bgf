@@ -16,3 +16,4 @@ balcon->sol_balcon, sequence(rambarde {adj(primitive,#0 .primitive)},{adj($0 .pr
 premur_avec_balcon->premur, cluster(balcon {adj(primitive,#0 .primitive)},{}) {}{primitive = $0 .primitive; plan =$0 .plan;}
 mur->premur_avec_balcon	,cluster(fenetre_complete {adj(primitive,#0 .primitive)}, {}) {}{primitive = $0 .primitive; plan = $0 .plan;}
 murs->cycle(mur,{adj($0 .primitive,$1 .primitive) ^ @ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}
+hlm->cluster(murs,{}) {}

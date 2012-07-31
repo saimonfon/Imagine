@@ -81,6 +81,19 @@ class Vec3
 		y=z;
 		z=tmp;
 	}
+
+	Vec3 projetePlan(float* eq)
+	{
+		float xp = (eq[1]*eq[1]+eq[2]*eq[2])*x - eq[0]*eq[1]*y - eq[0]*eq[2]*z - eq[0]*eq[3];
+		float yp = - eq[0]*eq[1]*x + (eq[0]*eq[0]+eq[2]*eq[2])*y - eq[1]*eq[2]*z - eq[1]*eq[3];
+		float zp = - eq[0]*eq[2]*x - eq[1]*eq[2]*y - (eq[0]*eq[0]+eq[1]*eq[1])*z - eq[2]*eq[3];
+		return Vec3(xp,yp,zp);
+	}
+	
+	float distancePlan(float* eq)
+	{
+		return fabs (eq[0]*x + eq[1]*y + eq[2]*z + eq[3]);
+	}
 	
 	float x,y,z;
 };

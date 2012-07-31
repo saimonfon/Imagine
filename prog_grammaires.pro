@@ -57,6 +57,8 @@ HEADERS += convexhull/ConvexHull.h \
            user/ContrainteOrtho2.cpp \
            user/ContrainteAdjacenceExacte.cpp \
            user/parserHLM.cpp \
+           user/parserHLMSimple.cpp \
+           user/parserReel.cpp \
            user/ContrainteMurFenetre.cpp \
            user/ContrainteFenetreComplete.cpp \
            user/ContrainteClusterFenetre.cpp \
@@ -108,8 +110,13 @@ SOURCES += main.cpp \
            grammaire/parsing/NonTerminal.cpp \
            grammaire/parsing/Terminal.cpp
 QT *= opengl xml svg	
-win32 {
+win32{
+	CONFIG(debug, debug|release) {
     LIBS *= -lQGLViewerd2
+	}
+	CONFIG(release, debug|release) {
+	LIBS *= -lQGLViewer2
+	}
 }
 unix {
     LIBS *= -lqglviewer-qt4 -lGLU

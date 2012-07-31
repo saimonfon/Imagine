@@ -16,6 +16,7 @@
 #include "../user/parserescalier.cpp"
 #include "../user/parsermurs.cpp"
 #include "../user/ParserHLMSimple.cpp"
+#include "../user/ParserReel.cpp"
 
 class Parserescalier;
 MainWindow::MainWindow() : QMainWindow()
@@ -32,29 +33,35 @@ MainWindow::MainWindow() : QMainWindow()
 	QAction*  gescAct = new QAction(tr("&Escalier"), fileMenu);
 	QAction*  gmursAct = new QAction(tr("&Murs"), fileMenu);
 	QAction*  gHLMsimpleAct = new QAction(tr("&HLM Simple"), fileMenu);
+	QAction*  gReelAct = new QAction(tr("&Données réelles"), fileMenu);
      gHLMAct->setCheckable(true);
 	 gescAct->setCheckable(true);
 	 gmursAct->setCheckable(true);
+	 gReelAct->setCheckable(true);
 	 gHLMsimpleAct->setCheckable(true);
 	 QActionGroup* choixGram = new QActionGroup(fileMenu);
 	 choixGram->addAction(gHLMAct);
 	 choixGram->addAction(gescAct);
 	 choixGram->addAction(gmursAct);
 	 choixGram->addAction(gHLMsimpleAct);
+	 choixGram->addAction(gReelAct);
 	 QMenu* gMenu = fileMenu->addMenu("&Grammaire");
 	 gMenu->addAction(gHLMAct);
 	 gMenu->addAction(gescAct);
 	 gMenu->addAction(gmursAct);
 	 gMenu->addAction(gHLMsimpleAct);
+	 gMenu->addAction(gReelAct);
 	QSignalMapper *signalMapper = new QSignalMapper(this);
 	 signalMapper->setMapping(gHLMAct, 0);
 	  signalMapper->setMapping(gescAct, 1);
 	  signalMapper->setMapping(gmursAct, 2);
 	  signalMapper->setMapping(gHLMsimpleAct, 3);
+	  signalMapper->setMapping(gReelAct, 4);
 	  connect(gHLMAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	  connect(gescAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	  connect(gmursAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	  connect(gHLMsimpleAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
+	  connect(gReelAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
     connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(changerGrammaire(int)));
 	 gHLMAct->setChecked(true);
 	 changerGrammaire(0);
@@ -301,6 +308,9 @@ void MainWindow::changerGrammaire(int grammaire)
 		break;
 		case 3 :
 		p = new ParserHLMSimple();
+		break;
+		case 4 :
+		p = new ParserReel();
 		break;
 		default :
 		p=new ParserHLM();
