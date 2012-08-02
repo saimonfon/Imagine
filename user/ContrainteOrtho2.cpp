@@ -16,6 +16,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	Vec3 n1(p1->equation[0],p1->equation[1],p1->equation[2]);
 	Vec3 n2(p2->equation[0],p2->equation[1],p2->equation[2]);
 	Vec3 n3(p3->equation[0],p3->equation[1],p3->equation[2]);
+	return (n1*n2<0.1);
 	
 	//Pour chaque marche, trouver l'arête d'adjacence
 	int arete1,arete2;

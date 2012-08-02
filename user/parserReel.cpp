@@ -15,7 +15,7 @@
 #include "ContrainteMurFenetre.cpp"
 #include "ContrainteFenetreComplete.cpp"
 #include "ContrainteClusterFenetre.cpp"
-#include "CalculAttFenetreComplete.cpp"
+#include "CalculAttFenetreCompleteReel.cpp"
 class ParserReel : public Parser {
 public:
 ParserReel(){
@@ -84,17 +84,17 @@ nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitiv
 r2->calculAtt = new Calcul9();
 vector<MembreDroit*> v3;
 v3.push_back(new MembreStandard("fenetre"));
-OperateurCycle* op0= new OperateurCycle("rebord_possible","OPE");
+OperateurCluster* op0= new OperateurCluster("rebord_possible","OPE");
 op0->condAdjExt.push_back(new ConditionAdj(0,"primitive",0,"primitive"));
-op0->condAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
 v3.push_back(op0);
 Regle* r3 = new Regle("fenetre_complete",v3);
 ajouterRegle(r3);
-class Calcul10 : public CalculAttributs {
-void calculAttrib(Noeud* nouveau){
-nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
-}};
-r3->calculAtt = new Calcul10();
+class ConditionUnique3_11 : public ConditionUnique{
+bool estVerifiee(Noeud* n){return 
+(n->getAttribut("size")->intValue()>=1);}};
+ConditionUnique3_11* c3_11 = new ConditionUnique3_11(); c3_11->indice = 1;
+r3->condUnique.push_back(c3_11);
+r3->calculAtt = new CalculAttFenetreCompleteReel();
 vector<MembreDroit*> v4;
 v4.push_back(new MembreStandard("premur"));
 OperateurCluster* op1= new OperateurCluster("fenetre_complete","OPE");

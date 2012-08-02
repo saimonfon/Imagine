@@ -86,15 +86,16 @@ Modele* FileReader::readFile(string fileName, string adjFileName)
 	map<Polygone*, set<Polygone*> > adj;
 	std::ifstream infile(adjFileName.c_str());
 string line;
-int num=0;
+int num=0,i=0;
 int num_adj=0,num_adj_b=0,num_adj_p=0;
 int adj_value;
 
-	for (unsigned int i=0;i<N;++i)
+	while(getline(infile,line))
 	{
+	std::istringstream iss(line);
 		for (unsigned int j=0;j<N;++j)
 		{
-			infile >> adj_value;
+			iss >> adj_value;
 			if(adj_value>0)
 			{
 			adj[res[j]].insert(res[i]);
@@ -107,6 +108,7 @@ int adj_value;
 				num_adj_p++;
 			num_adj++;
 		}
+		i++;
 	}
 	infile.close();
 	cout<<"Nombre d'adjacences "<<num_adj<<" "<<num_adj_b<<" "<<num_adj_p<<endl;

@@ -234,7 +234,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
     cout<<parent<<" : "<<parent->condUnique.size();
 	for(vector<ConditionUnique*>::iterator it = parent->condUnique.begin();it!=parent->condUnique.end();it++)
 	{
-        cout<<"Traitement de la condition unique "<<(*it)->indice<<" et this->position vaut "<<this->position<<endl;
+        //cout<<"Traitement de la condition unique "<<(*it)->indice<<" et this->position vaut "<<this->position<<endl;
 		if((*it)->indice != this->position)
 			continue;
 		if(!((*it)->estVerifiee(*ite)))

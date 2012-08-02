@@ -87,6 +87,7 @@ SOURCES += main.cpp \
            gui/treeitem.cpp \
            gui/treemodel.cpp \
            user/CalculAttFenetreComplete.cpp \
+           user/CalculAttFenetreCompleteReel.cpp \
            user/ContrainteAdjacenceExacte.cpp \
            user/ContrainteClusterFenetre.cpp \
            user/ContrainteFenetreComplete.cpp \

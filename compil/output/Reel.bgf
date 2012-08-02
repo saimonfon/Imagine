@@ -2,12 +2,12 @@
 #ContrainteMurFenetre
 #ContrainteFenetreComplete
 #ContrainteClusterFenetre
-#CalculAttFenetreComplete
+#CalculAttFenetreCompleteReel
 grammaire Reel
 
 premur->polygone {$0 .vertical==true ^ $0 .area > 2.0} {primitive = $0 .primitive; plan =$0 .plan;}
 fenetre->polygone {$0 .vertical==true ^ $0 .area > 0.2 ^ $0 .area < 1.0} {primitive = $0 .primitive;}
 rebord_possible-> polygone{$0 .vert_or_hor == true ^ $0 .area<0.1} {primitive = $0 .primitive;}
-fenetre_complete->fenetre, cycle(rebord_possible{adj(primitive,#0 .primitive)},{adj($0 .primitive,$1 .primitive)}) {}{primitive = $0 .primitive;}
+fenetre_complete->fenetre, cluster(rebord_possible{adj(primitive,#0 .primitive)},{}) {$1 .size>=1}{@CalculAttFenetreCompleteReel}
 mur->premur	,cluster(fenetre_complete {adj(primitive,#0 .primitive)}, {}) {}{primitive = $0 .primitive; plan = $0 .plan;}
 murs->sequence(mur,{adj($0 .primitive,$1 .primitive) ^ @ContrainteAdjacenceExacte}) {}{primitive = $0 .primitive;}
