@@ -21,6 +21,7 @@ class MainWindow: public QMainWindow
 	void executer();
 	void executerPartiel();
 	void inverserAxesModele();
+	void colorier();
 	void changerGrammaire(int grammaire);
 	private :
 	void afficherModele();

@@ -17,6 +17,7 @@
 #include "../user/parsermurs.cpp"
 #include "../user/ParserHLMSimple.cpp"
 #include "../user/ParserReel.cpp"
+#include "ElementDialog.h"
 
 class Parserescalier;
 MainWindow::MainWindow() : QMainWindow()
@@ -102,9 +103,9 @@ TreeItem* item = static_cast<TreeItem*>(index.internalPointer());
 Noeud* n = item->n;	
 if(n==NULL)
 	return;
-bool * indices = new bool[p->terminaux.size()];
+int * indices = new int[p->terminaux.size()];
 for(int i=0;i<p->terminaux.size();i++)
-	indices[i]=false;
+	indices[i]=0;
 	
 	queue<Noeud*> aVoir;
 		aVoir.push(n);
@@ -115,7 +116,7 @@ for(int i=0;i<p->terminaux.size();i++)
 		if(n->getType().compare("polygone")==0)
 		{
 			qDebug()<<QString::number(n->getAttribut("number")->intValue()-1)<<endl;
-			indices[n->getAttribut("number")->intValue()] = true;
+			indices[n->getAttribut("number")->intValue()] = 1;
 		}
 		vector<Noeud*> enfants = n->getEnfants();
 		for(vector<Noeud*>::iterator it = enfants.begin();it!=enfants.end();it++)
@@ -124,7 +125,7 @@ for(int i=0;i<p->terminaux.size();i++)
 		}
 	}
 	
-	v->setColoredIndices(indices);
+	v->setColoredIndices(indices,1);
 	v->update();
 	}
 
@@ -157,7 +158,7 @@ if (!f.open(QIODevice::WriteOnly | QIODevice::Text))
          return;
 QTextStream out(&f);
 out<<"graph G{\n";
-for(map<Polygone*,set<Polygone*> >::iterator it = p->adj.begin();it!=p->adj.end();it++)
+for(map<Polygone*,set<Polygone*> >::iterator it = modele->adj.begin();it!=modele->adj.end();it++)
 {
 	for(set<Polygone*>::iterator it2 = it->second.begin();it2!=it->second.end();it2++)
 		out<<it->first->number<<" -- "<<(*it2)->number<<"\n";
@@ -180,6 +181,58 @@ system("dot -Tsvg arbre.dot > arbre.svg");
 //Afficher le SVG avec Qt
 QSvgWidget* svgWidget = new QSvgWidget("arbre.svg");
 svgWidget->show();
+}
+
+void MainWindow::colorier()
+{
+if(!view->currentIndex().isValid())
+	return;
+TreeItem* item = static_cast<TreeItem*>(view->currentIndex().internalPointer());
+QStringList types;
+for(map<string,set_noeud>::iterator it = p->noeudsParType.begin(); it!=p->noeudsParType.end();it++)
+	types << QString::fromStdString(it->first);
+ElementDialog dial(types,this);
+dial.exec();
+Viewer* viewer = new Viewer(p->terminaux);
+int * indices = new int[p->terminaux.size()];
+for(int i=0;i<p->terminaux.size();i++)
+	indices[i]=0;
+	
+for(int i=0;i<dial.selectionnes.size();i++)
+{
+	qDebug()<<dial.selectionnes[i]<<endl;
+	queue<pair<Noeud*,bool> > aVoir;
+	if(item->n->getType().compare(dial.selectionnes[i].toStdString())==0)
+		aVoir.push(pair<Noeud*,bool>(item->n,true));
+	else
+		aVoir.push(pair<Noeud*,bool>(item->n,false));
+	while(!aVoir.empty())
+	{
+		Noeud* n = aVoir.front().first;
+		bool ok = aVoir.front().second;
+		aVoir.pop();
+		if(n->getType().compare("polygone")==0 && ok)
+		{
+			qDebug()<<"OK on ajoute un polygone"<<endl;
+			indices[n->getAttribut("number")->intValue()] = i+1;
+		}
+		vector<Noeud*> enfants = n->getEnfants();
+		for(vector<Noeud*>::iterator it = enfants.begin();it!=enfants.end();it++)
+		{
+			if((*it)->getType().compare(dial.selectionnes[i].toStdString())==0 || ok)
+				aVoir.push(pair<Noeud*,bool>(*it,true));
+	else
+	{
+		aVoir.push(pair<Noeud*,bool>(*it,false));
+		qDebug()<<QString::fromStdString((*it)->getType())<<" != "<<dial.selectionnes[i]<<endl;
+		}
+		}
+	}
+}
+	
+	viewer->setColoredIndices(indices,dial.selectionnes.size());
+	viewer->show();
+	viewer->update();
 }
 
 void MainWindow::chargerFichierTexte()
@@ -237,8 +290,6 @@ if(!ok)
 modele->setEchelle(1/(float)echelle);
 p->parse(modele);
 v= new Viewer(p->terminaux);
-	bool * indices = new bool[p->terminaux.size()];
-	v->setColoredIndices(indices); 
      TreeModel* model = new TreeModel(p);
 	 view = new QTreeView();
 	 connect(view,SIGNAL(activated(const QModelIndex&)), this, SLOT(afficherElems(const QModelIndex&)));
@@ -251,8 +302,11 @@ v= new Viewer(p->terminaux);
 	s->setSizes(sizes);
 	view->setContextMenuPolicy(Qt::ActionsContextMenu);
 	QAction* showTree = new QAction("Arbre de dérivation",view);
+	QAction* colorieAct = new QAction("Colorier",view);
 	connect(showTree,SIGNAL(triggered()),this,SLOT(afficherArbre()));
+	connect(colorieAct,SIGNAL(triggered()),this,SLOT(colorier()));
 	view->addAction(showTree);
+	view->addAction(colorieAct);
 	tabs->removeTab(1);
 	delete resultWidget;
 	resultWidget = s;
@@ -271,8 +325,6 @@ if(!ok)
 	return;
 p->parse(modele,nb_iter);
 v= new Viewer(p->terminaux);
-	bool * indices = new bool[p->terminaux.size()];
-	v->setColoredIndices(indices); 
      TreeModel* model = new TreeModel(p);
 	 view = new QTreeView();
 	 connect(view,SIGNAL(activated(const QModelIndex&)), this, SLOT(afficherElems(const QModelIndex&)));

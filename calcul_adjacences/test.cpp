@@ -1,5 +1,5 @@
 #include <iostream>
-#include "prog_grammaires\geometrie\Vec3.h"
+#include "..\geometrie\Vec3.h"
 #include <vector>
 #include <map>
 #include <set>
@@ -39,7 +39,7 @@ for(int i=0;i<points.size();i++)
 		adj[i][j]=false;
 }
 
-int nb_cell = 100;
+int nb_cell = 10;
 float pas = max(maxX-minX,max(maxY-minY,maxZ-minZ))/nb_cell;
 for(int iter=0;iter<8;iter++)
 {

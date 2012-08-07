@@ -8,9 +8,9 @@ using namespace std;
 Viewer::Viewer(vector<Polygone*> p)
 {
 this->p = p;
-colored_ind = new bool[p.size()];
+colored_ind= new int[p.size()];
 for(int i=0;i<p.size();i++)
-	colored_ind[i]=false;
+	colored_ind[i]=0;
 	
 
 setViewPrimitives();
@@ -45,10 +45,21 @@ i++;
 }*/
 }
 
-void Viewer::setColoredIndices(bool* colored_ind)
+void Viewer::setColoredIndices(int* colored_ind,int max)
 {
 	//delete[] this->colored_ind;
 	this->colored_ind = colored_ind;
+	nodeColors = new int[3*(max+1)];
+	nodeColors[0] = nodeColors[1] = nodeColors[2] = 120;
+	for(int i=0;i<max;i++)
+	{
+		QColor c;
+		c.setHsv((int)(300./max*i),255,255,255);
+		QColor c2 = c.toRgb();
+		nodeColors[3*(i+1)] = c2.red();
+		nodeColors[3*(i+1)+1] = c2.green();
+		nodeColors[3*(i+1)+2] = c2.blue();
+	}
 	mode=0;
 }
 
@@ -69,10 +80,7 @@ for(vector<Polygone*>::iterator it = p.begin();it!=p.end();it++)
 {
 if(mode==0)
 {
-if(colored_ind[i])
-glColor4ub(255, 0,0,100); // on demande du bleu
-else
-glColor4ub(120, 120, 120,10); // on demande du bleu
+glColor4ub(nodeColors[3*colored_ind[i]],nodeColors[3*colored_ind[i]+1],nodeColors[3*colored_ind[i]+2],255);
 }
 else
 {
