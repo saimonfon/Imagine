@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "../grammaire/Parser.h"
+#include "geometrie/ObjReader.h"
 #include <QtGui>
 class Viewer;
 class Modele;
@@ -9,8 +10,14 @@ class MainWindow: public QMainWindow
 	Q_OBJECT
 	public :
 	MainWindow();
+
 	Viewer* v;
 	QTabWidget* tabs;
+	QModelIndex modIndex;
+
+	double echelle;
+	double epsilon;
+
 	public slots : 
 	void afficherElems(const QModelIndex& index);
 	void afficherExclu();
@@ -18,11 +25,15 @@ class MainWindow: public QMainWindow
 	void afficherArbre();
 	void chargerFichierTexte();
 	void chargerFichierObj();
+
+	void setEpsilon();
+	void setScale();
+
 	void executer();
 	void executerPartiel();
 	void inverserAxesModele();
-	void colorier();
 	void changerGrammaire(int grammaire);
+	void saveCustomObj();
 	private :
 	void afficherModele();
 	void scaleModel();
@@ -31,5 +42,7 @@ class MainWindow: public QMainWindow
 	QTreeView* view;
 	QWidget* modelWidget;
 	QWidget* resultWidget;
+
+	ObjReader f;
 };
 #endif

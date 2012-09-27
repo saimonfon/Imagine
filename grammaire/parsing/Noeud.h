@@ -4,45 +4,54 @@
 #include <string>
 #include <map>
 #include "../attributs/Attribut.h"
+
+
 using namespace std;
-/** Classe décrivant un noeud (i.e. un non-terminal) reconnu.*/
+/** Classe dï¿½crivant un noeud (i.e. un non-terminal) reconnu.*/
 class Noeud
 {
 	public:
 	/** Retourne la liste des enfants du noeud.*/
 	virtual vector<Noeud*> getEnfants() const = 0;
+
 	/** Retourne le type du noeud.*/
 	virtual string getType() const = 0;
+
 	/** Retourne la valeur d'un attribut du nom.
-	@param nom Le nom de l'attribut demandé.
+	@param nom Le nom de l'attribut demandï¿½.
 	@return Un pointeur sur la valeur de l'attribut.*/
 	Attribut* getAttribut(string nom);
+
 	/** Retourne les attributs du noeud.
 	@return Les attributs du noeud, sous la forme d'un dictionnaire.*/
 	map<string,Attribut*> getAttributs();
 	string nom_parser;
+
 	/** Modifie la valeur d'un attribut du noeud.
-	@param nom Le nom de l'attribut à modifier.
+	@param nom Le nom de l'attribut ï¿½ modifier.
 	@param val La nouvelle valeur de l'attribut.*/
 	void setAttribut(string nom,Attribut* val);
 	
-	/** Test d'égalité entre deux noeuds. Utilisé par le parser pour ne pas ajouter plusieurs fois le même noeud à la forêt.
-	@param n2 Un pointeur sur le noeud à comparer.
+	/** Test d'ï¿½galitï¿½ entre deux noeuds. Utilisï¿½ par le parser pour ne pas ajouter plusieurs fois le mï¿½me noeud ï¿½ la forï¿½t.
+	@param n2 Un pointeur sur le noeud ï¿½ comparer.
 	@return true si les deux noeuds sont identiques, false sinon.*/
 	virtual bool equals(const Noeud* n2) const=0;
+
 	float score;
 	
 	/**Accesseur sur les enfants du noeud.
-	@param i Indice de l'élément à accéder.
-	@return Un pointeur sur le i-ème enfant du noeud.*/
+	@param i Indice de l'ï¿½lï¿½ment ï¿½ accï¿½der.
+	@return Un pointeur sur le i-ï¿½me enfant du noeud.*/
 	Noeud*& operator[](int i);
 	
 	/** Accesseur sur les attributs du noeud.
-	@param s Le nom de l'attribut demandé.
-	@return La valeur de l'attribut (équivalent à getAttribut(s)).*/
+	@param s Le nom de l'attribut demandï¿½.
+	@return La valeur de l'attribut (ï¿½quivalent ï¿½ getAttribut(s)).*/
 	Attribut* operator[](string s);
 	
 	vector<Noeud*> enfants;
 	map<string,Attribut*> attributs;
+
+
 };
 #endif

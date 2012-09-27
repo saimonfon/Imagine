@@ -1,9 +1,12 @@
+#ifndef CONTRAINTE_ORTHO2_HEADER
+#define CONTRAINTE_ORTHO2_HEADER
+
 #include "../grammaire/condition/ConditionGenerale.h"
 #include "../grammaire/parsing/Noeud.h"
 #include "../grammaire/Parser.h"
 #include <vector>
 #include <iostream>
-//La contrainte pour deux marches consécutives
+//La contrainte pour deux marches consï¿½cutives
 class ContrainteOrtho2 : public ConditionGenerale
 {
 public: 
@@ -18,7 +21,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	Vec3 n3(p3->equation[0],p3->equation[1],p3->equation[2]);
 	return (n1*n2<0.1);
 	
-	//Pour chaque marche, trouver l'arête d'adjacence
+	//Pour chaque marche, trouver l'arï¿½te d'adjacence
 	int arete1,arete2;
 	for(int k=0;k<p1->points3D.size();k++)
 			for(int l=0;l<p3->points3D.size();l++)
@@ -46,7 +49,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 				}
 			}
 			
-	//Vérifier que les deux top se situent bien de part et d'autre de l'arête commune
+	//Vï¿½rifier que les deux top se situent bien de part et d'autre de l'arï¿½te commune
 	/*float x1,y1,x2,y2;
 	x1 = p1->points3D[arete1].x;
 	y1 = p1->points3D[arete1].y;
@@ -63,7 +66,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	if(sign1*sign2<0)
 		return false;*/
 		
-		//Vérifier qu'il y ait bien adjacence au niveau de l'arête parallèle au lieu d'adjacence
+		//Vï¿½rifier qu'il y ait bien adjacence au niveau de l'arï¿½te parallï¿½le au lieu d'adjacence
 	Vec3 a = p1->points3D[(arete1+2)%4];
 				Vec3 b = p1->points3D[(arete1+3)%4];
 				Vec3 c = p2->points3D[(arete2+2)%4];
@@ -74,3 +77,5 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	return false;
 }
 };
+
+#endif

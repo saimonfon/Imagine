@@ -1,11 +1,11 @@
 #ifndef CONTRAINTE_FENETRE_COMPLETE_H
 #define CONTRAINTE_FENETRE_COMPLETE_H
 #include "../grammaire/condition/ConditionGenerale.h"
-#include "ContrainteAdjacenceExacte.cpp"
+#include "ContrainteAdjacenceExacte.h"
 #include "../grammaire/parsing/Noeud.h"
 #include <vector>
 #include <iostream>
-//La contrainte pour une fenetre complete (tout le rebord doit etre adjacent à la fenetre)
+//La contrainte pour une fenetre complete (tout le rebord doit etre adjacent ï¿½ la fenetre)
 class ContrainteFenetreComplete : public ConditionGenerale
 {
 public: 
@@ -18,7 +18,7 @@ bool estVerifiee(vector<Noeud*> enfants, Parser* p)
 	vector<Noeud*> rebords = rebord->getEnfants();
 	for(vector<Noeud*>::iterator it = rebords.begin();it!=rebords.end();it++)
 	{
-		if(p->adj[((*fenetre)["primitive"])->polygoneValue()].count(((*(*it))["primitive"])->polygoneValue())==0) //si un des rebords n'est pas adjacent à la fenetre
+		if(p->adj[((*fenetre)["primitive"])->polygoneValue()].count(((*(*it))["primitive"])->polygoneValue())==0) //si un des rebords n'est pas adjacent ï¿½ la fenetre
 			return false;
 		vector<Noeud*> v;
 		v.push_back(rebord);

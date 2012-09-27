@@ -4,6 +4,8 @@
 #include "MembreDroit.h"
 #include "condition/ConditionUnique.h"
 #include "condition/ConditionAdj.h"
+#include "condition/ConditionAdj_Ext.h"
+#include "condition/ConditionAdj_Int.h"
 #include "condition/ConditionEgal.h"
 #include "condition/ConditionGenerale.h"
 #include <vector>
@@ -13,49 +15,57 @@ class Regle
 {
 	public:
 	/**Constructeur.
-	@param nom Le nom du non-terminal correspondant à la règle.
-	@param membresDroits Le vecteur des membres droits de la règle.
+	@param nom Le nom du non-terminal correspondant ï¿½ la rï¿½gle.
+	@param membresDroits Le vecteur des membres droits de la rï¿½gle.
 	*/
 	Regle(string nom, vector<MembreDroit*> membresDroits);
-	/** Applique la règle à l'état courant du parser passé en paramètre.
-	@param p Le parser décrivant l'état courant du système.
-	@return La liste des noeuds résultant de l'application de la règle.*/
+	/** Applique la rï¿½gle ï¿½ l'ï¿½tat courant du parser passï¿½ en paramï¿½tre.
+	@param p Le parser dï¿½crivant l'ï¿½tat courant du systï¿½me.
+	@return La liste des noeuds rï¿½sultant de l'application de la rï¿½gle.*/
 	vector<Noeud*> appliquer(Parser* p);
-	/** Objet décrivant un calcul personnalisé par l'utilisateur des attributs des noeuds nouvellement créés.*/
+	/** Objet dï¿½crivant un calcul personnalisï¿½ par l'utilisateur des attributs des noeuds nouvellement crï¿½ï¿½s.*/
 	CalculAttributs* calculAtt;
-	/** Membres droits de la règle (terminaux/non-terminaux) ou opérateurs */
+	/** Membres droits de la rï¿½gle (terminaux/non-terminaux) ou opï¿½rateurs */
 	vector<MembreDroit*> membresDroits;
-	/** Parser correspondant à l'état actuel du système.*/
+	/** Parser correspondant ï¿½ l'ï¿½tat actuel du systï¿½me.*/
 	Parser* p;
-	/** Nom du non-terminal correspondant à la règle. */
+	/** Nom du non-terminal correspondant ï¿½ la rï¿½gle. */
 	string nom;
 	/** Nombre de membres droits. */
 	int N;
-	/**L'ordre dans lequel les variables doivent être affectées (de la plus contrainte à la moins contrainte) */
+	/**L'ordre dans lequel les variables doivent ï¿½tre affectï¿½es (de la plus contrainte ï¿½ la moins contrainte) */
 	int* order;
 	/** Les conditions portant sur un membre droit (par exemple, chaque marche doit mesurer plus de 30 cm).*/
 	vector<ConditionUnique*> condUnique;
-	/** Les conditions d'adjacence entre attributs de deux éléments consécutifs. */
+	/** Les conditions d'adjacence entre attributs de deux ï¿½lï¿½ments consï¿½cutifs. */
 	vector<ConditionAdj*> condAdj;
-	/** Les conditions d'égalité entre attributs de deux éléments consécutifs. */
+	/** les conditions d'adjacence exterieure entre attributs de deux elements */
+	vector<ConditionAdj_Ext*> condAdj_ext;
+	/** les conditions d'adjacence inetrieure entre attributs de deux elements */
+	vector<ConditionAdj_Int*> condAdj_int;
+	/** Les conditions d'ï¿½galitï¿½ entre attributs de deux ï¿½lï¿½ments consï¿½cutifs. */
 	vector<ConditionEgal*> condEgal;
-	/** Les conditions générales (à vérifier sur une affectation complète. */
+	/** Les conditions gï¿½nï¿½rales (ï¿½ vï¿½rifier sur une affectation complï¿½te. */
 	vector<ConditionGenerale*> condGen;
 	
-	map<ConditionAdj*,map<Polygone*,set<Noeud*> > > table_adj_i;
-	map<ConditionAdj*,map<Polygone*,set<Noeud*> > > table_adj_j;
-	
-	//Le void* dans la map peut poser des problèmes (égalité entre pointeurs au lieu d'égalité entre valeurs)
+	map<ConditionAdj*    , map<Polygone*, set<Noeud*> > > table_adj_i;
+	map<ConditionAdj*    , map<Polygone*, set<Noeud*> > > table_adj_j;
+	map<ConditionAdj_Ext*, map<Polygone*, set<Noeud*> > > table_adj_ext_i;
+	map<ConditionAdj_Ext*, map<Polygone*, set<Noeud*> > > table_adj_ext_j;
+	map<ConditionAdj_Int*, map<Polygone*, set<Noeud*> > > table_adj_int_i;
+	map<ConditionAdj_Int*, map<Polygone*, set<Noeud*> > > table_adj_int_j;
+
+	//Le void* dans la map peut poser des problï¿½mes (ï¿½galitï¿½ entre pointeurs au lieu d'ï¿½galitï¿½ entre valeurs)
 	map<ConditionEgal*,map<void*,set<Noeud*> > > table_eg_i;
 	map<ConditionEgal*,map<void*,set<Noeud*> > > table_eg_j;
 	
-	/** Résolution du problème d'affectation.
+	/** Rï¿½solution du problï¿½me d'affectation.
 	@param affectPart Affectation partielle courante.
 	@param curInd Indice de la variable sur laquelle boucler.*/
 	void solveCSP(Noeud** affectPart, int curInd);
 	//RAJOUTER LES TABLES DE HACHAGE DE LA REGLE
 	
 	private :
-	vector<Noeud*> resultat; //Résultats, pour éviter de le passer en argument de la fonction récursive à chaque fois.
+	vector<Noeud*> resultat; //Rï¿½sultats, pour ï¿½viter de le passer en argument de la fonction rï¿½cursive ï¿½ chaque fois.
 };
 #endif

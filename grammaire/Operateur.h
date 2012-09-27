@@ -4,6 +4,8 @@
 #include <string>
 #include "condition/ConditionUnique.h"
 #include "condition/ConditionAdj.h"
+#include "condition/ConditionAdj_Ext.h"
+#include "condition/ConditionAdj_Int.h"
 #include "condition/ConditionEgal.h"
 #include "condition/ConditionGenerale.h"
 #include "regles/CalculAttributs.h"
@@ -12,39 +14,46 @@ typedef set<Noeud*> setNoeud;
 class Operateur : public MembreDroit
 {
 	public :
-	/** Initialise l'opérateur.
-@param nom Le nom de l'élément répété.*/
+	/** Initialise l'opï¿½rateur.
+@param nom Le nom de l'ï¿½lï¿½ment rï¿½pï¿½tï¿½.*/
 	void init(string nom, string name);
 	set<Noeud*> getAffectations(Parser* p,Noeud** affectation, int N);
-	/** La fonction spécifique (cycle, séquence...) : retourne les noeuds à partir du graphe de successeurs possibles */
+	/** La fonction spï¿½cifique (cycle, sï¿½quence...) : retourne les noeuds ï¿½ partir du graphe de successeurs possibles */
 	virtual set<Noeud*> noeudsFromGraphe()=0;
-	/** Le parser correspondant à l'état courant.*/
+	/** Le parser correspondant ï¿½ l'ï¿½tat courant.*/
 	Parser * p;
 	/** L'affectation partielle courante.*/
 	Noeud** affectation;
-	/** Le nom de l'élément répété.*/
+	/** Le nom de l'ï¿½lï¿½ment rï¿½pï¿½tï¿½.*/
 	string nom;
 	string name;
 
 	/** Les conditions portant sur le membre droit (par exemple, chaque marche doit mesurer plus de 30 cm).*/
 	vector<ConditionUnique*> condUnique;
-	/** Les conditions d'adjacence entre attributs de deux éléments consécutifs. */
+	/** Les conditions d'adjacence entre attributs de deux ï¿½lï¿½ments consï¿½cutifs. */
 	vector<ConditionAdj*> condAdj;
-	/** Les conditions d'égalité entre attributs de deux éléments consécutifs. */
+	vector<ConditionAdj_Ext*> condAdj_ext;
+	vector<ConditionAdj_Int*> condAdj_int;
+
+	/** Les conditions d'ï¿½galitï¿½ entre attributs de deux ï¿½lï¿½ments consï¿½cutifs. */
 	vector<ConditionEgal*> condEgal;
-	/** Les conditions générales sur deux éléments consécutifs */
+	/** Les conditions gï¿½nï¿½rales sur deux ï¿½lï¿½ments consï¿½cutifs */
 	vector<ConditionGenerale*> condGen;
 	
 	set<Noeud*> dejaTraites;
 	map<Noeud*,set<Noeud*> > succ;
 	map<ConditionAdj*,map<Polygone*,set<Noeud*> > > table_adj_i;
 	map<ConditionAdj*,map<Polygone*,set<Noeud*> > > table_adj_j;
+	map<ConditionAdj_Ext*,map<Polygone*,set<Noeud*> > > table_adj_ext_i;
+	map<ConditionAdj_Ext*,map<Polygone*,set<Noeud*> > > table_adj_ext_j;
+	map<ConditionAdj_Int*,map<Polygone*,set<Noeud*> > > table_adj_int_i;
+	map<ConditionAdj_Int*,map<Polygone*,set<Noeud*> > > table_adj_int_j;
 	
-	//Le void* dans la map peut poser des problèmes (égalité entre pointeurs au lieu d'égalité entre valeurs)
+	//Le void* dans la map peut poser des problï¿½mes (ï¿½galitï¿½ entre pointeurs au lieu d'ï¿½galitï¿½ entre valeurs)
 	map<ConditionEgal*,map<void*,set<Noeud*> > > table_eg_i;
 	map<ConditionEgal*,map<void*,set<Noeud*> > > table_eg_j;
 	
-	/** Conditions d'adjacence entre chaque élément de l'opérateur et un élément externe de la même règle.*/
+	/** Conditions d'adjacence entre chaque ï¿½lï¿½ment de l'opï¿½rateur et un ï¿½lï¿½ment externe de la mï¿½me rï¿½gle.*/
 	vector<ConditionAdj*> condAdjExt;
 
 	CalculAttributs* calculAtt;

@@ -45,6 +45,18 @@ class Vec3
 		return Vec3(this->x+other.x,this->y+other.y,this->z+other.z);
 	}
 	
+	const bool operator<(const Vec3& other) const
+	{
+		if(this->x < other.x){return true;}
+		if(this->x == other.x){
+			if(this->y < other.y){return true;}
+			if(this->y == other.y){
+				if(this->z < other.z){return true;}
+			}
+		}
+		return false;
+	}
+
 	void operator+=(const Vec3& other)
 	{
 		this->x+=other.x;

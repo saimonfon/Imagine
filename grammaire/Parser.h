@@ -12,7 +12,7 @@ using namespace std;
 
 class NoeudEq{
 public:
-/** Egalité entre deux noeuds. Utilisé pour la hashmap. */
+/** Egalitï¿½ entre deux noeuds. Utilisï¿½ pour la hashmap. */
 bool operator ()(const Noeud* n1,const Noeud* n2) const
 {
 	return n1->equals(n2);
@@ -44,14 +44,19 @@ class Parser
 		void computeAdjacencies();
 		void ajouterRegle(Regle* r);
 		//void ajouterRegle(RegleSequence* r);
+
 		map<Polygone*, set<Polygone*> > adj;/** La matrice d'adjacence entre polygones*/
-		vector<Regle*> regles; /** Les règles de la grammaire*/
-		vector<Noeud*> foret; /** La forêt des non-terminaux reconnus */
+		map<Polygone*, set<Polygone*> > adj_ext; /** La matrice d'adjacence exterieure*/
+		map<Polygone*, set<Polygone*> > adj_int; /** La matrice d'adjacence interieure*/
+		float echelle;
+
+		vector<Regle*> regles; /** Les rï¿½gles de la grammaire*/
+		vector<Noeud*> foret; /** La forï¿½t des non-terminaux reconnus */
 		map<string,set_noeud> noeudsParType; /** A chaque type, l'ensemble des noeuds correspondants */
 		void generateDot(string filename, bool axiomeSeulement);
-		//map<Regle*,set<Noeud*> > seqDejaTraitees; /** Pour chaque règle de séquence, listes à 1 élément déjà construites */
-		map<Noeud*,set<Noeud*> > exclusivite ; /** Relation d'exclusivité. A chaque noeud est associé la liste des noeuds qui ne peuvent apparaître dans le même arbre. */
-		//map<string,set<RegleSequence*> >  reglesSequence; /** Associe à chaque non-terminal les règles séquence dans lesquelles il apparait. */ 
+		//map<Regle*,set<Noeud*> > seqDejaTraitees; /** Pour chaque rï¿½gle de sï¿½quence, listes ï¿½ 1 ï¿½lï¿½ment dï¿½jï¿½ construites */
+		map<Noeud*,set<Noeud*> > exclusivite ; /** Relation d'exclusivitï¿½. A chaque noeud est associï¿½ la liste des noeuds qui ne peuvent apparaï¿½tre dans le mï¿½me arbre. */
+		//map<string,set<RegleSequence*> >  reglesSequence; /** Associe ï¿½ chaque non-terminal les rï¿½gles sï¿½quence dans lesquelles il apparait. */ 
 		void afficherMeilleur(string axiome);
 		void generateDot(string filename, Noeud* racine);
 		};

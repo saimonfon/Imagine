@@ -1,3 +1,6 @@
+#ifndef parserHLMSimple_header
+#define parserHLMSimple_header
+
 #include "../grammaire/Parser.h"
 #include <vector>
 #include <string>
@@ -11,14 +14,14 @@
 #include "../grammaire/condition/ConditionEgal.h"
 #include "../grammaire/regles/CalculAttributs.h"
 #include "../grammaire/attributs/Attribut.h"
-#include "ContrainteAdjacenceExacte.cpp"
-#include "ContrainteMurFenetre.cpp"
-#include "ContrainteFenetreComplete.cpp"
-#include "ContrainteClusterFenetre.cpp"
-#include "CalculAttFenetreCompleteReel.cpp"
-class ParserReel : public Parser {
+#include "ContrainteAdjacenceExacte.h"
+#include "ContrainteMurFenetre.h"
+#include "ContrainteFenetreComplete.h"
+#include "ContrainteClusterFenetre.h"
+#include "CalculAttFenetreComplete.h"
+class ParserHLMSimple : public Parser {
 public:
-ParserReel(){
+ParserHLMSimple(){
 vector<MembreDroit*> v0;
 v0.push_back(new MembreStandard("polygone"));
 Regle* r0 = new Regle("premur",v0);
@@ -49,11 +52,11 @@ bool estVerifiee(Noeud* n){return
 ConditionUnique1_4* c1_4 = new ConditionUnique1_4(); c1_4->indice = 0;
 class ConditionUnique1_5 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-(n->getAttribut("area")->floatValue()>0.2);}};
+(n->getAttribut("area")->floatValue()>0.1);}};
 ConditionUnique1_5* c1_5 = new ConditionUnique1_5(); c1_5->indice = 0;
 class ConditionUnique1_6 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-(n->getAttribut("area")->floatValue()<1.0);}};
+(n->getAttribut("area")->floatValue()<2.0);}};
 ConditionUnique1_6* c1_6 = new ConditionUnique1_6(); c1_6->indice = 0;
 r1->condUnique.push_back(c1_4);
 r1->condUnique.push_back(c1_5);
@@ -73,28 +76,41 @@ bool estVerifiee(Noeud* n){return
 ConditionUnique2_8* c2_8 = new ConditionUnique2_8(); c2_8->indice = 0;
 class ConditionUnique2_9 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-(n->getAttribut("area")->floatValue()<0.1);}};
+(n->getAttribut("rectangle")->boolValue()==true);}};
 ConditionUnique2_9* c2_9 = new ConditionUnique2_9(); c2_9->indice = 0;
+class ConditionUnique2_10 : public ConditionUnique{
+bool estVerifiee(Noeud* n){return 
+(n->getAttribut("area")->floatValue()<0.5);}};
+ConditionUnique2_10* c2_10 = new ConditionUnique2_10(); c2_10->indice = 0;
 r2->condUnique.push_back(c2_8);
 r2->condUnique.push_back(c2_9);
-class Calcul9 : public CalculAttributs {
+r2->condUnique.push_back(c2_10);
+class Calcul10 : public CalculAttributs {
 void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
 }};
-r2->calculAtt = new Calcul9();
+r2->calculAtt = new Calcul10();
 vector<MembreDroit*> v3;
 v3.push_back(new MembreStandard("fenetre"));
-OperateurCluster* op0= new OperateurCluster("rebord_possible","OPE");
+OperateurCycle* op0= new OperateurCycle("rebord_possible","OPE");
 op0->condAdjExt.push_back(new ConditionAdj(0,"primitive",0,"primitive"));
+op0->condAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
+op0->condGen.push_back(new ContrainteAdjacenceExacte());
+class Calcul11 : public CalculAttributs {
+void calculAttrib(Noeud* nouveau){
+nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
+}};
+op0->calculAtt = new Calcul11();
 v3.push_back(op0);
 Regle* r3 = new Regle("fenetre_complete",v3);
 ajouterRegle(r3);
-class ConditionUnique3_11 : public ConditionUnique{
+class ConditionUnique3_13 : public ConditionUnique{
 bool estVerifiee(Noeud* n){return 
-(n->getAttribut("size")->intValue()>=1);}};
-ConditionUnique3_11* c3_11 = new ConditionUnique3_11(); c3_11->indice = 1;
-r3->condUnique.push_back(c3_11);
-r3->calculAtt = new CalculAttFenetreCompleteReel();
+(n->getAttribut("size")->intValue()==4);}};
+ConditionUnique3_13* c3_13 = new ConditionUnique3_13(); c3_13->indice = 1;
+r3->condUnique.push_back(c3_13);
+r3->condGen.push_back(new ContrainteFenetreComplete());
+r3->calculAtt = new CalculAttFenetreComplete();
 vector<MembreDroit*> v4;
 v4.push_back(new MembreStandard("premur"));
 OperateurCluster* op1= new OperateurCluster("fenetre_complete","OPE");
@@ -102,22 +118,24 @@ op1->condAdjExt.push_back(new ConditionAdj(0,"primitive",0,"primitive"));
 v4.push_back(op1);
 Regle* r4 = new Regle("mur",v4);
 ajouterRegle(r4);
-class Calcul11 : public CalculAttributs {
+class Calcul13 : public CalculAttributs {
 void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
 nouveau->setAttribut("plan",nouveau->getEnfants()[0]->getAttribut("plan"));
 }};
-r4->calculAtt = new Calcul11();
+r4->calculAtt = new Calcul13();
 vector<MembreDroit*> v5;
-OperateurSequence* op2= new OperateurSequence("mur","OPE");
+OperateurCycle* op2= new OperateurCycle("mur","OPE");
 op2->condAdj.push_back(new ConditionAdj(0,"primitive",1,"primitive"));
 op2->condGen.push_back(new ContrainteAdjacenceExacte());
 v5.push_back(op2);
 Regle* r5 = new Regle("murs",v5);
 ajouterRegle(r5);
-class Calcul12 : public CalculAttributs {
+class Calcul14 : public CalculAttributs {
 void calculAttrib(Noeud* nouveau){
 nouveau->setAttribut("primitive",nouveau->getEnfants()[0]->getAttribut("primitive"));
 }};
-r5->calculAtt = new Calcul12();
+r5->calculAtt = new Calcul14();
 }};
+
+#endif

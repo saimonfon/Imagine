@@ -12,7 +12,10 @@ int n3 = 0; //compteur pour les conditions et règles de calcul
 //class batimentParser extends Parser;
 
 grammaire 
-	: {System.out.println("#include \"../grammaire/Parser.h\"");
+	: {
+System.out.println("#ifndef "+$dnom.nom+"_header");
+System.out.println("#define "+$dnom.nom+"_header");
+System.out.println("#include \"../grammaire/Parser.h\"");
 System.out.println("#include <vector>");
 System.out.println("#include <string>");
 System.out.println("#include \"../grammaire/Regle.h\"");
@@ -21,10 +24,13 @@ System.out.println("#include \"../grammaire/MembreStandard.h\"");
 System.out.println("#include \"../grammaire/OperateurSequence.h\"");
 System.out.println("#include \"../grammaire/OperateurCluster.h\"");
 System.out.println("#include \"../grammaire/OperateurEnsemble.h\"");
+System.out.println("#include \"../grammaire/OperateurPartieConnexe.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionAdj.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionEgal.h\"");
 System.out.println("#include \"../grammaire/regles/CalculAttributs.h\"");
-System.out.println("#include \"../grammaire/attributs/Attribut.h\"");}
+System.out.println("#include \"../grammaire/attributs/Attribut.h\"");
+}
+
 
 dinclude
 dnom=def_nom {System.out.println("class Parser"+$dnom.nom+" : public Parser {");
@@ -32,9 +38,10 @@ System.out.println("public:");
 	System.out.println("Parser"+$dnom.nom+"(){");}
 	def_regles {
 	System.out.println("}};");
+	System.out.println("#endif");
 	};
 dinclude 
-	: ('#' i=ID {System.out.println("#include \""+$i.text+".cpp\"");})*	;
+	: ('#' i=ID {System.out.println("#include \""+$i.text+".h\"");})*	;
 
 def_nom	returns [String nom]:	'grammaire' id=ID {nom= $id.text;};//id.getText();};
 def_regles 
@@ -59,7 +66,8 @@ operateur
 	:	{String opType="";}('sequence' {opType="OperateurSequence";}
 		| 'cycle' {opType="OperateurCycle";}
 		|'cluster' {opType="OperateurCluster";}
-		|'ensemble' {opType="OperateurEnsemble";})
+		|'ensemble' {opType="OperateurEnsemble";}
+		| 'partieConnexe' {opType="OperateurPartieConnexe";})
 		'(' i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres '}')?
 		',' '{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("op"+n2+"->"+s);})?'}'
 		 (',' ('{' liste_calcul {System.out.println("op"+n2+"->calculAtt = new Calcul"+n3+"();");n3++;}

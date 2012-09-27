@@ -25,7 +25,7 @@ class Polygone
 	Vec3& operator[](int i);
 	int size();
 	vector<Vec3*> triangles; //Triangles
-float area;
+	float area;
 	private:
 	void computePoints3D();
 };

@@ -5,16 +5,19 @@ class Viewer : public QGLViewer
 {
 public :
 Viewer(vector<Polygone*> p);
-void setColoredIndices(int* colored_ind,int max);
+Viewer(vector<Polygone*> p, float ms);
+void setColoredIndices(bool* colored_ind);
 void setViewPrimitives();
+  float modele_scale;
 protected :
 	int* primColors;
-	int* nodeColors;
   virtual void draw();
   virtual void init();
   virtual QString helpString() const;
   vector<Polygone*> p;
-  int* colored_ind;
+  bool* colored_ind;
   GLuint base_ind ;
   int mode; //0 pour les indices, 1 pour les primitives
+
+
 };
