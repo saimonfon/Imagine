@@ -113,7 +113,7 @@ public :
 			}
 
 			(*it)->computeAttributs();
-			(*it)->area /= (echelle*echelle);
+			//(*it)->area /= (echelle*echelle);
 			cout<<(*it)->getArea()<<"\n";
 		}
 

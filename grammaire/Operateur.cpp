@@ -7,7 +7,30 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 {
 	this->p = p;
 	this->affectation  =affectation;
-	set_noeud candidats = p->noeudsParType[this->nom];
+	set_noeud candidats;
+	cout<<"On va récupérer les noeuds candidats"<<endl;
+	if(type==0) //Opérateur simple, les noeuds candidats sont des noeuds de l'arbre
+	candidats = p->noeudsParType[this->nom];
+	else //Opérateur ayant un opérateur imbriqué, il faut d'abord trouver les solutions de l'opérateur imbriqué
+	{
+	candidats = enfant->getAffectations(p,affectation,N);
+	cout<<"oK ICI"<<endl;
+	//Traiter le cas où le noeud retourné est le noeud "EnsembleVide"
+	if(candidats.size()==1)
+	{
+		set_noeud::iterator it=candidats.begin();
+		if((*it)->getType().compare("EnsembleVide")==0)
+			candidats = set_noeud();
+	}
+	else
+	{
+		set_noeud candidats2 = set_noeud();
+		for(set_noeud::iterator it = candidats.begin();it!=candidats.end();it++)
+			candidats2.insert(p->ajouterNoeud(*it));
+		candidats = candidats2;
+	}
+	}
+	cout<<"OK on a récupéré les candidats"<<endl;
 	dejaTraites = set<Noeud*>();
 	succ = map<Noeud*,set<Noeud*> >();
 	for(set_noeud::iterator ite = candidats.begin();ite!=candidats.end();ite++)
@@ -324,6 +347,8 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			if(!goOn)
 				break;
 		}
+		
+	cout<<"OK ICI"<<endl;
 		cout<<parent<<" : "<<parent->condUnique.size();
 		for(vector<ConditionUnique*>::iterator it = parent->condUnique.begin();it!=parent->condUnique.end();it++)
 		{
@@ -338,7 +363,7 @@ set<Noeud*> Operateur::getAffectations(Parser* p,Noeud** affectation, int N)
 			}
 		}
 	}
-
+	cout<<"OK ICI"<<endl;
 	for(set<Noeud*>::iterator ite = toErase.begin();ite!=toErase.end();ite++)
 		res.erase(*ite);
 	/*if(res.size()==0)
@@ -351,4 +376,25 @@ void Operateur::init(string nom ,string name)
 	this->nom = nom;
 	this->name = name;
 	calculAtt = NULL;
+	type=0;
+}
+
+void Operateur::init(Operateur* enfant, string name)
+{
+	this->enfant = enfant;
+	this->name = name;
+	cout<<"NOM DE l'OP IMBRIQUE :"<<name<<endl;
+	calculAtt = NULL;
+	type=1;
+}
+
+void Operateur::init (Regle* parent, int position)
+{
+	cout<<"On appelle la version spéciale opérateur"<<endl;
+	MembreDroit::init(parent,position);
+	if(type==1)
+	{
+		enfant->init(parent,position);
+		cout<<"On appelle bien initi sur l'operateur imbriqué"<<endl;
+	}
 }

@@ -5,6 +5,7 @@ class OperateurCluster : public Operateur
 {
 public:
 OperateurCluster(string nom, string tempname);
+OperateurCluster(Operateur* enfant, string tempname);
 set<Noeud*> noeudsFromGraphe();
 };
 #endif

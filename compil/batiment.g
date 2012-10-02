@@ -4,11 +4,12 @@ import java.util.LinkedList;
 }
 
 @members{
-int n=0; //compteur pour les règles
+int n=0; //compteur pour les regles
 int n2=0; //compteur pour les membres droits
-int n3 = 0; //compteur pour les conditions et règles de calcul
+int n3 = 0; //compteur pour les conditions et regles de calcul
+int n4=0; //compteur pour les opérateurs imbriqués
 }
-/* Règles du parser*/
+/* Regles du parser*/
 //class batimentParser extends Parser;
 
 grammaire 
@@ -26,6 +27,8 @@ System.out.println("#include \"../grammaire/OperateurCluster.h\"");
 System.out.println("#include \"../grammaire/OperateurEnsemble.h\"");
 System.out.println("#include \"../grammaire/OperateurPartieConnexe.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionAdj.h\"");
+System.out.println("#include \"../grammaire/condition/ConditionAdj_Ext.h\"");
+System.out.println("#include \"../grammaire/condition/ConditionAdj_Int.h\"");
 System.out.println("#include \"../grammaire/condition/ConditionEgal.h\"");
 System.out.println("#include \"../grammaire/regles/CalculAttributs.h\"");
 System.out.println("#include \"../grammaire/attributs/Attribut.h\"");
@@ -68,13 +71,30 @@ operateur
 		|'cluster' {opType="OperateurCluster";}
 		|'ensemble' {opType="OperateurEnsemble";}
 		| 'partieConnexe' {opType="OperateurPartieConnexe";})
-		'(' i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres '}')?
+		'(' 
+		(i2 = ID {System.out.println(opType+"* op"+n2+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres '}')?
+		|operateur_imbrique {System.out.println(opType+"* op"+n2+"= new "+opType+"(opi"+n4+",\"OPE_IMBRIQUE\");");n4++;})
 		',' '{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("op"+n2+"->"+s);})?'}'
 		 (',' ('{' liste_calcul {System.out.println("op"+n2+"->calculAtt = new Calcul"+n3+"();");n3++;}
 		|'@' c=ID {System.out.println("op"+n2+"->calculAtt = new "+$c.text+"();");}) '}' )? ')' {System.out.println("v"+n+".push_back(op"+n2+");");n2++;};
+		
+		operateur_imbrique 
+	:	{String opType="";}('sequence' {opType="OperateurSequence";}
+		| 'cycle' {opType="OperateurCycle";}
+		|'cluster' {opType="OperateurCluster";}
+		|'ensemble' {opType="OperateurEnsemble";}
+		| 'partieConnexe' {opType="OperateurPartieConnexe";})
+		'(' i2 = ID {System.out.println(opType+"* opi"+n4+"= new "+opType+"(\""+$i2.text+"\",\"OPE\");");} ('{' contrainte_op_membres_imbrique '}')?
+		',' '{' (lc = liste_contraintes {for(String s:$lc.liste) System.out.println("opi"+n4+"->"+s);})?'}'
+		 (',' ('{' liste_calcul {System.out.println("opi"+n4+"->calculAtt = new Calcul"+n3+"();");n3++;}
+		|'@' c=ID {System.out.println("opi"+n4+"->calculAtt = new "+$c.text+"();");}) '}' )? ')';
 
 contrainte_op_membres 
 	:	(ADJ '(' att=ID ',' '#' j=INT '.' att_j=ID ')' {System.out.println("op"+n2+"->condAdjExt.push_back(new ConditionAdj(0,\""+$att.text+"\","+$j.text+",\""+$att_j.text+"\"));");})*;
+
+
+contrainte_op_membres_imbrique 
+	:	(ADJ '(' att=ID ',' '#' j=INT '.' att_j=ID ')' {System.out.println("opi"+n4+"->condAdjExt.push_back(new ConditionAdj(0,\""+$att.text+"\","+$j.text+",\""+$att_j.text+"\"));");})*;
 
 liste_contraintes returns [List<String> liste]:	
 	{liste = new LinkedList<String>();} c=contrainte {liste.add($c.toString);}('^' c2=contrainte {liste.add($c2.toString);})*;
@@ -87,12 +107,16 @@ liste_calcul
 	contrainte returns [String toString]:
 	c=contrainte_egal {toString = $c.toString;}|
 	c=contrainte_adj {toString = $c.toString;}|
+	c=contrainte_adj_ext{toString = $c.toString;}|
+	c=contrainte_adj_int{toString = $c.toString;}|
 	c=condition_unique {toString = $c.toString;}|
 	c=contrainte_generale {toString = $c.toString;}|
 	'(' c=contrainte {toString = $c.toString;}')';
 	
 	contrainte_egal returns [String toString]: '$' i=INT '.' att_i=ID '=' '$' j=INT '.' att_j=ID {toString="condEgal.push_back(new ConditionEgal("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
 	contrainte_adj returns [String toString] : ADJ '(' '$' i=INT '.' att_i=ID ',' '$' j=INT '.' att_j=ID ')' {toString="condAdj.push_back(new ConditionAdj("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
+	contrainte_adj_ext returns [String toString] : ADJEXT '(' '$' i=INT '.' att_i=ID ',' '$' j=INT '.' att_j=ID ')' {toString="condAdj_ext.push_back(new ConditionAdj_Ext("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
+	contrainte_adj_int returns [String toString] : ADJINT '(' '$' i=INT '.' att_i=ID ',' '$' j=INT '.' att_j=ID ')' {toString="condAdj_int.push_back(new ConditionAdj_Int("+$i.text+",\""+$att_i.text+"\","+$j.text+",\""+$att_j.text+"\"));";};
 	
 	condition_unique  returns [String toString] : {System.out.println("class ConditionUnique"+n+"_"+(++n3)+" : public ConditionUnique{");
 	System.out.println("bool estVerifiee(Noeud* n){return ");}
@@ -105,11 +129,13 @@ liste_calcul
 	contrainte_generale returns [String toString]:'@' i=ID{toString="condGen.push_back(new "+$i.text+"());";};
 	
 	expr_calcul : att_i=ID '=' '$' j=INT '.' att_j=ID {System.out.println("nouveau->setAttribut(\""+$att_i.text+"\",nouveau->getEnfants()["+$j.text+"]->getAttribut(\""+$att_j.text+"\"));");};
-/*Règles du lexer*/
+/*Rï¿½gles du lexer*/
 
 BOOL 	:	 'true'|'false';
 OP_COMP :'=='|'>'|'<'|'>='|'<='|'!=';
 ADJ 	: 'adj';
+ADJEXT	: 'adj_ext';
+ADJINT	: 'adj_int';
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
     

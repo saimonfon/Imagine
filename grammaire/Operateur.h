@@ -14,9 +14,12 @@ typedef set<Noeud*> setNoeud;
 class Operateur : public MembreDroit
 {
 	public :
+	void init (Regle* parent, int position);
+	int type; //0 pour opérateur simple, 1 s'il contient une imbrication
 	/** Initialise l'op�rateur.
 @param nom Le nom de l'�l�ment r�p�t�.*/
 	void init(string nom, string name);
+	void init(Operateur* enfant, string name);
 	set<Noeud*> getAffectations(Parser* p,Noeud** affectation, int N);
 	/** La fonction sp�cifique (cycle, s�quence...) : retourne les noeuds � partir du graphe de successeurs possibles */
 	virtual set<Noeud*> noeudsFromGraphe()=0;
@@ -26,6 +29,7 @@ class Operateur : public MembreDroit
 	Noeud** affectation;
 	/** Le nom de l'�l�ment r�p�t�.*/
 	string nom;
+	Operateur* enfant;
 	string name;
 
 	/** Les conditions portant sur le membre droit (par exemple, chaque marche doit mesurer plus de 30 cm).*/

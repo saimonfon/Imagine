@@ -1,0 +1,5 @@
+grammaire Imbrique
+
+premur->polygone {$0 .vertical==true ^ $0 .area > 2.0} {primitive = $0 .primitive; plan =$0 .plan;}
+rebord_possible-> polygone{$0 .vert_or_hor == true ^ $0 .area<0.5} {primitive = $0 .primitive;}
+mur->premur	,cluster(cluster(rebord_possible {adj(primitive,#0 .primitive)},{adj($0 .primitive,$1 .primitive)},{primitive = $0 .primitive;}), {}) {}{primitive = $0 .primitive; plan = $0 .plan;}

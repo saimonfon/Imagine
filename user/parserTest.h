@@ -1,5 +1,5 @@
-#ifndef null_header
-#define null_header
+#ifndef parsertest_h
+#define parsertest_h
 #include "../grammaire/Parser.h"
 #include <vector>
 #include <string>

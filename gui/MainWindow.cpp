@@ -21,6 +21,7 @@
 #include "../user/parserHLMSimple.h"
 #include "../user/parserReel.h"
 #include "../user/parserTest.h"
+#include "../user/ParserImbrique.h"
 
 class Parserescalier;
 MainWindow::MainWindow() : QMainWindow()
@@ -57,14 +58,16 @@ MainWindow::MainWindow() : QMainWindow()
 	QAction*  gmursAct = new QAction(tr("&Murs"), fileMenu);
 	QAction*  gHLMsimpleAct = new QAction(tr("&HLM Simple"), fileMenu);
 	QAction*  gReelAct = new QAction(tr("&Donn�es r�elles"), fileMenu);
-
+	
 	QAction* gTestAct = new QAction(tr("&Test"), fileMenu);
+	QAction* gImbriqueAct = new QAction(tr("&Imbrication"), fileMenu);
 
 	gHLMAct->setCheckable(true);
 	gescAct->setCheckable(true);
 	gmursAct->setCheckable(true);
 	gReelAct->setCheckable(true);
 	gHLMsimpleAct->setCheckable(true);
+	gImbriqueAct->setCheckable(true);
 
 	gTestAct->setCheckable(true);
 
@@ -74,6 +77,7 @@ MainWindow::MainWindow() : QMainWindow()
 	choixGram->addAction(gmursAct);
 	choixGram->addAction(gHLMsimpleAct);
 	choixGram->addAction(gReelAct);
+	choixGram->addAction(gImbriqueAct);
 
 	choixGram->addAction(gTestAct);
 
@@ -83,6 +87,7 @@ MainWindow::MainWindow() : QMainWindow()
 	gMenu->addAction(gmursAct);
 	gMenu->addAction(gHLMsimpleAct);
 	gMenu->addAction(gReelAct);
+	gMenu->addAction(gImbriqueAct);
 
 	gMenu->addAction(gTestAct);
 
@@ -94,13 +99,14 @@ MainWindow::MainWindow() : QMainWindow()
 	signalMapper->setMapping(gReelAct, 4);
 
 	signalMapper->setMapping(gTestAct, 5);
-
+signalMapper->setMapping(gImbriqueAct, 6);
 	connect(gHLMAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	connect(gescAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	connect(gmursAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	connect(gHLMsimpleAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 	connect(gReelAct,SIGNAL(triggered()),signalMapper,SLOT(map()));
 
+	connect(gImbriqueAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 	connect(gTestAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
 	connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(changerGrammaire(int)));
@@ -422,10 +428,10 @@ void MainWindow::executer()
 void MainWindow::executerPartiel()
 {
 	bool ok;
-	double echelle = QInputDialog::getDouble  (this,"Echelle du mod�le","Indiquer la taille (en m�tres) de l'axe.", 1, 0,1000, 3, &ok);
+	/*double echelle = QInputDialog::getDouble  (this,"Echelle du mod�le","Indiquer la taille (en m�tres) de l'axe.", 1, 0,1000, 3, &ok);
 	if(!ok)
 		return;
-	modele->setEchelle(1/(float)echelle);
+	modele->setEchelle(1/(float)echelle);*/
 	int nb_iter = QInputDialog::getInt (this,"Execution partielle","Nombre maximal d'it�rations :", 3, 1,1000, 1, &ok);
 	if(!ok)
 		return;
@@ -476,6 +482,9 @@ void MainWindow::changerGrammaire(int grammaire)
 		break;
 	case 5 :
 		p = new Parsertest();
+		break;
+	case 6 :
+		p = new ParserImbrique();
 		break;
 	default :
 		p=new ParserHLM();

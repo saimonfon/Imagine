@@ -8,6 +8,12 @@ OperateurCluster::OperateurCluster(string nom, string tempname)
 	init(nom, tempname);
 }
 
+
+OperateurCluster::OperateurCluster(Operateur* enfant, string tempname)
+{
+	init(enfant,tempname);
+}
+
 set<Noeud*> OperateurCluster::noeudsFromGraphe()
 {
 	set<Noeud*> res;
@@ -64,6 +70,11 @@ set<Noeud*> OperateurCluster::noeudsFromGraphe()
 		res.insert(new_node);
 	}
 	if(res.size()==0)
+	{
+		cout<<"On a un cluster avec 0 résultat"<<endl;
 			res.insert(p->ajouterNoeud(new NonTerminal("EnsembleVide",vector<Noeud*>()))); //Important d'avoir un noeud correspondant à l'ensemble vide, doit être traité différement dans le calcul de l'exclusivité.
+			
+		cout<<"OK insertion noeud vide"<<endl;
+		}
 	return res;
 }

@@ -11,6 +11,11 @@ OperateurPartieConnexe::OperateurPartieConnexe(string nom, string tempname)
 	init(nom, tempname);
 }
 
+OperateurPartieConnexe::OperateurPartieConnexe(Operateur* enfant, string tempname)
+{
+	init(enfant, tempname);
+}
+
 bool OperateurPartieConnexe::exclusivite(Noeud* n_to_test, vector<Noeud*> &nodes){
 
 	bool ok=true;

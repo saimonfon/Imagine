@@ -24,6 +24,6 @@ public :
 	@param position Losition du membre droit dans la règle parent.
 	*/
 	string name;
-	void init (Regle* parent, int position);
+	virtual void init (Regle* parent, int position);
 };
 #endif
